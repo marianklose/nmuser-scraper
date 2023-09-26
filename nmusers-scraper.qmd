@@ -1,7 +1,18 @@
 ---
 title: "nmusers scraper"
+date: today
 author: Marian Klose
-format: html
+execute: 
+    echo: true
+    message: true
+    warning: true
+format:
+    html:
+        toc: true
+        code-fold: show
+        code-tools: true
+        number-sections: true
+        embed-resources: true
 ---
 
 ## Library
