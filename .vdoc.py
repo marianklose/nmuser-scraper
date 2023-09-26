@@ -30,6 +30,21 @@ from bs4 import BeautifulSoup
 #
 #
 #
+# define token safely via gitignored file 
+from secrets import api_token
+#
+#
+#
+#
+#
+# define global parameters
+repository_id = 'R_kgDOKYhvWw'
+category_id = 'DIC_kwDOKYhvW84CZobi'
+#
+#
+#
+#
+#
 # define fetching function based on msg number
 def fetch_details(msg_number):
     # Initialize an empty dictionary to hold the details
@@ -56,6 +71,27 @@ def fetch_details(msg_number):
         details['message'] = message_tag.text.strip()
         
     return details
+
+# define function to create discussion in GitHub repo
+def create_discussion(api_token, repository_id, category_id, title, body, silent):
+    # define url
+    url = 'https://api.github.com/graphql'
+
+    # define query
+    query = f'mutation{{createDiscussion(input: {{repositoryId: "{repository_id}", categoryId: "{category_id}", body: "{body}", title: "{title}"}}) {{discussion {{id}}}}}}'
+
+    # define json
+    json = { 'query' : query}
+
+    # define headers
+    headers = {'Authorization': 'token %s' % api_token}
+
+    # post request and return json
+    r = requests.post(url=url, json=json, headers=headers)
+
+    # print response text if not silent
+    if silent == False:
+        print(r.text)
 #
 #
 #
@@ -97,48 +133,15 @@ for msg in msg_ids:
 #
 #
 #
-# define token safely via input
-api_token = input()
-#
-#
-#
-#
-#
-# define url
-url = 'https://api.github.com/graphql'
-
-# define query
-json = { 'query' : '{ viewer { repositories(first: 30) { totalCount pageInfo { hasNextPage endCursor } edges { node { name } } } } }' }
-
-# define headers
-headers = {'Authorization': 'token %s' % api_token}
-
-# post request and return json
-r = requests.post(url=url, json=json, headers=headers)
-
-# print json text
-print (r.text)
-#
-#
-#
-#
-#
-# define url
-url = 'https://api.github.com/graphql'
-
-query = '{createDiscussion(input: {repositoryId: "132135131", categoryId: "5678", body: "The body", title: "The title"}) {discussion {id}}}'
-
-# define query
-json = { 'query' : query}
-
-# define headers
-headers = {'Authorization': 'token %s' % api_token}
-
-# post request and return json
-r = requests.post(url=url, json=json, headers=headers)
-
-# print json text
-print (r.text)
+# create discussion
+create_discussion(
+    api_token=api_token,
+    title="Parameter based",
+    body="Parameter based",
+    repository_id = repository_id,
+    category_id = category_id,
+    silent=False
+)
 #
 #
 #

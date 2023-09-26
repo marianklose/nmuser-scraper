@@ -25,6 +25,24 @@ import requests
 from bs4 import BeautifulSoup
 ```
 
+## PAT Token
+
+```{python}
+# define token safely via gitignored file 
+from secrets import api_token
+```
+
+## Global Parameters
+
+```{python}
+# Define repository and category IDs
+repository_id = 'R_kgDOKYhvWw'
+category_id = 'DIC_kwDOKYhvW84CZobi'
+
+# Define number of messages we want to retrieve (for testing)
+n_msg = 1
+```
+
 ## Functions
 
 ```{python}
@@ -54,6 +72,27 @@ def fetch_details(msg_number):
         details['message'] = message_tag.text.strip()
         
     return details
+
+# define function to create discussion in GitHub repo
+def create_discussion(api_token, repository_id, category_id, title, body, silent):
+    # define url
+    url = 'https://api.github.com/graphql'
+
+    # define query
+    query = f'mutation{{createDiscussion(input: {{repositoryId: "{repository_id}", categoryId: "{category_id}", body: "{body}", title: "{title}"}}) {{discussion {{id}}}}}}'
+
+    # define json
+    json = { 'query' : query}
+
+    # define headers
+    headers = {'Authorization': 'token %s' % api_token}
+
+    # post request and return json
+    r = requests.post(url=url, json=json, headers=headers)
+
+    # print response text if not silent
+    if silent == False:
+        print(r.text)
 ```
 
 # Scraping
@@ -61,9 +100,6 @@ def fetch_details(msg_number):
 ## Fetching List of Messages
 
 ```{python}
-# Define number of messages we want to retrieve (for testing)
-n_msg = 3
-
 # Define most recent message ID
 recent_id = 8686
 
@@ -92,50 +128,16 @@ for msg in msg_ids:
 ```
 
 
-## Retrieve PAT token
-
-```{python}	
-# define token safely via input
-api_token = input()
-```
-
-## Test: List Own Repos
-
-```{python}
-# define url
-url = 'https://api.github.com/graphql'
-
-# define json
-json = { 'query' : '{ viewer { repositories(first: 30) { totalCount pageInfo { hasNextPage endCursor } edges { node { name } } } } }' }
-
-# define headers
-headers = {'Authorization': 'token %s' % api_token}
-
-# post request and return json
-r = requests.post(url=url, json=json, headers=headers)
-
-# print json text
-print (r.text)
-```
-
 ## Test: Create Discussion
 
 ```{python}
-# define url
-url = 'https://api.github.com/graphql'
-
-# define query
-query = 'mutation{createDiscussion(input: {repositoryId: "R_kgDOKYhvWw", categoryId: "DIC_kwDOKYhvW84CZobi", body: "This is the first discussion created via python!", title: "Received from Python"}) {discussion {id}}}'
-
-# define json
-json = { 'query' : query}
-
-# define headers
-headers = {'Authorization': 'token %s' % api_token}
-
-# post request and return json
-r = requests.post(url=url, json=json, headers=headers)
-
-# print json text
-print (r.text)
+# create discussion
+create_discussion(
+    api_token=api_token,
+    title="Parameter based",
+    body="Parameter based",
+    repository_id = repository_id,
+    category_id = category_id,
+    silent=False
+)
 ```
