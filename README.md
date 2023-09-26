@@ -1,2 +1,2 @@
 # nmuser-scraper
- Tool to scrape nmuser mail archive
+ Tool to scrape nmusers mail archive
