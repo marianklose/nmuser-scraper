@@ -80,10 +80,7 @@ msg_ids
 
 # Initialize an empty dictionary to hold the msg information
 msg = {}
-#
-#
-#
-#
+
 # Loop through each msg item and extract the details
 for msg in msg_ids:
     # Initialize an empty dictionary to hold individual msg info
@@ -96,6 +93,52 @@ for msg in msg_ids:
     print(single_msg)
 #
 #
+#
+#
+#
+#
+# define token safely via input
+api_token = input()
+#
+#
+#
+#
+#
+# define url
+url = 'https://api.github.com/graphql'
+
+# define query
+json = { 'query' : '{ viewer { repositories(first: 30) { totalCount pageInfo { hasNextPage endCursor } edges { node { name } } } } }' }
+
+# define headers
+headers = {'Authorization': 'token %s' % api_token}
+
+# post request and return json
+r = requests.post(url=url, json=json, headers=headers)
+
+# print json text
+print (r.text)
+#
+#
+#
+#
+#
+# define url
+url = 'https://api.github.com/graphql'
+
+query = '{createDiscussion(input: {repositoryId: "132135131", categoryId: "5678", body: "The body", title: "The title"}) {discussion {id}}}'
+
+# define query
+json = { 'query' : query}
+
+# define headers
+headers = {'Authorization': 'token %s' % api_token}
+
+# post request and return json
+r = requests.post(url=url, json=json, headers=headers)
+
+# print json text
+print (r.text)
 #
 #
 #
