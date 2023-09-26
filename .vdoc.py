@@ -24,6 +24,7 @@
 #
 # load packages
 import requests
+import time
 from bs4 import BeautifulSoup
 #
 #
@@ -37,9 +38,12 @@ from secrets import api_token
 #
 #
 #
-# define global parameters
+# Define repository and category IDs
 repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
+
+# Define number of messages we want to retrieve (for testing)
+n_msg = 2
 #
 #
 #
@@ -64,6 +68,16 @@ def fetch_details(msg_number):
     date_tag = soup.select_one('span.date a')
     if date_tag:
         details['date'] = date_tag.text.strip()
+
+    # Extract the subject
+    subject_tag = soup.select_one('span.subject span[itemprop="name"]')
+    if subject_tag:
+        details['subject'] = subject_tag.text.strip()
+
+    # Extract the author
+    author_tag = soup.select_one('span.sender span[itemprop="name"]')
+    if author_tag:
+        details['author'] = author_tag.text.strip()
     
     # Extract the message text
     message_tag = soup.select_one('div.msgBody')
@@ -73,9 +87,18 @@ def fetch_details(msg_number):
     return details
 
 # define function to create discussion in GitHub repo
-def create_discussion(api_token, repository_id, category_id, title, body, silent):
+def create_discussion(api_token, repository_id, category_id, date, author, title, body, silent):
     # define url
     url = 'https://api.github.com/graphql'
+
+    # define additional information (pre)
+    add_inf_pre = f'**Date:** {date}\n**Author:** {author}\n\n'
+
+    # defione additional information (post)
+    add_inf_post = f'\n\n---\n\n*Please note: this discussion was automatically created via web scraping of the nmusers mail archive. If you have any questions, please contact the original author of this message. If you are the original author and want your message deleted, you can contact the maintainer at any time.*'
+
+    # add additional information to body
+    body = add_inf_pre + body + add_inf_post
 
     # define query
     query = f'mutation{{createDiscussion(input: {{repositoryId: "{repository_id}", categoryId: "{category_id}", body: "{body}", title: "{title}"}}) {{discussion {{id}}}}}}'
@@ -99,9 +122,6 @@ def create_discussion(api_token, repository_id, category_id, title, body, silent
 #
 #
 #
-# Define number of messages we want to retrieve (for testing)
-n_msg = 3
-
 # Define most recent message ID
 recent_id = 8686
 
@@ -124,24 +144,28 @@ for msg in msg_ids:
 
     # Fetch the details
     single_msg = fetch_details(msg)
+
+    # Create discussion
+    create_discussion(
+        api_token=api_token,
+        title=single_msg['subject'],
+        body=single_msg['message'],
+        date=single_msg['date'],
+        author=single_msg['author'],
+        repository_id = repository_id,
+        category_id = category_id,
+        silent=False
+    )
     
     # print msg
+    print("Successfully posted: \n")
     print(single_msg)
+    print("\n\n")
+
+    # sleep for 5 seconds
+    time.sleep(5)
 #
 #
-#
-#
-#
-#
-# create discussion
-create_discussion(
-    api_token=api_token,
-    title="Parameter based",
-    body="Parameter based",
-    repository_id = repository_id,
-    category_id = category_id,
-    silent=False
-)
 #
 #
 #
