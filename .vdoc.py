@@ -8,6 +8,20 @@
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # load packages
 import requests
 from bs4 import BeautifulSoup
@@ -22,7 +36,7 @@ def fetch_details(msg_number):
     details = {}
     
     # Generate the full URL of the detailed page
-    url = "https://www.mail-archive.com/nmusers@globomaxnm.com/msg{msg_number}.html"
+    url = f"https://www.mail-archive.com/nmusers@globomaxnm.com/msg{msg_number}.html"
     
     # Fetch the HTML content from the URL
     response = requests.get(url)
@@ -37,7 +51,7 @@ def fetch_details(msg_number):
         details['date'] = date_tag.text.strip()
     
     # Extract the message text
-    message_tag = soup.select_one('div.msgBody pre')
+    message_tag = soup.select_one('div.msgBody')
     if message_tag:
         details['message'] = message_tag.text.strip()
         
@@ -47,53 +61,41 @@ def fetch_details(msg_number):
 #
 #
 #
-# Fetch the landing page
-landing_url = 'https://www.mail-archive.com/nmusers@globomaxnm.com/'
-response = requests.get(landing_url)
-landing_page_content = response.text
+#
+#
+# Define number of messages we want to retrieve (for testing)
+n_msg = 3
 
-# Initialize a BeautifulSoup object and specify the parser
-soup = BeautifulSoup(landing_page_content, 'html.parser')
+# Define most recent message ID
+recent_id = 8686
 
-# Initialize an empty dictionary to hold the threads' information
-threads = []
+# Define vector of message IDs
+msg_ids = list(range(recent_id, recent_id - n_msg, -1))
 
-# show first element
-soup.select('li')[0]
+# Convert numerics to strings and paste 0 in front
+msg_ids = ["0" + str(x) for x in msg_ids]
+
+# show
+msg_ids
+
+# Initialize an empty dictionary to hold the msg information
+msg = {}
 #
 #
 #
 #
-# Loop through each thread item and extract the details
-for thread in soup.select('li'):
-    # Initialize an empty dictionary to hold individual thread info
-    thread_info = {}
+# Loop through each msg item and extract the details
+for msg in msg_ids:
+    # Initialize an empty dictionary to hold individual msg info
+    single_msg = {}
+
+    # Fetch the details
+    single_msg = fetch_details(msg)
     
-    # Extract the thread title
-    title_tag = thread.select_one('span.subject a')
-    if title_tag:
-        thread_info['title'] = title_tag.text.strip()
-        
-        # Extract the thread number from the 'name' attribute
-        if 'name' in title_tag.attrs:
-            thread_info['number'] = title_tag['name']
-    
-    # Extract the sender information
-    sender_tag = thread.select_one('span.sender')
-    if sender_tag:
-        thread_info['sender'] = sender_tag.text.strip()
-    
-    # Append the dictionary to the list only if it contains some data
-    if thread_info:
-        threads.append(thread_info)
-
-# Print the list of thread dictionaries
-print(threads)
+    # print msg
+    print(single_msg)
 #
 #
-#
-#
-fetch_details(msg_number="08686")
 #
 #
 #
