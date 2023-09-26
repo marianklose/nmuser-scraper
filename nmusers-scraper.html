@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>nmusers scraper</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="nmusers-scraper_files/libs/clipboard/clipboard.min.js"></script>
+<script src="nmusers-scraper_files/libs/quarto-html/quarto.js"></script>
+<script src="nmusers-scraper_files/libs/quarto-html/popper.min.js"></script>
+<script src="nmusers-scraper_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="nmusers-scraper_files/libs/quarto-html/anchor.min.js"></script>
+<link href="nmusers-scraper_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="nmusers-scraper_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="nmusers-scraper_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="nmusers-scraper_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="nmusers-scraper_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">nmusers scraper</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="library" class="level2">
+<h2 class="anchored" data-anchor-id="library">Library</h2>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define fetching function based on msg number</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fetch_details(msg_number):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize an empty dictionary to hold the details</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    details <span class="op">=</span> {}</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate the full URL of the detailed page</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="st">"https://www.mail-archive.com/nmusers@globomaxnm.com/msg</span><span class="sc">{msg_number}</span><span class="st">.html"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fetch the HTML content from the URL</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    page_content <span class="op">=</span> response.text</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize a BeautifulSoup object and specify the parser</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(page_content, <span class="st">'html.parser'</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the date</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    date_tag <span class="op">=</span> soup.select_one(<span class="st">'span.date a'</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> date_tag:</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        details[<span class="st">'date'</span>] <span class="op">=</span> date_tag.text.strip()</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the message text</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    message_tag <span class="op">=</span> soup.select_one(<span class="st">'div.msgBody pre'</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> message_tag:</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        details[<span class="st">'message'</span>] <span class="op">=</span> message_tag.text.strip()</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> details</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="test" class="level2">
+<h2 class="anchored" data-anchor-id="test">Test</h2>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch the landing page</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>landing_url <span class="op">=</span> <span class="st">'https://www.mail-archive.com/nmusers@globomaxnm.com/'</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(landing_url)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>landing_page_content <span class="op">=</span> response.text</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a BeautifulSoup object and specify the parser</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(landing_page_content, <span class="st">'html.parser'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an empty dictionary to hold the threads' information</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>threads <span class="op">=</span> []</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show first element</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>soup.select(<span class="st">'li'</span>)[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>&lt;li&gt;&lt;span class="threadlink"&gt;Thread&lt;/span&gt;&lt;/li&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each thread item and extract the details</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> thread <span class="kw">in</span> soup.select(<span class="st">'li'</span>):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize an empty dictionary to hold individual thread info</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    thread_info <span class="op">=</span> {}</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the thread title</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    title_tag <span class="op">=</span> thread.select_one(<span class="st">'span.subject a'</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> title_tag:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        thread_info[<span class="st">'title'</span>] <span class="op">=</span> title_tag.text.strip()</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extract the thread number from the 'name' attribute</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'name'</span> <span class="kw">in</span> title_tag.attrs:</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            thread_info[<span class="st">'number'</span>] <span class="op">=</span> title_tag[<span class="st">'name'</span>]</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the sender information</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    sender_tag <span class="op">=</span> thread.select_one(<span class="st">'span.sender'</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sender_tag:</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        thread_info[<span class="st">'sender'</span>] <span class="op">=</span> sender_tag.text.strip()</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append the dictionary to the list only if it contains some data</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> thread_info:</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        threads.append(thread_info)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the list of thread dictionaries</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(threads)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[{'title': '[NMusers] PhD vacancy in pharmacometrics and systems pharmacology at Leiden University', 'number': '08686', 'sender': 'Guo, T. (Tingjie)'}, {'title': '[NMusers] PAGANZ 2024 in Melbourne, Australia - 14-16th Feb  - Registrations now open!', 'number': '08685', 'sender': 'Jacqueline Hannam'}, {'title': '[NMusers] Seamless simulation of Nonmem models from R', 'number': '08684', 'sender': 'Philip Harder Delff'}, {'title': '[NMusers] Pharmacometrics role available, southern CA', 'number': '08683', 'sender': 'Brenda Roseberry'}, {'title': '[NMusers] Director, Clinical Pharmacology and Pharmacometrics role available, remote, United States', 'number': '08682', 'sender': 'Brenda Roseberry'}, {'title': '[NMusers] Can you please give access to NONMEM users this young Pharmacoetrican?', 'number': '08681', 'sender': 'Ali Duchu'}, {'title': '[NMusers] 2023 Virtual Training Course on PKPD of Protein Therapeutics, November 28-30', 'number': '08680', 'sender': 'Meibohm, Bernd'}, {'title': '[NMusers] Opportunities in Clinical Pharmacology at ACELYRIN', 'number': '08679', 'sender': 'Anh Nguyen'}, {'title': '[NMusers] Exciting Clinical Pharmacology / Pharmacometrics Leadership role-Sr. / Director', 'number': '08678', 'sender': 'TJ Elder'}, {'title': '[NMusers] Fraction of metabolite formation', 'number': '08675', 'sender': 'Saikumar Matcha'}, {'title': 'Re: [NMusers] Fraction of metabolite formation', 'number': '08676', 'sender': 'Martin Bergstrand'}, {'title': 'Re: [NMusers] Fraction of metabolite formation', 'number': '08677', 'sender': 'Saikumar Matcha'}, {'title': '[NMusers] Sept. Webinar: A Pharmacodynamic Model for the Assessment and Optimization of PROTACs', 'number': '08674', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] Taca Training Workshop on Pharmacometric Statistics 2024', 'number': '08673', 'sender': 'Adrian Dunne'}, {'title': '[NMusers] Release of a new version of e-Campsis', 'number': '08672', 'sender': 'Emilie Henin'}, {'title': '[NMusers] Post-Doctoral Research Fellow/PhD position in Translational Pharmacology', 'number': '08670', 'sender': "D'Agate, Salvatore"}, {'title': '[NMusers] Clarification on performance of mu referencing', 'number': '08667', 'sender': 'Sébastien Bihorel'}, {'title': 'Re: [NMusers] Clarification on performance of mu referencing', 'number': '08668', 'sender': 'Bill Denney'}, {'title': '[NMusers] FINAL ANNOUNCEMENT +++ Call for the next generation of talents within the interdisciplinary PhD program PharMetrX - Germany, Freie Universität Berlin/University of Potsdam', 'number': '08665', 'sender': 'Cornelia Böhnstedt'}, {'title': '[NMusers] Director, Clinical Pharmacology and Pharmacometrics, Remote, US', 'number': '08656', 'sender': 'Brenda Roseberry'}, {'title': '[NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08653', 'sender': 'Gobburu, Joga'}, {'title': 'Re: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08654', 'sender': 'James G Wright'}, {'title': 'Re: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08655', 'sender': 'Gobburu, Joga'}, {'title': 'Re: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08657', 'sender': 'Wilbert de Witte'}, {'title': 'Re: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08660', 'sender': 'Jeroen Elassaiss-Schaap (PD-value B.V.)'}, {'title': 'Re: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08669', 'sender': 'Gobburu, Joga'}, {'title': 'Re: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08658', 'sender': 'Martin Bergstrand'}, {'title': 'RE: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08659', 'sender': 'Nick Holford'}, {'title': 'Re: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08666', 'sender': 'Pyry Välitalo'}, {'title': 'Re: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08671', 'sender': 'Alan Maloney'}, {'title': 'Fwd: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08661', 'sender': 'James G Wright'}, {'title': 'Re: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08662', 'sender': 'Gobburu, Joga'}, {'title': 'Re: Fwd: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08663', 'sender': 'Jeroen Elassaiss-Schaap (PD-value B.V.)'}, {'title': 'Re: [NMusers] Observed (yaxis) vs Predicted (xaxis) Diagnostic Plot - Scientific basis.', 'number': '08664', 'sender': 'Martin Bergstrand'}, {'title': '[NMusers] Please check my email in list', 'number': '08652', 'sender': 'Ayyappa Chaturvedula'}, {'title': '[NMusers] Principal Scientist Clinical Pharmacology role available. Remote.', 'number': '08651', 'sender': 'Brenda Roseberry'}, {'title': '[NMusers] Help on reviewing codes', 'number': '08648', 'sender': 'Ali Duchu'}, {'title': 'Re: [NMusers] Help on reviewing codes', 'number': '08649', 'sender': '약리학교실'}, {'title': 'Re: [NMusers] Help on reviewing codes', 'number': '08650', 'sender': 'Saeheum Song'}, {'title': '[NMusers] Exciting Clinical Pharmacology / Pharmacometrics Leadership role in (Cambridge/Fully Remote)', 'number': '08647', 'sender': 'TJ Elder'}, {'title': '[NMusers] Webinar: Proteomics-Informed PBPK Modeling to Predict Systemic and Tissue Drug Concentrations in Rats', 'number': '08646', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] August Webinar: Proteomics-Informed PBPK Modeling to Predict Systemic and Tissue Drug Concentrations in Rats', 'number': '08645', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] Lecturer/Senior Lecturer in Pharmacokinetics and Pharmacodynamics, The University of Manchester', 'number': '08643', 'sender': 'Kayode Ogungbenro'}, {'title': '[NMusers] Call for the next generation of talents within the interdisciplinary PhD program PharMetrX - Germany, Freie Universität Berlin/University of Potsdam', 'number': '08642', 'sender': 'Cornelia Böhnstedt'}, {'title': '[NMusers] Webinar on Wednesday: Modeling IFNα signaling', 'number': '08641', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] nmusers', 'number': '08640', 'sender': 'Venkata Yellepeddi'}, {'title': '[NMusers] Specify full OMEGA matrix for simulation', 'number': '08635', 'sender': 'Philip Harder Delff'}, {'title': 'Re: [NMusers] Specify full OMEGA matrix for simulation', 'number': '08636', 'sender': 'Leonid Gibiansky'}, {'title': 'Re: [NMusers] Specify full OMEGA matrix for simulation', 'number': '08637', 'sender': 'Philip Harder Delff'}, {'title': 'RE: [NMusers] Specify full OMEGA matrix for simulation', 'number': '08638', 'sender': 'Nick Holford'}, {'title': 'Re: [NMusers] Specify full OMEGA matrix for simulation', 'number': '08639', 'sender': 'Philip Harder Delff'}, {'title': '[NMusers] July Webinar: Modeling IFNα signaling and optimizing treatment strategies', 'number': '08634', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] Release of e-Campsis', 'number': '08633', 'sender': 'Christian Laveille'}, {'title': '[NMusers] BQL simulations', 'number': '08630', 'sender': 'Hiba Sliem'}, {'title': 'Re: [NMusers] BQL simulations', 'number': '08631', 'sender': 'Jeroen Elassaiss-Schaap (PD-value B.V.)'}, {'title': 'Re: [NMusers] BQL simulations', 'number': '08632', 'sender': 'Leonid Gibiansky'}, {'title': '[NMusers] Postdoc position in Pharmacometrics and Biostatistics at UCSF', 'number': '08629', 'sender': 'Shaffer, Craig'}, {'title': '[NMusers] Postdoctoral Research Fellow at Freie Universität Berlin', 'number': '08628', 'sender': 'Linda Aulin'}, {'title': '[NMusers] Exciting Quantitative Pharmacology / Pharmacometrics role in (Cambridge/Fully Remote)', 'number': '08627', 'sender': 'TJ Elder'}, {'title': '[NMusers] June Webinar: A QSP Model to Understand Clinical Cytokine Dynamics Following Bispecific Dosing in Solid Tumors', 'number': '08626', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] Director/Head of US pharmacometrics role available!!', 'number': '08625', 'sender': 'Brenda Roseberry'}, {'title': '[NMusers] Remote Associate Director, Director, or Senior Director -"Executive Director would be a stretch" of PK/PD modeling', 'number': '08624', 'sender': 'TJ Elder'}, {'title': '[NMusers] Position for Postdoctoral Research Fellow at the University of Cape Town', 'number': '08623', 'sender': 'Roeland Wasmann'}, {'title': '[NMusers] Automatic Conversion between NONMEM and nlmixr2 models', 'number': '08621', 'sender': 'Matthew Fidler'}, {'title': 'Re: [NMusers] Automatic Conversion between NONMEM and nlmixr2 models', 'number': '08622', 'sender': 'Niurys.CS'}, {'title': '[NMusers] Lecturer/Senior Lecturer in Pharmacokinetics and Pharmacodynamics, University of Manchester, Manchester, UK', 'number': '08619', 'sender': 'Kayode Ogungbenro'}, {'title': '[NMusers] Job Opportunity at the Division of Pharmacometrics, FDA', 'number': '08620', 'sender': 'Zhu, Hao'}, {'title': '[NMusers] Problem with estimating sigma when using M3 method', 'number': '08612', 'sender': 'Hiba Sliem'}, {'title': 'Re: [NMusers] Problem with estimating sigma when using M3 method', 'number': '08613', 'sender': 'Leonid Gibiansky'}, {'title': 'Re: [NMusers] Problem with estimating sigma when using M3 method', 'number': '08614', 'sender': 'Leonid Gibiansky'}, {'title': 'Re: [NMusers] Problem with estimating sigma when using M3 method', 'number': '08615', 'sender': 'Philip Harder Delff'}, {'title': 'RE: [NMusers] Problem with estimating sigma when using M3 method', 'number': '08616', 'sender': 'Hiba Sliem'}, {'title': 'Re: [NMusers] Problem with estimating sigma when using M3 method', 'number': '08617', 'sender': 'Leonid Gibiansky'}, {'title': 'Re: [NMusers] Problem with estimating sigma when using M3 method', 'number': '08618', 'sender': 'Leonid Gibiansky'}, {'title': '[NMusers] Job Opportunity in Clinical Pharmacology Modeling &amp; Simulation (CPMS) at Parexel International', 'number': '08611', 'sender': 'Zhang, JP'}, {'title': '[NMusers] Simulations Plus Pre-conference workshop at PAGE', 'number': '08609', 'sender': 'Jennifer Johnson'}, {'title': '[NMusers] PKPD post-doc at Medicines for Malaria Venture', 'number': '08608', 'sender': 'Nathalie Gobeau'}, {'title': '[NMusers] Last announcement - LAP&amp;P TMDD case at PAGE 2023', 'number': '08607', 'sender': 'Tamara van Steeg'}, {'title': '[NMusers] Stan for pharmacometrics day in Paris on the 8th of June 2023', 'number': '08606', 'sender': 'Julie Bertrand'}, {'title': '[NMusers] May Webinar: Leveraging machine learning strategies for nonlinear mixed effects model selection', 'number': '08605', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] Exciting Director level PMx leader opportunity at growing company (remote)', 'number': '08604', 'sender': 'TJ Elder'}, {'title': '[NMusers] Certara workshops at PAGE 2023: Effective Visualisations for Pharmacometrics models &amp; CAR-T Population Kinetic Analysis', 'number': '08603', 'sender': 'Stephen Duffull'}, {'title': '[NMusers] 1- or 2-day workshop at PAGE', 'number': '08602', 'sender': 'Wilbert de Witte'}, {'title': '[NMusers] Pharmetheus workshops at PAGE 2023: Forest plots in practical use and PBPK-PD/QSP modeling with the OSPSuite', 'number': '08601', 'sender': 'Pharmetheus'}, {'title': '[NMusers] Requesting testing of list serve please ignore', 'number': '08600', 'sender': 'Bauer, Robert'}, {'title': '[NMusers] testing nmusers system, please ignore, 1367', 'number': '08599', 'sender': 'Bauer, Robert'}, {'title': '[NMusers] testing 13345, please ignore', 'number': '08598', 'sender': 'Bauer, Robert'}, {'title': '[NMusers] Invitation to 2nd pre-PAGE Educational Pharmacometrics Summer Symposium', 'number': '08597', 'sender': 'Eva Germovsek'}, {'title': '[NMusers] Re: Invitation to 2nd pre-PAGE Educational Pharmacometrics Summer Symposium', 'number': '08610', 'sender': 'Eva Germovsek'}, {'title': '[NMusers] Job Opportunity in Clinical Pharmacology Modeling &amp; Simulation (CPMS) at Parexel', 'number': '08596', 'sender': 'Zhang, JP'}, {'title': '[NMusers] Bayesian Modeling of Binary and Time-to-Event Outcomes at PAGE', 'number': '08595', 'sender': 'Jonathan French'}, {'title': '[NMusers] Faculty positions  at UCSF', 'number': '08594', 'sender': 'Savic, Rada'}, {'title': '[NMusers] Workshop on Modeling Delays in PKPK at PAGE', 'number': '08593', 'sender': 'Wojciech Krzyzanski'}, {'title': '[NMusers] Open position for Postdoctoral Research Fellow at Freie Universität Berlin', 'number': '08592', 'sender': 'Linda Aulin'}, {'title': '[NMusers] Webinar: QSP Modeling to Support a New Dose Application', 'number': '08591', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] Still seats available: 2023 Virtual Training Course on PKPD of Protein Therapeutics, April 17-21', 'number': '08588', 'sender': 'Meibohm, Bernd'}, {'title': '[NMusers] LAP&amp;P TMDD case study in A Coruña (PAGE 2023)', 'number': '08587', 'sender': 'Tamara van Steeg'}, {'title': '[NMusers] Pharmacometrics positions at Amador Bioscience (USA)', 'number': '08586', 'sender': 'Bing Wang'}, {'title': '[NMusers] Two Pre-PAGE Workshops on Simcyp Designer and PBPK Modelling of Paediatric and Pregnancy Populations', 'number': '08585', 'sender': 'Masoud Jamei'}, {'title': '[NMusers] Director/Sr. Dir. PMx Clinical PK Opening at Dynamic Oncology Company', 'number': '08584', 'sender': 'TJ Elder'}, {'title': '[NMusers] Open position Pharmacometrician at InSilicoTrials', 'number': '08583', 'sender': 'Roberta Bursi'}, {'title': '[NMusers] Present an Early Career Investigator Webinar', 'number': '08581', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] Scientific &amp; Strategic Leader in Immunology', 'number': '08580', 'sender': 'kdc...@placementgrp.com'}, {'title': '[NMusers] Postdoctoral Research Opportunities in the Savic Integrative Pharmacology Laboratory University of California, San Francisco', 'number': '08577', 'sender': 'Shaffer, Craig'}, {'title': '[NMusers] Early career investigators wanted to give a webinar', 'number': '08576', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] NONMEM / PDxPoP Workshops Presented by ICON Clinical Research LLC for 2023', 'number': '08574', 'sender': 'Wilhelm-Lear, Lisa'}, {'title': '[NMusers] CORRECTED - NONMEM / PDxPoP Workshops Presented by ICON Clinical Research LLC for 2023', 'number': '08575', 'sender': 'Wilhelm-Lear, Lisa'}, {'title': '[NMusers] CORRECTED - NONMEM / PDxPoP Workshops Presented by ICON Clinical Research LLC for 2023', 'number': '08590', 'sender': 'Wilhelm-Lear, Lisa'}, {'title': '[NMusers] NONMEM / PDxPoP Workshops Presented by ICON Clinical Research LLC for 2023', 'number': '08644', 'sender': 'Bauer, Robert'}, {'title': '[NMusers] March Modeling Webinar: Pharmacokinetic modeling for antivenom development', 'number': '08573', 'sender': 'Rebecca Baillie'}, {'title': 'RE: [NMusers] March Modeling Webinar: Pharmacokinetic modeling for antivenom development', 'number': '08579', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] 2023 Virtual Training Course on PKPD of Protein Therapeutics, April 17-21', 'number': '08572', 'sender': 'Meibohm, Bernd'}, {'title': '[NMusers] Calvagone: Opening Position as PBPK Modeller', 'number': '08571', 'sender': 'Christian Laveille'}, {'title': '[NMusers] Calvagone: Opening Position as Pharmacometrician', 'number': '08570', 'sender': 'Christian Laveille'}, {'title': '[NMusers] Astrazeneca - Senior Scientist in PMx in Barcelona, Spain', 'number': '08569', 'sender': 'Penland, Chris'}, {'title': '[NMusers] Summer Course on Quantitative Pharmacology in Spanish', 'number': '08568', 'sender': 'Zinnia Patricia Parra Guillén'}, {'title': '[NMusers] Summer Course on Quantitative Pharmacology in Spanish', 'number': '08589', 'sender': 'Zinnia Patricia Parra Guillén'}, {'title': '[NMusers] RE: Summer internship opportunity for PhD students at Eli Lilly', 'number': '08567', 'sender': 'Aurélie Lombard'}, {'title': '[NMusers] LAP&amp;P TMDD case study at PAGE 2023 on the 27th of June', 'number': '08566', 'sender': 'Tamara van Steeg'}, {'title': '[NMusers] llp function in PsN', 'number': '08564', 'sender': 'Olga Teplytska'}, {'title': 'Re: [NMusers] llp function in PsN', 'number': '08565', 'sender': 'Jakob Ribbing'}, {'title': '[NMusers] Indiana Disease &amp; Therapeutic Response Modeling Symposium February 22-24', 'number': '08563', 'sender': 'Quinney, Sara Kay'}, {'title': '[NMusers] QSP Job Opportunities at Novo Nordisk', 'number': '08562', 'sender': 'Bjørn Hald'}, {'title': '[NMusers] Job Opportunity at InSilicoTrials!', 'number': '08561', 'sender': 'Roberta Bursi'}, {'title': '[NMusers] Pharmacometrician opportunity InsightRX', 'number': '08560', 'sender': 'Ron Keizer'}, {'title': '[NMusers] Comments by shanpan1...@gmail.com', 'number': '08559', 'sender': 'Bauer, Robert'}, {'title': '[NMusers] PAGE 2023 - Certara Satellite workshops 27th June', 'number': '08558', 'sender': 'Simon Davis'}, {'title': '[NMusers] Uppsala Pharmacometric Summer School - UPSS', 'number': '08556', 'sender': 'Mats Karlsson'}, {'title': 'Re: [NMusers] Uppsala Pharmacometric Summer School - UPSS', 'number': '08557', 'sender': 'Shan Pan'}, {'title': '[NMusers] Uppsala Pharmacometric Summer School - UPSS', 'number': '08578', 'sender': 'Mats Karlsson'}, {'title': '[NMusers] AZ Pharmacometrics Internship - Summer 2023', 'number': '08553', 'sender': 'Penland, Chris'}, {'title': '[NMusers] 2 assistant/associate/full professor positions at Leiden University in Systems Pharmacology and Pharmacometrics', 'number': '08552', 'sender': 'Coen van Hasselt'}, {'title': '[NMusers] Webinar: A case‐study of model‐informed drug development', 'number': '08551', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] Registration for PAGE 2023 is now open!', 'number': '08550', 'sender': 'Thomas Dorlo (PAGE)'}, {'title': '[NMusers] Simcyp Workshops on Model-Informed Drug Development', 'number': '08549', 'sender': 'Masoud Jamei'}, {'title': '[NMusers] Opportunity Clinical Pharmacology Genmab NL', 'number': '08548', 'sender': 'Sieto Bosgra'}, {'title': '[NMusers] Vincent Lemaire and Fei Hua webinar: Perception of the Use and Impact of QSP in immuno-oncology', 'number': '08547', 'sender': 'Rebecca Baillie'}, {'title': '[NMusers] Modeling for non-Normal distributions of individual parameters', 'number': '08544', 'sender': 'Bauer, Robert'}, {'title': 'Re: [NMusers] Modeling for non-Normal distributions of individual parameters', 'number': '08545', 'sender': 'Leonid Gibiansky'}, {'title': '[NMusers] RE:Modeling for non-Normal distributions of individual parameters', 'number': '08546', 'sender': 'Bauer, Robert'}, {'title': '[NMusers] Second announcement: 2023 PAGANZ meeting in Adelaide, Australia', 'number': '08543', 'sender': 'Jacqueline Hannam'}, {'title': '[NMusers] PAGE 2023: First Announcement!', 'number': '08542', 'sender': 'Thomas Dorlo (PAGE)'}, {'title': '[NMusers] Off diagonals in $TABLE', 'number': '08535', 'sender': 'Paul Hutson'}, {'title': 'Re: [NMusers] Off diagonals in $TABLE', 'number': '08536', 'sender': 'Leonid Gibiansky'}, {'title': 'Re: [NMusers] Off diagonals in $TABLE', 'number': '08540', 'sender': 'Jakob Ribbing'}, {'title': 'Re: [NMusers] Off diagonals in $TABLE', 'number': '08537', 'sender': 'Jakob Ribbing'}, {'title': '[NMusers] Re: Off diagonals in $TABLE', 'number': '08538', 'sender': 'Sébastien Bihorel'}, {'title': '[NMusers] RE: Off diagonals in $TABLE', 'number': '08539', 'sender': 'Nick Holford'}, {'title': '[NMusers] RE: Off diagonals in $TABLE', 'number': '08541', 'sender': 'Paul Hutson'}, {'title': '[NMusers] To: "nmusers@globomaxnm.com" &lt;nmusers@globomaxnm.com&gt;', 'number': '08534', 'sender': 'Jing Wang'}, {'title': '[NMusers] Modeling and Simulation Expert Position at Bayer in Germany', 'number': '08531', 'sender': 'Dirk Garmann'}, {'title': '[NMusers] 2023 Internships a Novartis', 'number': '08522', 'sender': 'Matthew Fidler'}, {'title': '[NMusers] Simulate with parameter uncertainty', 'number': '08523', 'sender': 'Mark Sale'}, {'title': 'Re: [NMusers] Simulate with parameter uncertainty', 'number': '08524', 'sender': 'Leonid Gibiansky'}, {'title': 'Re: [NMusers] Simulate with parameter uncertainty', 'number': '08525', 'sender': 'Heine, Rob ter'}, {'title': 'RE: [NMusers] Simulate with parameter uncertainty', 'number': '08527', 'sender': 'Mark Sale'}, {'title': 'Re: [NMusers] Simulate with parameter uncertainty', 'number': '08528', 'sender': 'Mahmoud Tareq Abdelwahab'}, {'title': 'Re: [NMusers] Simulate with parameter uncertainty', 'number': '08526', 'sender': 'Jakob Ribbing'}, {'title': '[NMusers] Unsubscribe', 'number': '08529', 'sender': 'Naoto Hayashi'}, {'title': '[NMusers] Unsubscribe', 'number': '08533', 'sender': 'José Javier Zarate Losa'}, {'title': '[NMusers] 2023 Schedule for Online Workshops Presented by ICON Clinical Research LLC - NONMEM &amp; PDxPoP', 'number': '08520', 'sender': 'Bauer, Robert'}, {'title': '[NMusers] 2023 Schedule for Online Workshops Presented by ICON Clinical Research LLC - NONMEM &amp; PDxPoP', 'number': '08521', 'sender': 'Wilhelm-Lear, Lisa'}, {'title': '[NMusers] Postdoctoral Position at Bonn University, Germany', 'number': '08519', 'sender': 'Ulrich Jaehde'}, {'title': '[NMusers] Condition Number and other matters', 'number': '08518', 'sender': 'Bauer, Robert'}, {'title': '[NMusers] Condition number', 'number': '08483', 'sender': 'Ayyappa Chaturvedula'}, {'title': 'RE: [NMusers] Condition number', 'number': '08484', 'sender': 'Ken Kowalski'}, {'title': 'Re: [NMusers] Condition number', 'number': '08485', 'sender': 'Ayyappa Chaturvedula'}, {'title': 'RE: [NMusers] Condition number', 'number': '08486', 'sender': 'Ken Kowalski'}, {'title': 'Re: [NMusers] Condition number', 'number': '08488', 'sender': 'Ayyappa Chaturvedula'}, {'title': 'RE: [NMusers] Condition number', 'number': '08489', 'sender': 'Ken Kowalski'}, {'title': 'Re: [NMusers] Condition number', 'number': '08490', 'sender': 'Ayyappa Chaturvedula'}, {'title': 'Re: [NMusers] Condition number', 'number': '08491', 'sender': 'Jeroen Elassaiss-Schaap (PD-value B.V.)'}, {'title': 'RE: [NMusers] Condition number', 'number': '08487', 'sender': 'Bonate, Peter'}, {'title': 'Fwd: [NMusers] Condition number', 'number': '08492', 'sender': 'Kyun-Seop Bae'}, {'title': 'RE: [NMusers] Condition number', 'number': '08493', 'sender': 'Ken Kowalski'}, {'title': 'Re: [NMusers] Condition number', 'number': '08495', 'sender': 'Matthew Fidler'}, {'title': 'RE: [NMusers] Condition number', 'number': '08496', 'sender': 'Ken Kowalski'}, {'title': 'Re: [NMusers] Condition number', 'number': '08498', 'sender': 'Matthew Fidler'}, {'title': 'RE: [NMusers] Condition number', 'number': '08499', 'sender': 'Ken Kowalski'}, {'title': 'Re: [NMusers] Condition number', 'number': '08500', 'sender': 'Leonid Gibiansky'}, {'title': 'Re: [NMusers] Condition number', 'number': '08501', 'sender': 'Bonate, Peter'}, {'title': 'RE: [NMusers] Condition number', 'number': '08502', 'sender': 'Ken Kowalski'}, {'title': 'RE: [NMusers] Condition number', 'number': '08504', 'sender': 'Bonate, Peter'}, {'title': 'RE: [NMusers] Condition number', 'number': '08505', 'sender': 'Ken Kowalski'}, {'title': 'RE: [NMusers] Condition number', 'number': '08509', 'sender': 'Bonate, Peter'}, {'title': 'RE: [NMusers] Condition number', 'number': '08510', 'sender': 'Ken Kowalski'}, {'title': 'Re: [NMusers] Condition number', 'number': '08511', 'sender': 'Ayyappa Chaturvedula'}, {'title': 'Re: [NMusers] Condition number', 'number': '08512', 'sender': 'Al Maloney'}, {'title': 'RE: [NMusers] Condition number', 'number': '08506', 'sender': 'Bauer, Robert'}, {'title': 'RE: [NMusers] Condition number', 'number': '08507', 'sender': 'Bill Denney'}, {'title': 'Re: [NMusers] Condition number', 'number': '08508', 'sender': 'Kyun-Seop Bae'}, {'title': 'RE: [EXTERNAL] RE: [NMusers] Condition number', 'number': '08515', 'sender': 'Bauer, Robert'}, {'title': 'RE: [NMusers] Condition number', 'number': '08513', 'sender': 'Ken Kowalski'}, {'title': 'RE: [NMusers] Condition number', 'number': '08514', 'sender': 'Ken Kowalski'}, {'title': '[NMusers] Condition number', 'number': '08516', 'sender': 'Bauer, Robert'}, {'title': '[NMusers] Condition number', 'number': '08517', 'sender': 'Bauer, Robert'}, {'title': 'RE: [NMusers] Condition number', 'number': '08503', 'sender': 'Ken Kowalski'}, {'title': 'RE: [NMusers] Condition number', 'number': '08497', 'sender': 'Ken Kowalski'}, {'title': 'Re: [NMusers] Condition number', 'number': '08494', 'sender': 'Ayyappa Chaturvedula'}, {'title': '[NMusers] (Senior) pharmacometrician position at Centre for Human Drug Research (CHDR), the Netherlands', 'number': '08482', 'sender': 'Marije Otto'}]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fetch_details(msg_number<span class="op">=</span><span class="st">"08686"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>{}</code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
