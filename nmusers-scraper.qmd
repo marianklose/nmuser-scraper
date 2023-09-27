@@ -24,6 +24,7 @@ format:
 import requests
 import time
 from bs4 import BeautifulSoup
+from pprint import pprint
 ```
 
 ## PAT Token
@@ -41,8 +42,12 @@ from secrets import ai_api_token
 repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
 
+# Define most recent message ID
+# recent_id = 8686
+recent_id = 8677
+
 # Define number of messages we want to retrieve (for testing)
-n_msg = 10
+n_msg = 5
 ```
 
 ## Functions
@@ -52,6 +57,9 @@ n_msg = 10
 def fetch_details(msg_number):
     # Initialize an empty dictionary to hold the details
     details = {}
+
+    # Add the message number to the dictionary
+    details['id'] = msg_number
     
     # Generate the full URL of the detailed page
     url = f"https://www.mail-archive.com/nmusers@globomaxnm.com/msg{msg_number}.html"
@@ -62,6 +70,24 @@ def fetch_details(msg_number):
     
     # Initialize a BeautifulSoup object and specify the parser
     soup = BeautifulSoup(page_content, 'html.parser')
+
+    # Additional fields for thread details
+    thread_section = soup.select_one('div.tSliceList ul.icons')
+    
+    # Check if the list is empty
+    details['is_standalone'] = len(thread_section.find_all('li', recursive=False)) == 0 if thread_section else True
+                                   
+    # Extract message IDs within the thread
+    details['thread_message_ids'] = []
+    if not details['is_standalone']:
+        thread_msgs = thread_section.select('a[href^="msg"]')
+        details['thread_message_ids'] = [msg['href'].replace('msg', '').replace('.html', '') for msg in thread_msgs]
+
+    # append id to thread_message_ids
+    details['thread_message_ids'].append(msg_number)
+
+    # sort message ids in upscending order
+    details['thread_message_ids'] = sorted(details['thread_message_ids'], key=int)
     
     # Extract the date
     date_tag = soup.select_one('span.date a')
@@ -124,9 +150,7 @@ def create_discussion(api_token, repository_id, category_id, date, author, title
 ## Fetching List of Messages
 
 ```{python}
-# Define most recent message ID
-recent_id = 8686
-
+#| results: asis
 # Define vector of message IDs
 msg_ids = list(range(recent_id, recent_id - n_msg, -1))
 
@@ -147,26 +171,32 @@ for msg in msg_ids:
     # Fetch the details
     single_msg = fetch_details(msg)
 
-    # print message
-    print("Posted: \n")
+    # get rid of messages
+    single_msg.pop('message', None)
 
-    # Create discussion
-    create_discussion(
-        api_token=gh_api_token,
-        title=single_msg['subject'],
-        body=single_msg['message'],
-        date=single_msg['date'],
-        author=single_msg['author'],
-        repository_id = repository_id,
-        category_id = category_id,
-        silent=False
-    )
-    
-    # print msg
-    print(single_msg)
+    # pretty print single message
+    pprint(single_msg, indent=4)
     print("\n\n")
 
-    # sleep for n seconds
-    time.sleep(5)
+
 ```
 
+
+
+
+## Ablage
+
+```{python}
+# # Create discussion
+# create_discussion(
+#     api_token=gh_api_token,
+#     title=single_msg['subject'],
+#     body=single_msg['message'],
+#     date=single_msg['date'],
+#     author=single_msg['author'],
+#     repository_id = repository_id,
+#     category_id = category_id,
+#     silent=False
+# )
+
+```
