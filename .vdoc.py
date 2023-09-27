@@ -31,8 +31,9 @@ from bs4 import BeautifulSoup
 #
 #
 #
-# define token safely via gitignored file 
-from secrets import api_token
+# define pats and api tokens safely via gitignored file 
+from secrets import gh_api_token
+from secrets import ai_api_token
 #
 #
 #
@@ -43,7 +44,7 @@ repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
 
 # Define number of messages we want to retrieve (for testing)
-n_msg = 2
+n_msg = 4
 #
 #
 #
@@ -147,7 +148,7 @@ for msg in msg_ids:
 
     # Create discussion
     create_discussion(
-        api_token=api_token,
+        api_token=gh_api_token,
         title=single_msg['subject'],
         body=single_msg['message'],
         date=single_msg['date'],

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Marian Klose">
-<meta name="dcterms.date" content="2023-09-26">
+<meta name="dcterms.date" content="2023-09-27">
 
 <title>nmusers scraper</title>
 <style>
@@ -3060,7 +3060,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 26, 2023</p>
+      <p class="date">September 27, 2023</p>
     </div>
   </div>
   
@@ -3089,8 +3089,9 @@ vertical-align: -.125em;
 <div class="cell" data-execution_count="2">
 <details open>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define token safely via gitignored file </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> secrets <span class="im">import</span> api_token</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define pats and api tokens safely via gitignored file </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> secrets <span class="im">import</span> gh_api_token</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> secrets <span class="im">import</span> ai_api_token</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -3104,7 +3105,7 @@ vertical-align: -.125em;
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>category_id <span class="op">=</span> <span class="st">&#39;DIC_kwDOKYhvW84CZobi&#39;</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define number of messages we want to retrieve (for testing)</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>n_msg <span class="op">=</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>n_msg <span class="op">=</span> <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -3159,7 +3160,7 @@ vertical-align: -.125em;
 <span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    add_inf_pre <span class="op">=</span> <span class="ss">f&#39;**Date:** </span><span class="sc">{</span>date<span class="sc">}</span><span class="ch">\n</span><span class="ss">**Author:** </span><span class="sc">{</span>author<span class="sc">}</span><span class="ch">\n\n</span><span class="ss">&#39;</span></span>
 <span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># defione additional information (post)</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    add_inf_post <span class="op">=</span> <span class="ss">f&#39;</span><span class="ch">\n\n</span><span class="ss">---</span><span class="ch">\n\n</span><span class="ss">*This discussion was automatically created via web scraping of the nmusers mail archive. If you have any questions, please contact the original author of this message.*&#39;</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    add_inf_post <span class="op">=</span> <span class="ss">f&#39;</span><span class="ch">\n\n</span><span class="ss">---</span><span class="ch">\n\n</span><span class="ss">*Please note: this discussion was automatically created via web scraping of the nmusers mail archive. If you have any questions, please contact the original author of this message. If you are the original author and want your message deleted, you can contact the maintainer at any time.*&#39;</span></span>
 <span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add additional information to body</span></span>
 <span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> add_inf_pre <span class="op">+</span> body <span class="op">+</span> add_inf_post</span>
@@ -3215,7 +3216,7 @@ vertical-align: -.125em;
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create discussion</span></span>
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    create_discussion(</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        api_token<span class="op">=</span>api_token,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        api_token<span class="op">=</span>gh_api_token,</span>
 <span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span>single_msg[<span class="st">&#39;subject&#39;</span>],</span>
 <span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        body<span class="op">=</span>single_msg[<span class="st">&#39;message&#39;</span>],</span>
 <span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        date<span class="op">=</span>single_msg[<span class="st">&#39;date&#39;</span>],</span>
@@ -3230,21 +3231,35 @@ vertical-align: -.125em;
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(single_msg)</span>
 <span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>)</span>
 <span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sleep for 5 seconds</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sleep for n seconds</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>{&quot;data&quot;:{&quot;createDiscussion&quot;:{&quot;discussion&quot;:{&quot;id&quot;:&quot;D_kwDOKYhvW84AVpXK&quot;}}}}
+<pre><code>{&quot;data&quot;:{&quot;createDiscussion&quot;:{&quot;discussion&quot;:{&quot;id&quot;:&quot;D_kwDOKYhvW84AVp2Y&quot;}}}}
 Successfully posted: 
 
 {&#39;date&#39;: &#39;Tue, 26 Sep 2023 02:00:57 -0700&#39;, &#39;subject&#39;: &#39;[NMusers] PhD vacancy in pharmacometrics and systems pharmacology at Leiden University&#39;, &#39;author&#39;: &#39;Guo, T. (Tingjie)&#39;, &#39;message&#39;: &#39;Dear colleagues,\n\nLeiden University has an opening for a PhD position in pharmacometrics and \nsystems pharmacology. You can find more information through the link below. \nFeel free to contact me if you have any questions.\n\nPhD candidate in pharmacometrics and systems pharmacology for viral dynamic \nmodelling - Leiden University \n(universiteitleiden.nl)&lt;https://www.universiteitleiden.nl/en/vacancies/2023/q3eng/23-64214098phd-candidate-in-pharmacometrics-and-systems-pharmacology-for-viral-dynamic-modelling&gt;\n\nWarm regards,\nTingjie&#39;}
 
 
 
-{&quot;data&quot;:{&quot;createDiscussion&quot;:{&quot;discussion&quot;:{&quot;id&quot;:&quot;D_kwDOKYhvW84AVpXL&quot;}}}}
+{&quot;data&quot;:{&quot;createDiscussion&quot;:{&quot;discussion&quot;:{&quot;id&quot;:&quot;D_kwDOKYhvW84AVp2a&quot;}}}}
 Successfully posted: 
 
 {&#39;date&#39;: &#39;Sun, 24 Sep 2023 17:39:09 -0700&#39;, &#39;subject&#39;: &#39;[NMusers] PAGANZ 2024 in Melbourne, Australia - 14-16th Feb  - Registrations now open!&#39;, &#39;author&#39;: &#39;Jacqueline Hannam&#39;, &#39;message&#39;: &#39;Dear NMusers,\nRegistrations and abstracts for the 2024 Population Approach Group of Australia \nand New Zealand (PAGANZ) meeting are now open.\n\nThis meeting will be hosted by Monash University in Melbourne, Australia from \nWednesday 14 February to Friday 16 February 2024.\n\nAs usual we will be running both beginner and intermediate Population Approach \nWorkshops (PAWs) and a scientific program. Join us to hear from our 2024 ISoP \nKeynote Speaker, Professor Joga Gobburu, PhD, MBA. The 2024 Intermediate \nWorkshop will involve 1 full day on population modelling using Pumas and a ½ \nday on PyDarwin/NONMEM modelling. PyDarwin is a machine learning-based \nautomated pharmacometrics model development tool available as an open-source \npython package.\n\nGo to \nhttps://www.paganz.org/register&lt;https://us3.mailchimp.com/mctx/clicks?url=https%3A%2F%2Fwww.paganz.org%2Fregister&amp;xid=c500842a6c&amp;uid=24082939&amp;iid=a84ea99840&amp;pool=cts&amp;v=2&amp;c=1692239405&amp;h=3e7b5a90a14ce11e95f578a02eb2e854a0eef44ddc590d19ca7ef9406f5c32e1&gt;\n to register.\nAbstract submission closes at 5 pm AEST on 22nd January 2024. Registration \ncloses at 5 pm AEST on 5th February 2024.\n\nPlease be aware Taylor Swift will also be performing in Melbourne on Friday \n16th and over the subsequent weekend... While we are yet to receive her \nregistration to PAGANZ, we do recommend you plan-ahead and book your flights \nand accommodation early to avoid missing out!\n\nFor more information about the Melbourne 2024 meeting, see \nhttps://www.paganz.org/melbourne-2024/&lt;https://us3.mailchimp.com/mctx/clicks?url=https%3A%2F%2Fwww.paganz.org%2Fmelbourne-2024%2F&amp;xid=c500842a6c&amp;uid=24082939&amp;iid=a84ea99840&amp;pool=cts&amp;v=2&amp;c=1692239405&amp;h=f7a0a3eb2a75755bd4daeeae8d8dcc49995f132fd834047d42439e6a0541a38a&gt;\nWe look forward to seeing you there.\n\nKind regards,\n\nJacqui Hannam\n(she/her)\n\nPresident, PAGANZ Inc\nhttps://www.paganz.org/melbourne-2024/\n\n\nPlease note that if you are a PAGANZ member but do not receive our membership \nemails, you probably need to sign up for them!\nTo opt in for our communications, sign in to the website and navigate to the \nnewletters page - https://www.paganz.org/newsletter/&#39;}
+
+
+
+{&quot;errors&quot;:[{&quot;message&quot;:&quot;Parse error on \&quot;/\&quot; (error) at [1, 470]&quot;,&quot;locations&quot;:[{&quot;line&quot;:1,&quot;column&quot;:470}]}]}
+Successfully posted: 
+
+{&#39;date&#39;: &#39;Thu, 21 Sep 2023 17:44:20 -0700&#39;, &#39;subject&#39;: &#39;[NMusers] Seamless simulation of Nonmem models from R&#39;, &#39;author&#39;: &#39;Philip Harder Delff&#39;, &#39;message&#39;: &#39;Dear all,\n\nI am sharing a new R package on CRAN called NMsim for seamless\nsimulation of Nonmem models from R with no reimplementation or\ntranslation of the Nonmem model needed. The interface allows to simulate\na very wide range of Nonmem models this easily:\n\n&gt; simres &lt;- NMsim(path.mod=&quot;/path/to/nonmem/estimation/run.mod&quot;,data=data.sim)\n\nwhere &quot;run.mod&quot; is an _estimation_ input control stream (with an\nadjacent .ext with parameter estimates), and &quot;data.sim&quot; is an R\ndata.frame with doses and simulation events. &quot;simres&quot; will contain\nsimulation output and input data combined into one data.frame - ready\nfor plotting and other postprocessing.\n\nThe best place to explore it is on the NMsim website:\nhttps://philipdelff.github.io/NMsim/\nThere are two vignettes with examples under &quot;Articles&quot;. \n\nNMsim provides an extensive list of features. Here are some\nhighlights. All the features are activated using single arguments to the\nNMsim() function:\n\n* Simulation of new subjects (default method)\n* Simulation of a typical subject (ETAs equal 0)\n* Simulation of subjects already estimated in Nonmem model (ID\&#39;s merged\n  with estimated ETA\&#39;s from .phi file)\n* Simulation with parameter uncertainty based on a Nonmem covariance\n  step\n* Simulation of multiple models at a time. E.g., if a bootstrap run of a\n  model is available, NMsim can run the simulation with each of the\n  bootstrap models and collect all the results in one dataset.\n* Can submit jobs to clusters (so running the simulation on say 1,000\n  model estimates from a bootstrap is actually not that hard).\n* Simulation replicates using Nonmem `SUBPROBLEMS` feature avaible\n  through the `subproblems` argument\n* Can modify the simulation control stream on the fly - a powerful\n  feature for studying the effect of varying model parameters\n* Simulations of models on transformed observations can be\n  automatically transformed back using the `transform` argument.\n* You can write your own methods, if you have some other Nonmem-based\n  simulation (or other job) you want to automate using `NMsim`.\n\nI hope NMsim can be helpful to you as it is to me. If you have any\nquestions, don\&#39;t hesitate to reach out to me in any way. If you use\ngithub, https://github.com/philipdelff/NMsim/issues is the best place\nfor bug reports and technical questions.\n\nIf you are or want to be a Nonmem simulation and/or data.table expert\nand want to get involved in further development, I\&#39;m happy to hear from\nyou.\n\nBest regards,\nPhilip\n\n--&#39;}
+
+
+
+{&quot;data&quot;:{&quot;createDiscussion&quot;:{&quot;discussion&quot;:{&quot;id&quot;:&quot;D_kwDOKYhvW84AVp2c&quot;}}}}
+Successfully posted: 
+
+{&#39;date&#39;: &#39;Wed, 20 Sep 2023 08:07:46 -0700&#39;, &#39;subject&#39;: &#39;[NMusers] Pharmacometrics role available, southern CA&#39;, &#39;author&#39;: &#39;Brenda Roseberry&#39;, &#39;message&#39;: &#39;I have a new pharmacometrics role available. Ideally we would like some \nindustry or FDA or equivalent experience. Someone finishing a postdoc will be \nfine. Exceptional recent grads also considered as will more experienced \ncandidates. Level commensurate with experience, title flexible.  Role is \nhybrid/onsite in San Diego. Please let me know if interested or have a \nreferral. Email is brosebe...@cartermackay.com\n\nThis role is for a Sr. or Principal Scientist with in a pharmacometrics group \napplying MIDD strategies in drug development. Will conduct PK/PD modelling and \nsimulation in support of programs in all stages of clinical development. Will \npresent modelling and simulation analyses to internal project teams and may \npresent to external colleagues or regulatory agencies. This individual will \nwork with experienced cross functional teams and have mentorship from senior \nteam members.\n_\nResponsibilities:\n\n  *   Serve as subject matter expert in pharmacometrics and represent the \nPharmacometrics Group on matrix teams\n  *   Will lead the MIDD and Pharmacometrics strategies  to support dose \nselection,  trial design and regulatory submissions on assigned programs\n\n  *   Will oversee CRO partners/vendors\n  *   Independently conduct hands on  PK/PD analyses of data from early phase \nstudies and application of quantitative decision-making to assist in population \nPK, dose- and exposure-response relationships to optimize subsequent clinical \ndevelopment\n  *   Communicate and interpret modeling results to project teams. Accountable \nfor ensuring appropriate design and implementation of pharmacometrics plans\n  *   Collaborate with other colleagues to review and validate M&amp;S outputs such \nas datasets and modeling programs\n  *   Prepare posters, publications, presentations for internal and external \nconferences\nRequirements:\n\n  *   PharmD or PhD or equivalent preferred and 1+ years of relevant \nexperience; may include postdoc experience(level commensurate with experience)\n  *   MS in Pharmacokinetics, Pharmaceutical Sciences, Pharmacology, Chemistry, \nBiochemistry, or related field with a specific focus on PK and PK/PD modeling \nand simulation and 10+ years of Pharmaceutical/Biotech industry experience in \nconduct and/or oversight of late-stage Modeling and Simulation activities, \nincluding conduct or oversight of small molecule population pharmacokinetic \nanalyses. Experience in the preparation of components of the Clinical \nPharmacology sections of Regulatory submissions for IND- and NDA-stage projects \nOR\n  *   Demonstrated foundation of scientific knowledge (e.g., basic \npharmacokinetic/pharmacodynamic [PK/PD] and pharmacology concepts) and \ntechnical pharmacometrics skills including but not limited to nonlinear mixed \neffect modeling, mechanistic PK/PD, physiologically-based pharmacokinetic \n(PBPK), quantitative systems pharmacology (QSP) modeling and clinical trial \nsimulations\n  *   Competent in using modeling tools for population PK, PD analysis (e.g., \nNONMEM, Monolix, Simcyp, R packages for nonlinear mixed-effects modeling)\n  *   Proactive, innovative, with good problem-solving skills\n  *   Able to take different pharmacometrics assignments and deliver the \nresults promptly\n\n\n\n\n\n\n[image001.png]\nBrenda Roseberry\n   Vice President, Scientific Recruiting\n   Preclinical/Clinical--PK, Pharmacology, Pharmacometrics, Biomarkers\n    315-415-4353 -  Mobile&#39;}
 
 
 </code></pre>
@@ -3572,140 +3587,141 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## PAT Token</span></span>
 <span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co"># define token safely via gitignored file </span></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> secrets <span class="im">import</span> api_token</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## Global Parameters</span></span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Define repository and category IDs</span></span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>repository_id <span class="op">=</span> <span class="st">&#39;R_kgDOKYhvWw&#39;</span></span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>category_id <span class="op">=</span> <span class="st">&#39;DIC_kwDOKYhvW84CZobi&#39;</span></span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Define number of messages we want to retrieve (for testing)</span></span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>n_msg <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Functions</span></span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="co"># define fetching function based on msg number</span></span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fetch_details(msg_number):</span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize an empty dictionary to hold the details</span></span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    details <span class="op">=</span> {}</span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate the full URL of the detailed page</span></span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f&quot;https://www.mail-archive.com/nmusers@globomaxnm.com/msg</span><span class="sc">{</span>msg_number<span class="sc">}</span><span class="ss">.html&quot;</span></span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fetch the HTML content from the URL</span></span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url)</span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>    page_content <span class="op">=</span> response.text</span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize a BeautifulSoup object and specify the parser</span></span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(page_content, <span class="st">&#39;html.parser&#39;</span>)</span>
-<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the date</span></span>
-<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>    date_tag <span class="op">=</span> soup.select_one(<span class="st">&#39;span.date a&#39;</span>)</span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> date_tag:</span>
-<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>        details[<span class="st">&#39;date&#39;</span>] <span class="op">=</span> date_tag.text.strip()</span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the subject</span></span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>    subject_tag <span class="op">=</span> soup.select_one(<span class="st">&#39;span.subject span[itemprop=&quot;name&quot;]&#39;</span>)</span>
-<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> subject_tag:</span>
-<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>        details[<span class="st">&#39;subject&#39;</span>] <span class="op">=</span> subject_tag.text.strip()</span>
-<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the author</span></span>
-<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>    author_tag <span class="op">=</span> soup.select_one(<span class="st">&#39;span.sender span[itemprop=&quot;name&quot;]&#39;</span>)</span>
-<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> author_tag:</span>
-<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>        details[<span class="st">&#39;author&#39;</span>] <span class="op">=</span> author_tag.text.strip()</span>
-<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the message text</span></span>
-<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>    message_tag <span class="op">=</span> soup.select_one(<span class="st">&#39;div.msgBody&#39;</span>)</span>
-<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> message_tag:</span>
-<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>        details[<span class="st">&#39;message&#39;</span>] <span class="op">=</span> message_tag.text.strip()</span>
-<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> details</span>
-<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a><span class="co"># define function to create discussion in GitHub repo</span></span>
-<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_discussion(api_token, repository_id, category_id, date, author, title, body, silent):</span>
-<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define url</span></span>
-<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="st">&#39;https://api.github.com/graphql&#39;</span></span>
-<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define additional information (pre)</span></span>
-<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a>    add_inf_pre <span class="op">=</span> <span class="ss">f&#39;**Date:** </span><span class="sc">{</span>date<span class="sc">}</span><span class="ch">\n</span><span class="ss">**Author:** </span><span class="sc">{</span>author<span class="sc">}</span><span class="ch">\n\n</span><span class="ss">&#39;</span></span>
-<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>    <span class="co"># defione additional information (post)</span></span>
-<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a>    add_inf_post <span class="op">=</span> <span class="ss">f&#39;</span><span class="ch">\n\n</span><span class="ss">---</span><span class="ch">\n\n</span><span class="ss">*This discussion was automatically created via web scraping of the nmusers mail archive. If you have any questions, please contact the original author of this message.*&#39;</span></span>
-<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add additional information to body</span></span>
-<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> add_inf_pre <span class="op">+</span> body <span class="op">+</span> add_inf_post</span>
-<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define query</span></span>
-<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> <span class="ss">f&#39;mutation</span><span class="ch">{{</span><span class="ss">createDiscussion(input: </span><span class="ch">{{</span><span class="ss">repositoryId: &quot;</span><span class="sc">{</span>repository_id<span class="sc">}</span><span class="ss">&quot;, categoryId: &quot;</span><span class="sc">{</span>category_id<span class="sc">}</span><span class="ss">&quot;, body: &quot;</span><span class="sc">{</span>body<span class="sc">}</span><span class="ss">&quot;, title: &quot;</span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">&quot;</span><span class="ch">}}</span><span class="ss">) </span><span class="ch">{{</span><span class="ss">discussion </span><span class="ch">{{</span><span class="ss">id</span><span class="ch">}}}}}}</span><span class="ss">&#39;</span></span>
-<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define json</span></span>
-<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a>    json <span class="op">=</span> { <span class="st">&#39;query&#39;</span> : query}</span>
-<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define headers</span></span>
-<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a>    headers <span class="op">=</span> {<span class="st">&#39;Authorization&#39;</span>: <span class="st">&#39;token </span><span class="sc">%s</span><span class="st">&#39;</span> <span class="op">%</span> api_token}</span>
-<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a>    <span class="co"># post request and return json</span></span>
-<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> requests.post(url<span class="op">=</span>url, json<span class="op">=</span>json, headers<span class="op">=</span>headers)</span>
-<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print response text if not silent</span></span>
-<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> silent <span class="op">==</span> <span class="va">False</span>:</span>
-<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(r.text)</span>
-<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a><span class="fu"># Scraping</span></span>
-<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fetching List of Messages</span></span>
-<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a><span class="co"># Define most recent message ID</span></span>
-<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>recent_id <span class="op">=</span> <span class="dv">8686</span></span>
-<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a><span class="co"># Define vector of message IDs</span></span>
-<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(recent_id, recent_id <span class="op">-</span> n_msg, <span class="op">-</span><span class="dv">1</span>))</span>
-<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert numerics to strings and paste 0 in front</span></span>
-<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> [<span class="st">&quot;0&quot;</span> <span class="op">+</span> <span class="bu">str</span>(x) <span class="cf">for</span> x <span class="kw">in</span> msg_ids]</span>
-<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a><span class="co"># show</span></span>
-<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>msg_ids</span>
-<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an empty dictionary to hold the msg information</span></span>
-<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a>msg <span class="op">=</span> {}</span>
-<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each msg item and extract the details</span></span>
-<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> msg <span class="kw">in</span> msg_ids:</span>
-<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize an empty dictionary to hold individual msg info</span></span>
-<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a>    single_msg <span class="op">=</span> {}</span>
-<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fetch the details</span></span>
-<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>    single_msg <span class="op">=</span> fetch_details(msg)</span>
-<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create discussion</span></span>
-<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a>    create_discussion(</span>
-<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a>        api_token<span class="op">=</span>api_token,</span>
-<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span>single_msg[<span class="st">&#39;subject&#39;</span>],</span>
-<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a>        body<span class="op">=</span>single_msg[<span class="st">&#39;message&#39;</span>],</span>
-<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>        date<span class="op">=</span>single_msg[<span class="st">&#39;date&#39;</span>],</span>
-<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>        author<span class="op">=</span>single_msg[<span class="st">&#39;author&#39;</span>],</span>
-<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>        repository_id <span class="op">=</span> repository_id,</span>
-<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a>        category_id <span class="op">=</span> category_id,</span>
-<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>        silent<span class="op">=</span><span class="va">False</span></span>
-<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print msg</span></span>
-<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Successfully posted: </span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(single_msg)</span>
-<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>)</span>
-<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sleep for 5 seconds</span></span>
-<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">5</span>)</span>
-<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co"># define pats and api tokens safely via gitignored file </span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> secrets <span class="im">import</span> gh_api_token</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> secrets <span class="im">import</span> ai_api_token</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Global Parameters</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Define repository and category IDs</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>repository_id <span class="op">=</span> <span class="st">&#39;R_kgDOKYhvWw&#39;</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>category_id <span class="op">=</span> <span class="st">&#39;DIC_kwDOKYhvW84CZobi&#39;</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Define number of messages we want to retrieve (for testing)</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>n_msg <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Functions</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="co"># define fetching function based on msg number</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fetch_details(msg_number):</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize an empty dictionary to hold the details</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>    details <span class="op">=</span> {}</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate the full URL of the detailed page</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f&quot;https://www.mail-archive.com/nmusers@globomaxnm.com/msg</span><span class="sc">{</span>msg_number<span class="sc">}</span><span class="ss">.html&quot;</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fetch the HTML content from the URL</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url)</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>    page_content <span class="op">=</span> response.text</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize a BeautifulSoup object and specify the parser</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(page_content, <span class="st">&#39;html.parser&#39;</span>)</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the date</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>    date_tag <span class="op">=</span> soup.select_one(<span class="st">&#39;span.date a&#39;</span>)</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> date_tag:</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>        details[<span class="st">&#39;date&#39;</span>] <span class="op">=</span> date_tag.text.strip()</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the subject</span></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>    subject_tag <span class="op">=</span> soup.select_one(<span class="st">&#39;span.subject span[itemprop=&quot;name&quot;]&#39;</span>)</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> subject_tag:</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>        details[<span class="st">&#39;subject&#39;</span>] <span class="op">=</span> subject_tag.text.strip()</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the author</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>    author_tag <span class="op">=</span> soup.select_one(<span class="st">&#39;span.sender span[itemprop=&quot;name&quot;]&#39;</span>)</span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> author_tag:</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>        details[<span class="st">&#39;author&#39;</span>] <span class="op">=</span> author_tag.text.strip()</span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the message text</span></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>    message_tag <span class="op">=</span> soup.select_one(<span class="st">&#39;div.msgBody&#39;</span>)</span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> message_tag:</span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>        details[<span class="st">&#39;message&#39;</span>] <span class="op">=</span> message_tag.text.strip()</span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> details</span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a><span class="co"># define function to create discussion in GitHub repo</span></span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_discussion(api_token, repository_id, category_id, date, author, title, body, silent):</span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define url</span></span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="st">&#39;https://api.github.com/graphql&#39;</span></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define additional information (pre)</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a>    add_inf_pre <span class="op">=</span> <span class="ss">f&#39;**Date:** </span><span class="sc">{</span>date<span class="sc">}</span><span class="ch">\n</span><span class="ss">**Author:** </span><span class="sc">{</span>author<span class="sc">}</span><span class="ch">\n\n</span><span class="ss">&#39;</span></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a>    <span class="co"># defione additional information (post)</span></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>    add_inf_post <span class="op">=</span> <span class="ss">f&#39;</span><span class="ch">\n\n</span><span class="ss">---</span><span class="ch">\n\n</span><span class="ss">*Please note: this discussion was automatically created via web scraping of the nmusers mail archive. If you have any questions, please contact the original author of this message. If you are the original author and want your message deleted, you can contact the maintainer at any time.*&#39;</span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add additional information to body</span></span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> add_inf_pre <span class="op">+</span> body <span class="op">+</span> add_inf_post</span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define query</span></span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> <span class="ss">f&#39;mutation</span><span class="ch">{{</span><span class="ss">createDiscussion(input: </span><span class="ch">{{</span><span class="ss">repositoryId: &quot;</span><span class="sc">{</span>repository_id<span class="sc">}</span><span class="ss">&quot;, categoryId: &quot;</span><span class="sc">{</span>category_id<span class="sc">}</span><span class="ss">&quot;, body: &quot;</span><span class="sc">{</span>body<span class="sc">}</span><span class="ss">&quot;, title: &quot;</span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">&quot;</span><span class="ch">}}</span><span class="ss">) </span><span class="ch">{{</span><span class="ss">discussion </span><span class="ch">{{</span><span class="ss">id</span><span class="ch">}}}}}}</span><span class="ss">&#39;</span></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define json</span></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a>    json <span class="op">=</span> { <span class="st">&#39;query&#39;</span> : query}</span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define headers</span></span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a>    headers <span class="op">=</span> {<span class="st">&#39;Authorization&#39;</span>: <span class="st">&#39;token </span><span class="sc">%s</span><span class="st">&#39;</span> <span class="op">%</span> api_token}</span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a>    <span class="co"># post request and return json</span></span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> requests.post(url<span class="op">=</span>url, json<span class="op">=</span>json, headers<span class="op">=</span>headers)</span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print response text if not silent</span></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> silent <span class="op">==</span> <span class="va">False</span>:</span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(r.text)</span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a><span class="fu"># Scraping</span></span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fetching List of Messages</span></span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a><span class="co"># Define most recent message ID</span></span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>recent_id <span class="op">=</span> <span class="dv">8686</span></span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a><span class="co"># Define vector of message IDs</span></span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(recent_id, recent_id <span class="op">-</span> n_msg, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert numerics to strings and paste 0 in front</span></span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> [<span class="st">&quot;0&quot;</span> <span class="op">+</span> <span class="bu">str</span>(x) <span class="cf">for</span> x <span class="kw">in</span> msg_ids]</span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a><span class="co"># show</span></span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a>msg_ids</span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an empty dictionary to hold the msg information</span></span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a>msg <span class="op">=</span> {}</span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each msg item and extract the details</span></span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> msg <span class="kw">in</span> msg_ids:</span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize an empty dictionary to hold individual msg info</span></span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a>    single_msg <span class="op">=</span> {}</span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fetch the details</span></span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>    single_msg <span class="op">=</span> fetch_details(msg)</span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create discussion</span></span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a>    create_discussion(</span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a>        api_token<span class="op">=</span>gh_api_token,</span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span>single_msg[<span class="st">&#39;subject&#39;</span>],</span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>        body<span class="op">=</span>single_msg[<span class="st">&#39;message&#39;</span>],</span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>        date<span class="op">=</span>single_msg[<span class="st">&#39;date&#39;</span>],</span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>        author<span class="op">=</span>single_msg[<span class="st">&#39;author&#39;</span>],</span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a>        repository_id <span class="op">=</span> repository_id,</span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>        category_id <span class="op">=</span> category_id,</span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a>        silent<span class="op">=</span><span class="va">False</span></span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print msg</span></span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Successfully posted: </span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(single_msg)</span>
+<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sleep for n seconds</span></span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">10</span>)</span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
