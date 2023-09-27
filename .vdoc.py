@@ -44,7 +44,7 @@ repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
 
 # Define number of messages we want to retrieve (for testing)
-n_msg = 3
+n_msg = 10
 #
 #
 #
@@ -118,7 +118,7 @@ def create_discussion(api_token, repository_id, category_id, date, author, title
 
     # print response text if not silent
     if silent == False:
-        print(r.text)
+        print(r.text + "\n")
 #
 #
 #

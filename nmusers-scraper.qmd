@@ -42,7 +42,7 @@ repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
 
 # Define number of messages we want to retrieve (for testing)
-n_msg = 3
+n_msg = 10
 ```
 
 ## Functions
