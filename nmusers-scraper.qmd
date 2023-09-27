@@ -23,6 +23,7 @@ format:
 # load packages
 import requests
 import time
+import json
 from bs4 import BeautifulSoup
 from pprint import pprint
 ```
@@ -43,11 +44,14 @@ repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
 
 # Define most recent message ID
-# recent_id = 8686
-recent_id = 8677
+recent_id = 8686
+# recent_id = 8677
+
+# define id where to stop
+stop_id = 8664
 
 # Define number of messages we want to retrieve (for testing)
-n_msg = 5
+n_msg = (recent_id - stop_id)+1
 ```
 
 ## Functions
@@ -112,7 +116,7 @@ def fetch_details(msg_number):
     return details
 
 # define function to create discussion in GitHub repo
-def create_discussion(api_token, repository_id, category_id, date, author, title, body, silent):
+def create_discussion(api_token, repository_id, category_id, date, author, title, body):
     # define url
     url = 'https://api.github.com/graphql'
 
@@ -131,18 +135,83 @@ def create_discussion(api_token, repository_id, category_id, date, author, title
     # define query
     query = f'mutation{{createDiscussion(input: {{repositoryId: "{repository_id}", categoryId: "{category_id}", body: "{body}", title: "{title}"}}) {{discussion {{id}}}}}}'
 
-    # define json
-    json = { 'query' : query}
+    # define json paylod
+    json_payload  = { 'query' : query}
 
     # define headers
     headers = {'Authorization': 'token %s' % api_token}
 
     # post request and return json
-    r = requests.post(url=url, json=json, headers=headers)
+    r = requests.post(url=url, json=json_payload, headers=headers)
 
-    # print response text if not silent
-    if silent == False:
+    # return response text and store as dict
+    return json.loads(r.text)
+
+
+# Function to add a comment to an existing discussion in GitHub
+def add_comment_to_discussion(api_token, discussion_id, body, date, author, silent):
+    # Define GraphQL URL
+    url = 'https://api.github.com/graphql'
+
+    # define additional information (pre)
+    add_inf_pre = f'**Date:** {date}\n**Author:** {author}\n\n'
+
+    # defione additional information (post)
+    add_inf_post = f'\n\n---\n\n*Please note: this discussion was automatically created via web scraping of the nmusers mail archive. If you have any questions, please contact the original author of this message. If you are the original author and want your message deleted, you can contact the maintainer at any time.*'
+    
+    # Replace '"' with '\"' in body
+    body = body.replace('"', '\\"')
+
+    # add additional information to body
+    body = add_inf_pre + body + add_inf_post
+    
+    # Define GraphQL query for adding a comment
+    query = f'''mutation{{
+        addDiscussionComment(input: {{ body: "{body}", discussionId: "{discussion_id}"}}) {{
+            comment {{
+                id
+            }}
+        }}
+    }}'''
+    
+    # Define JSON payload
+    json_payload  = {'query': query}
+    
+    # Define headers
+    headers = {'Authorization': f'token {api_token}'}
+    
+    # Make POST request
+    r = requests.post(url=url, json=json_payload, headers=headers)
+    
+    # Print response if not silent
+    if not silent:
         print(r.text + "\n")
+
+
+# function to extract the threads from a list of messages
+def extract_threads(messages_dict):
+    thread_dict = {}
+    thread_id = 1  # Starting thread ID
+
+    # To keep track of messages that are already part of a thread
+    seen_messages = set() 
+
+    for msg_id, msg in messages_dict.items():
+        
+        # Skip this message if it's already part of a thread
+        if msg_id in seen_messages:
+            continue
+        
+        thread_message_ids = msg['thread_message_ids']
+        
+        # add threads
+        thread_dict[thread_id] = thread_message_ids
+        thread_id += 1
+        
+        # Mark all messages in this thread as seen
+        seen_messages.update(thread_message_ids)
+            
+    return thread_dict
 ```
 
 # Scraping
@@ -163,40 +232,66 @@ msg_ids
 # Initialize an empty dictionary to hold the msg information
 msg = {}
 
-# Loop through each msg item and extract the details
-for msg in msg_ids:
-    # Initialize an empty dictionary to hold individual msg info
-    single_msg = {}
+# Loop through each msg id, extract the details and append
+for id in msg_ids:
 
     # Fetch the details
-    single_msg = fetch_details(msg)
+    single_msg = fetch_details(id)
 
-    # get rid of messages
-    single_msg.pop('message', None)
+    # Append to msg
+    msg[id] = single_msg
 
-    # pretty print single message
-    pprint(single_msg, indent=4)
-    print("\n\n")
 
+# Extract threads
+thread_dict = extract_threads(msg)
+
+# Pretty print the result
+pprint(thread_dict, indent=4)
+```
+
+
+## Loop
+
+```{python}	
+# Loop through each element in the dictionary
+for thread_id, msg_list in thread_dict.items():
+    # define id
+    id = msg_list[0]
+
+    # retrieve message
+    cur_msg = msg[id]
+
+    # create discussion for id and store output
+    dis_out = create_discussion(
+        api_token=gh_api_token,
+        title=cur_msg['subject'],
+        body=cur_msg['message'],
+        date=cur_msg['date'],
+        author=cur_msg['author'],
+        repository_id = repository_id,
+        category_id = category_id
+    )
+
+    # store freshly created discussion id
+    dis_id = dis_out['data']['createDiscussion']['discussion']['id']
+
+    # check if thread has more than one message
+    if len(msg_list) > 1:
+        # loop through all messages in thread
+        for msg_id in msg_list[1:]:
+            # retrieve message
+            cur_msg = msg[msg_id]
+
+            # add comment to discussion
+            add_comment_to_discussion(
+                api_token=gh_api_token,
+                discussion_id=dis_id,
+                body=cur_msg['message'],
+                date=cur_msg['date'],
+                author=cur_msg['author'],
+                silent=False
+            )
 
 ```
 
 
-
-
-## Ablage
-
-```{python}
-# # Create discussion
-# create_discussion(
-#     api_token=gh_api_token,
-#     title=single_msg['subject'],
-#     body=single_msg['message'],
-#     date=single_msg['date'],
-#     author=single_msg['author'],
-#     repository_id = repository_id,
-#     category_id = category_id,
-#     silent=False
-# )
-
-```
