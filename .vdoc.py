@@ -44,7 +44,7 @@ repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
 
 # Define number of messages we want to retrieve (for testing)
-n_msg = 4
+n_msg = 3
 #
 #
 #
@@ -98,6 +98,9 @@ def create_discussion(api_token, repository_id, category_id, date, author, title
     # defione additional information (post)
     add_inf_post = f'\n\n---\n\n*Please note: this discussion was automatically created via web scraping of the nmusers mail archive. If you have any questions, please contact the original author of this message. If you are the original author and want your message deleted, you can contact the maintainer at any time.*'
 
+    # replace '"' with '\"' in body
+    body = body.replace('"', '\\"')
+
     # add additional information to body
     body = add_inf_pre + body + add_inf_post
 
@@ -146,6 +149,9 @@ for msg in msg_ids:
     # Fetch the details
     single_msg = fetch_details(msg)
 
+    # print message
+    print("Posted: \n")
+
     # Create discussion
     create_discussion(
         api_token=gh_api_token,
@@ -159,11 +165,10 @@ for msg in msg_ids:
     )
     
     # print msg
-    print("Successfully posted: \n")
     print(single_msg)
     print("\n\n")
 
-    # sleep for 5 seconds
+    # sleep for n seconds
     time.sleep(5)
 #
 #
