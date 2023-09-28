@@ -26,6 +26,7 @@
 import requests
 import time
 import json
+import re
 from bs4 import BeautifulSoup
 from pprint import pprint
 #
@@ -46,11 +47,12 @@ repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
 
 # Define most recent message ID
-recent_id = 8686
+recent_id = 8687
 # recent_id = 8677
 
 # define id where to stop
-stop_id = 8664
+# stop_id = 8664
+stop_id = 8685
 
 # Define number of messages we want to retrieve (for testing)
 n_msg = (recent_id - stop_id)+1
@@ -59,6 +61,9 @@ n_msg = (recent_id - stop_id)+1
 #
 #
 #
+
+############################### fetch_details ########################################
+
 # define fetching function based on msg number
 def fetch_details(msg_number):
     # Initialize an empty dictionary to hold the details
@@ -114,8 +119,10 @@ def fetch_details(msg_number):
     message_tag = soup.select_one('div.msgBody')
     if message_tag:
         details['message'] = message_tag.text.strip()
-        
+
     return details
+
+############################### create_discussion ####################################
 
 # define function to create discussion in GitHub repo
 def create_discussion(api_token, repository_id, category_id, date, author, title, body):
@@ -149,6 +156,7 @@ def create_discussion(api_token, repository_id, category_id, date, author, title
     # return response text and store as dict
     return json.loads(r.text)
 
+############################ add_comment_to_discussion ################################
 
 # Function to add a comment to an existing discussion in GitHub
 def add_comment_to_discussion(api_token, discussion_id, body, date, author, silent):
@@ -190,6 +198,8 @@ def add_comment_to_discussion(api_token, discussion_id, body, date, author, sile
         print(r.text + "\n")
 
 
+################################ extract_threads ######################################
+
 # function to extract the threads from a list of messages
 def extract_threads(messages_dict):
     thread_dict = {}
@@ -198,12 +208,14 @@ def extract_threads(messages_dict):
     # To keep track of messages that are already part of a thread
     seen_messages = set() 
 
+    # Loop through each message
     for msg_id, msg in messages_dict.items():
         
         # Skip this message if it's already part of a thread
         if msg_id in seen_messages:
             continue
         
+        # Extract the thread message IDs
         thread_message_ids = msg['thread_message_ids']
         
         # add threads
@@ -214,6 +226,93 @@ def extract_threads(messages_dict):
         seen_messages.update(thread_message_ids)
             
     return thread_dict
+
+
+############################### fetch_missing_messages ###############################
+
+# Function to fetch missing messages in thread_dict and add them to msg dictionary
+def fetch_missing_messages(thread_dict, msg):
+    for thread_id, msg_list in thread_dict.items():
+        for msg_id in msg_list:
+            if msg_id not in msg:
+                # Fetch missing message details
+                fetched_msg = fetch_details(msg_id)
+                
+                # Add the fetched message to msg dictionary
+                msg[msg_id] = fetched_msg
+
+
+############################### delete_discussion ###################################
+
+# Function to delete a discussion by its ID
+def delete_discussion(api_token, discussion_id):
+    # Define GraphQL URL
+    url = 'https://api.github.com/graphql'
+    
+    # Define GraphQL query for deleting a discussion
+    query = f'''mutation{{
+        deleteDiscussion(input: {{ id: "{discussion_id}" }}) {{
+            clientMutationId
+        }}
+    }}'''
+    
+    # Define JSON payload
+    json_payload  = {'query': query}
+    
+    # Define headers
+    headers = {'Authorization': f'token {api_token}'}
+    
+    # Make POST request
+    r = requests.post(url=url, json=json_payload, headers=headers)
+    
+    # Check for errors
+    if r.status_code == 200:
+        print(f'Successfully deleted discussion with ID {discussion_id}.')
+    else:
+        print(f'Failed to delete discussion with ID {discussion_id}. Error: {r.text}')
+
+
+############################### list_all_discussions #################################
+
+# Function to list all discussions by repository ID
+def list_all_discussions(api_token, repository_id):
+    # Define GraphQL URL
+    url = 'https://api.github.com/graphql'
+
+    # Define GraphQL query for fetching discussions
+    query = f'''
+    query {{
+      node(id: "{repository_id}") {{
+        ... on Repository {{
+          discussions(first: 100) {{
+            nodes {{
+              id
+              title
+            }}
+          }}
+        }}
+      }}
+    }}
+    '''
+    
+    # Define JSON payload
+    json_payload  = {'query': query}
+
+    # Define headers
+    headers = {'Authorization': f'token {api_token}'}
+
+    # Make POST request
+    r = requests.post(url=url, json=json_payload, headers=headers)
+
+    # Parse the JSON response
+    discussions_data = json.loads(r.text)
+
+    # Extract discussion ids and titles
+    discussions = [(d['id'], d['title']) for d in discussions_data['data']['node']['discussions']['nodes']]
+
+    return discussions
+
+
 #
 #
 #
@@ -247,6 +346,9 @@ for id in msg_ids:
 # Extract threads
 thread_dict = extract_threads(msg)
 
+# Fetch any missing messages in the threads
+fetch_missing_messages(thread_dict, msg)
+
 # Pretty print the result
 pprint(thread_dict, indent=4)
 #
@@ -274,6 +376,9 @@ for thread_id, msg_list in thread_dict.items():
         category_id = category_id
     )
 
+    # output to console
+    print(f'Created discussion {dis_out["data"]["createDiscussion"]["discussion"]["id"]} for message {id}.')
+
     # store freshly created discussion id
     dis_id = dis_out['data']['createDiscussion']['discussion']['id']
 
@@ -293,9 +398,25 @@ for thread_id, msg_list in thread_dict.items():
                 author=cur_msg['author'],
                 silent=False
             )
+            
+            # output to console
+            print(f'Added comment to discussion {dis_id} for message {msg_id}.')
 
 #
 #
+#
+#
+#
+#
+#
+# # Fetch all discussions for the given repository ID
+# all_discussions = list_all_discussions(api_token=gh_api_token, repository_id=repository_id)
+
+# # Delete each discussion
+# for dis_id, title in all_discussions:
+#     print(f"Deleting discussion with ID: {dis_id}, Title: {title}")
+#     delete_discussion(api_token=gh_api_token, discussion_id=dis_id)
+
 #
 #
 #
