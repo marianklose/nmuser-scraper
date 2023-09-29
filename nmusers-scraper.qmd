@@ -50,7 +50,7 @@ recent_id = 8687
 
 # define id where to stop
 # stop_id = 8664
-stop_id = 8685
+stop_id = 8686
 
 # Define number of messages we want to retrieve (for testing)
 n_msg = (recent_id - stop_id)+1
