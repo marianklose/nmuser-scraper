@@ -407,6 +407,7 @@ for thread_id, msg_list in thread_dict.items():
 ## Delete all discussions (if needed)
 
 ```{python}
+#| eval: false
 # Fetch all discussions for the given repository ID
 all_discussions = list_all_discussions(api_token=gh_api_token, repository_id=repository_id)
 
