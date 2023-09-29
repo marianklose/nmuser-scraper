@@ -45,8 +45,20 @@ from secrets import ai_api_token
 repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
 
+# Hardcoded dictionary for email classification categories
+category_dict = {
+    "Announcements": "DIC_kwDOKYhvW84CZvWP",
+    "Open Positions": "DIC_kwDOKYhvW84CZvWQ",
+    "Technicalities": "DIC_kwDOKYhvW84CZvWX",
+    "Others": "DIC_kwDOKYhvW84CZvWY"
+}
+
+# define chatgpt model
+# model = "gpt-3.5-turbo"
+model = "gpt-4"
+
 # define categories for eamil classification
-categories = ["Announcement", "Open Position (Academia)", "Open Position (Industry)", "Technical Question", "Others"]
+categories = list(category_dict.keys())
 
 # Define most recent message ID
 recent_id = 8687
@@ -54,7 +66,7 @@ recent_id = 8687
 
 # define id where to stop
 # stop_id = 8664
-stop_id = 8686
+stop_id = 8655
 
 # Define number of messages we want to retrieve (for testing)
 n_msg = (recent_id - stop_id)+1
@@ -317,20 +329,20 @@ def list_all_discussions(api_token, repository_id):
 
 ############################### get_chat_completion #################################
 
-def get_chat_completion(api_key, categories, message_text):
+def get_chat_completion(api_key, categories, message_text, model):
 
     # Set OpenAI API key
     openai.api_key = api_key
     
     # Construct the messages
     messages = [
-        {"role": "system", "content": f"You are a machine which classifies emails by content. You can only speak 4 words = categories: {', '.join(categories)}. Your output is directly used as a string for the category. If you deviate from the 4 words, the program will fail and you will be punished."},
+        {"role": "system", "content": f"You are a machine which classifies emails by content. You can only speak 4 words = categories: {', '.join(categories)}    Your output is directly used as a string for the category. If you deviate from the 4 words, the program will fail and you will be punished. Even a . after the category can crash the program so stick exactly to the categories provided and do not deviate. Please include Webinars to Announcements. "},
         {"role": "user", "content": message_text}
     ]
     
     # Make API request
     chat_completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model=model,
         messages=messages
     )
     
@@ -379,7 +391,7 @@ pprint(thread_dict, indent=4)
 ```
 
 
-## Loop
+## Loop Through Threads
 
 ```{python}	
 # Loop through each element in the dictionary
@@ -389,6 +401,17 @@ for thread_id, msg_list in thread_dict.items():
 
     # retrieve message
     cur_msg = msg[id]
+
+    # retrieve category from openai
+    category = get_chat_completion(
+        api_key = ai_api_token,
+        categories = categories,
+        message_text = cur_msg['subject'],
+        model = model
+    )
+
+    # get category_id from category_dict
+    category_id = category_dict[category]
 
     # create discussion for id and store output
     dis_out = create_discussion(
@@ -447,10 +470,9 @@ for dis_id, title in all_discussions:
 
 ## OpenAi Test
 
-
 ```{python}
-# test openai with simple message
-email_content = "2023/06/19 [NMusers] BQL simulations Hiba Sliem"
-classification = get_chat_completion(api_key = ai_api_token, categories = categories, message_text = email_content)
-print(classification)
+# # test openai with simple message
+# email_content = "[NMusers] 2023 Virtual Training Course on PKPD of Protein Therapeutics, November 28-30 "
+# classification = get_chat_completion(api_key = ai_api_token, categories = categories, message_text = email_content)
+# print(classification)
 ```
