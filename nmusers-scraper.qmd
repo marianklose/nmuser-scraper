@@ -407,11 +407,11 @@ for thread_id, msg_list in thread_dict.items():
 ## Delete all discussions (if needed)
 
 ```{python}
-# # Fetch all discussions for the given repository ID
-# all_discussions = list_all_discussions(api_token=gh_api_token, repository_id=repository_id)
+# Fetch all discussions for the given repository ID
+all_discussions = list_all_discussions(api_token=gh_api_token, repository_id=repository_id)
 
-# # Delete each discussion
-# for dis_id, title in all_discussions:
-#     print(f"Deleting discussion with ID: {dis_id}, Title: {title}")
-#     delete_discussion(api_token=gh_api_token, discussion_id=dis_id)
+# Delete each discussion
+for dis_id, title in all_discussions:
+    print(f"Deleting discussion with ID: {dis_id}, Title: {title}")
+    delete_discussion(api_token=gh_api_token, discussion_id=dis_id)
 ```

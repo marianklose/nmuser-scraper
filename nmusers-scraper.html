@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Marian Klose">
-<meta name="dcterms.date" content="2023-09-28">
+<meta name="dcterms.date" content="2023-09-29">
 
 <title>nmusers scraper</title>
 <style>
@@ -3062,7 +3062,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 28, 2023</p>
+      <p class="date">September 29, 2023</p>
     </div>
   </div>
   
@@ -3115,7 +3115,7 @@ vertical-align: -.125em;
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># define id where to stop</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># stop_id = 8664</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>stop_id <span class="op">=</span> <span class="dv">8685</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>stop_id <span class="op">=</span> <span class="dv">8686</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define number of messages we want to retrieve (for testing)</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>n_msg <span class="op">=</span> (recent_id <span class="op">-</span> stop_id)<span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3419,7 +3419,7 @@ vertical-align: -.125em;
 <span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>pprint(thread_dict, indent<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>{1: [&#39;08687&#39;], 2: [&#39;08686&#39;], 3: [&#39;08685&#39;]}</code></pre>
+<pre><code>{1: [&#39;08687&#39;], 2: [&#39;08686&#39;]}</code></pre>
 </div>
 </div>
 </section>
@@ -3474,9 +3474,8 @@ vertical-align: -.125em;
 <span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f&#39;Added comment to discussion </span><span class="sc">{</span>dis_id<span class="sc">}</span><span class="ss"> for message </span><span class="sc">{</span>msg_id<span class="sc">}</span><span class="ss">.&#39;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Created discussion D_kwDOKYhvW84AVrPz for message 08687.
-Created discussion D_kwDOKYhvW84AVrP0 for message 08686.
-Created discussion D_kwDOKYhvW84AVrP1 for message 08685.</code></pre>
+<pre><code>Created discussion D_kwDOKYhvW84AVrsm for message 08687.
+Created discussion D_kwDOKYhvW84AVrsn for message 08686.</code></pre>
 </div>
 </div>
 </section>
@@ -3837,7 +3836,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="co"># define id where to stop</span></span>
 <span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="co"># stop_id = 8664</span></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>stop_id <span class="op">=</span> <span class="dv">8685</span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>stop_id <span class="op">=</span> <span class="dv">8686</span></span>
 <span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Define number of messages we want to retrieve (for testing)</span></span>
 <span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>n_msg <span class="op">=</span> (recent_id <span class="op">-</span> stop_id)<span class="op">+</span><span class="dv">1</span></span>
@@ -4200,8 +4199,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb10-427"><a href="#cb10-427" aria-hidden="true" tabindex="-1"></a><span class="co"># for dis_id, title in all_discussions:</span></span>
 <span id="cb10-428"><a href="#cb10-428" aria-hidden="true" tabindex="-1"></a><span class="co">#     print(f&quot;Deleting discussion with ID: {dis_id}, Title: {title}&quot;)</span></span>
 <span id="cb10-429"><a href="#cb10-429" aria-hidden="true" tabindex="-1"></a><span class="co">#     delete_discussion(api_token=gh_api_token, discussion_id=dis_id)</span></span>
-<span id="cb10-430"><a href="#cb10-430" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-431"><a href="#cb10-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-430"><a href="#cb10-430" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
