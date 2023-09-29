@@ -21,6 +21,7 @@ format:
 
 ```{python}
 # load packages
+import openai
 import requests
 import time
 import json
@@ -43,6 +44,9 @@ from secrets import ai_api_token
 # Define repository and category IDs
 repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
+
+# define categories for eamil classification
+categories = ["Announcement", "Open Position (Academia)", "Open Position (Industry)", "Technical Question", "Others"]
 
 # Define most recent message ID
 recent_id = 8687
@@ -311,6 +315,29 @@ def list_all_discussions(api_token, repository_id):
     return discussions
 
 
+############################### get_chat_completion #################################
+
+def get_chat_completion(api_key, categories, message_text):
+
+    # Set OpenAI API key
+    openai.api_key = api_key
+    
+    # Construct the messages
+    messages = [
+        {"role": "system", "content": f"You are a machine which classifies emails by content. You can only speak 4 words = categories: {', '.join(categories)}. Your output is directly used as a string for the category. If you deviate from the 4 words, the program will fail and you will be punished."},
+        {"role": "user", "content": message_text}
+    ]
+    
+    # Make API request
+    chat_completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages
+    )
+    
+    # Extract and return the content
+    return chat_completion["choices"][0]["message"]["content"]
+
+
 ```
 
 # Scraping
@@ -403,7 +430,6 @@ for thread_id, msg_list in thread_dict.items():
 ```
 
 
-
 ## Delete all discussions (if needed)
 
 ```{python}
@@ -415,4 +441,16 @@ all_discussions = list_all_discussions(api_token=gh_api_token, repository_id=rep
 for dis_id, title in all_discussions:
     print(f"Deleting discussion with ID: {dis_id}, Title: {title}")
     delete_discussion(api_token=gh_api_token, discussion_id=dis_id)
+```
+
+
+
+## OpenAi Test
+
+
+```{python}
+# test openai with simple message
+email_content = "2023/06/19 [NMusers] BQL simulations Hiba Sliem"
+classification = get_chat_completion(api_key = ai_api_token, categories = categories, message_text = email_content)
+print(classification)
 ```
