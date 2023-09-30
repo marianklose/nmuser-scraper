@@ -37,8 +37,8 @@ from functions import *
 
 ```{python}
 # define pats and api tokens safely via gitignored file 
-from secrets import gh_api_token
-from secrets import ai_api_token
+from my_secrets import gh_api_token
+from my_secrets import ai_api_token
 ```
 
 ## Global Options and Parameters
@@ -111,7 +111,7 @@ thread_dict = extract_threads(msg)
 # Fetch any missing messages in the threads
 fetch_missing_messages(thread_dict, msg)
 
-# Pretty print the result
+# print the result
 pprint(thread_dict, indent=4)
 ```
 
@@ -120,10 +120,27 @@ pprint(thread_dict, indent=4)
 
 ```{python}
 # Loop through each element in the dictionary
-for thread_id, msg_list in thread_dict.items():
-    # define id
-    print(thread_id)
-    print(msg_list)
+for thread_id, thread_info in thread_dict.items():
+
+    # define initial message id
+    inital_msg_id = thread_info['ids'][0]
+
+    # retrieve initial thread starting message
+    cur_msg = msg[inital_msg_id]
+
+    # retrieve category from openai
+    category = get_chat_completion(
+        api_key = ai_api_token,
+        categories = categories,
+        message_text = cur_msg['subject'],
+        model = model
+    )
+
+    # update thread_dict with category
+    thread_dict[thread_id]['category'] = category
+
+# print the result
+pprint(thread_dict, indent=4)
 ```
 
 

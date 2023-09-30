@@ -9,7 +9,7 @@
 <meta name="author" content="Marian Klose">
 <meta name="dcterms.date" content="2023-09-30">
 
-<title>nmusers scraper</title>
+<title>chatgpt training</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -3034,16 +3034,7 @@ vertical-align: -.125em;
   <li><a href="#scraping" id="toc-scraping" class="nav-link" data-scroll-target="#scraping"><span class="header-section-number">2</span> Scraping</a>
   <ul class="collapse">
   <li><a href="#fetching-list-of-messages" id="toc-fetching-list-of-messages" class="nav-link" data-scroll-target="#fetching-list-of-messages"><span class="header-section-number">2.1</span> Fetching List of Messages</a></li>
-  <li><a href="#adding-chatgpt-classification-and-labels" id="toc-adding-chatgpt-classification-and-labels" class="nav-link" data-scroll-target="#adding-chatgpt-classification-and-labels"><span class="header-section-number">2.2</span> Adding ChatGPT Classification and Labels</a></li>
-  </ul></li>
-  <li><a href="#create-discussions" id="toc-create-discussions" class="nav-link" data-scroll-target="#create-discussions"><span class="header-section-number">3</span> Create Discussions</a>
-  <ul class="collapse">
-  <li><a href="#loop-through-threads" id="toc-loop-through-threads" class="nav-link" data-scroll-target="#loop-through-threads"><span class="header-section-number">3.1</span> Loop Through Threads</a></li>
-  <li><a href="#delete-all-discussions-if-needed" id="toc-delete-all-discussions-if-needed" class="nav-link" data-scroll-target="#delete-all-discussions-if-needed"><span class="header-section-number">3.2</span> Delete all discussions (if needed)</a></li>
-  </ul></li>
-  <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests"><span class="header-section-number">4</span> Tests</a>
-  <ul class="collapse">
-  <li><a href="#openai-test" id="toc-openai-test" class="nav-link" data-scroll-target="#openai-test"><span class="header-section-number">4.1</span> OpenAi Test</a></li>
+  <li><a href="#create-training-dataset" id="toc-create-training-dataset" class="nav-link" data-scroll-target="#create-training-dataset"><span class="header-section-number">2.2</span> Create Training Dataset</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -3052,7 +3043,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">nmusers scraper</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">chatgpt training</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -3091,12 +3082,14 @@ vertical-align: -.125em;
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># import own custom functions</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functions <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># import own custom functions</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functions <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -3106,8 +3099,8 @@ vertical-align: -.125em;
 <details open>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define pats and api tokens safely via gitignored file </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> secrets <span class="im">import</span> gh_api_token</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> secrets <span class="im">import</span> ai_api_token</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> my_secrets <span class="im">import</span> gh_api_token</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> my_secrets <span class="im">import</span> ai_api_token</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -3138,14 +3131,11 @@ vertical-align: -.125em;
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="st">&quot;gpt-3.5-turbo&quot;</span></span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># model = &quot;gpt-4&quot;</span></span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Define most recent message ID</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>recent_id <span class="op">=</span> <span class="dv">8687</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co"># define id where to stop</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>stop_id <span class="op">=</span> <span class="dv">8686</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Define number of messages we want to retrieve (for testing)</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>n_msg <span class="op">=</span> (recent_id <span class="op">-</span> stop_id)<span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co"># sample vector of message IDs</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>n_msg <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>recent_id <span class="op">=</span> <span class="dv">8687</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>my_array <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, recent_id))</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> random.sample(my_array, n_msg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -3157,176 +3147,298 @@ vertical-align: -.125em;
 <div class="cell" data-results="asis" data-execution_count="4">
 <details open>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define vector of message IDs</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(recent_id, recent_id <span class="op">-</span> n_msg, <span class="op">-</span><span class="dv">1</span>))</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert numerics to strings and paste 0 in front</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> [<span class="bu">str</span>(num).zfill(<span class="dv">5</span>) <span class="cf">for</span> num <span class="kw">in</span> msg_ids]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert numerics to strings and paste 0 in front</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> [<span class="st">&quot;0&quot;</span> <span class="op">+</span> <span class="bu">str</span>(x) <span class="cf">for</span> x <span class="kw">in</span> msg_ids]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># show</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>msg_ids</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># show</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>msg_ids</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an empty dictionary to hold the msg information</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>msg <span class="op">=</span> {}</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an empty dictionary to hold the msg information</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>msg <span class="op">=</span> {}</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each msg id, extract the details and append</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> msg_ids:</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each msg id, extract the details and append</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> msg_ids:</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fetch the details</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    single_msg <span class="op">=</span> fetch_details(<span class="bu">id</span>)</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fetch the details</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    single_msg <span class="op">=</span> fetch_details(<span class="bu">id</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append to msg</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    msg[<span class="bu">id</span>] <span class="op">=</span> single_msg</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append to msg</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    msg[<span class="bu">id</span>] <span class="op">=</span> single_msg</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract threads</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>thread_dict <span class="op">=</span> extract_threads(msg)</span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract threads</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>thread_dict <span class="op">=</span> extract_threads(msg)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch any missing messages in the threads</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>fetch_missing_messages(thread_dict, msg)</span>
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch any missing messages in the threads</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>fetch_missing_messages(thread_dict, msg)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># print the result</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>pprint(thread_dict, indent<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># print the result</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>pprint(thread_dict, indent<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>{   1: {&#39;category&#39;: None, &#39;ids&#39;: [&#39;08687&#39;], &#39;labels&#39;: None},
-    2: {&#39;category&#39;: None, &#39;ids&#39;: [&#39;08686&#39;], &#39;labels&#39;: None}}</code></pre>
+<pre><code>fetch_missing_messages: fetching message 00763
+fetch_missing_messages: fetching message 00765
+fetch_missing_messages: fetching message 00766
+fetch_missing_messages: fetching message 03768
+fetch_missing_messages: fetching message 03769
+fetch_missing_messages: fetching message 03772
+fetch_missing_messages: fetching message 03778
+fetch_missing_messages: fetching message 03779
+fetch_missing_messages: fetching message 03780
+fetch_missing_messages: fetching message 03781
+fetch_missing_messages: fetching message 03782
+fetch_missing_messages: fetching message 05133
+fetch_missing_messages: fetching message 05134
+fetch_missing_messages: fetching message 05138
+fetch_missing_messages: fetching message 05139
+fetch_missing_messages: fetching message 05145
+fetch_missing_messages: fetching message 05149
+fetch_missing_messages: fetching message 02024
+fetch_missing_messages: fetching message 02025
+fetch_missing_messages: fetching message 02026
+fetch_missing_messages: fetching message 02028
+fetch_missing_messages: fetching message 02030
+fetch_missing_messages: fetching message 02031
+fetch_missing_messages: fetching message 02032
+fetch_missing_messages: fetching message 02035
+fetch_missing_messages: fetching message 02036
+fetch_missing_messages: fetching message 02039
+fetch_missing_messages: fetching message 02040
+fetch_missing_messages: fetching message 02041
+fetch_missing_messages: fetching message 02042
+fetch_missing_messages: fetching message 02043
+fetch_missing_messages: fetching message 02044
+fetch_missing_messages: fetching message 02045
+fetch_missing_messages: fetching message 02046
+fetch_missing_messages: fetching message 02056
+fetch_missing_messages: fetching message 07307
+fetch_missing_messages: fetching message 07308
+fetch_missing_messages: fetching message 07309
+fetch_missing_messages: fetching message 07311
+fetch_missing_messages: fetching message 07313
+fetch_missing_messages: fetching message 07317
+fetch_missing_messages: fetching message 07319
+fetch_missing_messages: fetching message 07321
+fetch_missing_messages: fetching message 07322
+fetch_missing_messages: fetching message 07330
+fetch_missing_messages: fetching message 06452
+fetch_missing_messages: fetching message 06453
+fetch_missing_messages: fetching message 06454
+fetch_missing_messages: fetching message 06455
+fetch_missing_messages: fetching message 06456
+fetch_missing_messages: fetching message 05619
+fetch_missing_messages: fetching message 05620
+fetch_missing_messages: fetching message 05621
+fetch_missing_messages: fetching message 05622
+fetch_missing_messages: fetching message 01113
+fetch_missing_messages: fetching message 01114
+fetch_missing_messages: fetching message 01149
+fetch_missing_messages: fetching message 01150
+fetch_missing_messages: fetching message 01151
+fetch_missing_messages: fetching message 04371
+fetch_missing_messages: fetching message 04372
+fetch_missing_messages: fetching message 04373
+fetch_missing_messages: fetching message 04376
+fetch_missing_messages: fetching message 07857
+fetch_missing_messages: fetching message 02502
+fetch_missing_messages: fetching message 06385
+fetch_missing_messages: fetching message 06393
+fetch_missing_messages: fetching message 06469
+fetch_missing_messages: fetching message 05604
+fetch_missing_messages: fetching message 01505
+fetch_missing_messages: fetching message 01508
+fetch_missing_messages: fetching message 01511
+{   1: {   &#39;category&#39;: None,
+           &#39;ids&#39;: [&#39;00763&#39;, &#39;00764&#39;, &#39;00765&#39;, &#39;00766&#39;],
+           &#39;labels&#39;: None},
+    2: {&#39;category&#39;: None, &#39;ids&#39;: [&#39;05196&#39;], &#39;labels&#39;: None},
+    3: {   &#39;category&#39;: None,
+           &#39;ids&#39;: [   &#39;03768&#39;,
+                      &#39;03769&#39;,
+                      &#39;03772&#39;,
+                      &#39;03774&#39;,
+                      &#39;03778&#39;,
+                      &#39;03779&#39;,
+                      &#39;03780&#39;,
+                      &#39;03781&#39;,
+                      &#39;03782&#39;],
+           &#39;labels&#39;: None},
+    4: {&#39;category&#39;: None, &#39;ids&#39;: [&#39;06260&#39;], &#39;labels&#39;: None},
+    5: {   &#39;category&#39;: None,
+           &#39;ids&#39;: [   &#39;05133&#39;,
+                      &#39;05134&#39;,
+                      &#39;05137&#39;,
+                      &#39;05138&#39;,
+                      &#39;05139&#39;,
+                      &#39;05145&#39;,
+                      &#39;05149&#39;],
+           &#39;labels&#39;: None},
+    6: {&#39;category&#39;: None, &#39;ids&#39;: [&#39;06326&#39;], &#39;labels&#39;: None},
+    7: {   &#39;category&#39;: None,
+           &#39;ids&#39;: [   &#39;02024&#39;,
+                      &#39;02025&#39;,
+                      &#39;02026&#39;,
+                      &#39;02027&#39;,
+                      &#39;02028&#39;,
+                      &#39;02030&#39;,
+                      &#39;02031&#39;,
+                      &#39;02032&#39;,
+                      &#39;02035&#39;,
+                      &#39;02036&#39;,
+                      &#39;02039&#39;,
+                      &#39;02040&#39;,
+                      &#39;02041&#39;,
+                      &#39;02042&#39;,
+                      &#39;02043&#39;,
+                      &#39;02044&#39;,
+                      &#39;02045&#39;,
+                      &#39;02046&#39;,
+                      &#39;02056&#39;],
+           &#39;labels&#39;: None},
+    8: {   &#39;category&#39;: None,
+           &#39;ids&#39;: [   &#39;07307&#39;,
+                      &#39;07308&#39;,
+                      &#39;07309&#39;,
+                      &#39;07311&#39;,
+                      &#39;07313&#39;,
+                      &#39;07315&#39;,
+                      &#39;07317&#39;,
+                      &#39;07319&#39;,
+                      &#39;07321&#39;,
+                      &#39;07322&#39;,
+                      &#39;07330&#39;],
+           &#39;labels&#39;: None},
+    9: {   &#39;category&#39;: None,
+           &#39;ids&#39;: [&#39;06451&#39;, &#39;06452&#39;, &#39;06453&#39;, &#39;06454&#39;, &#39;06455&#39;, &#39;06456&#39;],
+           &#39;labels&#39;: None},
+    10: {   &#39;category&#39;: None,
+            &#39;ids&#39;: [&#39;05618&#39;, &#39;05619&#39;, &#39;05620&#39;, &#39;05621&#39;, &#39;05622&#39;],
+            &#39;labels&#39;: None},
+    11: {   &#39;category&#39;: None,
+            &#39;ids&#39;: [&#39;01113&#39;, &#39;01114&#39;, &#39;01149&#39;, &#39;01150&#39;, &#39;01151&#39;, &#39;01152&#39;],
+            &#39;labels&#39;: None},
+    12: {   &#39;category&#39;: None,
+            &#39;ids&#39;: [&#39;04371&#39;, &#39;04372&#39;, &#39;04373&#39;, &#39;04374&#39;, &#39;04376&#39;],
+            &#39;labels&#39;: None},
+    13: {&#39;category&#39;: None, &#39;ids&#39;: [&#39;02664&#39;], &#39;labels&#39;: None},
+    14: {&#39;category&#39;: None, &#39;ids&#39;: [&#39;08282&#39;], &#39;labels&#39;: None},
+    15: {&#39;category&#39;: None, &#39;ids&#39;: [&#39;07856&#39;, &#39;07857&#39;], &#39;labels&#39;: None},
+    16: {&#39;category&#39;: None, &#39;ids&#39;: [&#39;01439&#39;], &#39;labels&#39;: None},
+    17: {&#39;category&#39;: None, &#39;ids&#39;: [&#39;02501&#39;, &#39;02502&#39;], &#39;labels&#39;: None},
+    18: {   &#39;category&#39;: None,
+            &#39;ids&#39;: [&#39;06385&#39;, &#39;06393&#39;, &#39;06469&#39;, &#39;06500&#39;],
+            &#39;labels&#39;: None},
+    19: {&#39;category&#39;: None, &#39;ids&#39;: [&#39;05603&#39;, &#39;05604&#39;], &#39;labels&#39;: None},
+    20: {   &#39;category&#39;: None,
+            &#39;ids&#39;: [&#39;01505&#39;, &#39;01508&#39;, &#39;01511&#39;, &#39;01512&#39;],
+            &#39;labels&#39;: None}}</code></pre>
 </div>
 </div>
 </section>
-<section id="adding-chatgpt-classification-and-labels" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="adding-chatgpt-classification-and-labels"><span class="header-section-number">2.2</span> Adding ChatGPT Classification and Labels</h2>
+<section id="create-training-dataset" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="create-training-dataset"><span class="header-section-number">2.2</span> Create Training Dataset</h2>
 <div class="cell" data-execution_count="5">
 <details open>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each element in the dictionary</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> thread_id, thread_info <span class="kw">in</span> thread_dict.items():</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># init data lis t</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data_list <span class="op">=</span> []</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define initial message id</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    inital_msg_id <span class="op">=</span> thread_info[<span class="st">&#39;ids&#39;</span>][<span class="dv">0</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each element in the dictionary</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> thread_id, thread_info <span class="kw">in</span> thread_dict.items():</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># retrieve initial thread starting message</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    cur_msg <span class="op">=</span> msg[inital_msg_id]</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define initial message id</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    inital_msg_id <span class="op">=</span> thread_info[<span class="st">&#39;ids&#39;</span>][<span class="dv">0</span>]</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># retrieve category from openai</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    category <span class="op">=</span> get_chat_completion(</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        api_key <span class="op">=</span> ai_api_token,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        categories <span class="op">=</span> categories,</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        message_text <span class="op">=</span> cur_msg[<span class="st">&#39;subject&#39;</span>],</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> model</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update thread_dict with category</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    thread_dict[thread_id][<span class="st">&#39;category&#39;</span>] <span class="op">=</span> category</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># print the result</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>pprint(thread_dict, indent<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># retrieve initial thread starting message</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    cur_msg <span class="op">=</span> msg[inital_msg_id]</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># store data from message</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> {</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;id&#39;</span>: cur_msg[<span class="st">&#39;id&#39;</span>],</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;date&#39;</span>: cur_msg[<span class="st">&#39;date&#39;</span>],</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;subject&#39;</span>: cur_msg[<span class="st">&#39;subject&#39;</span>],</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;message&#39;</span>: cur_msg[<span class="st">&#39;message&#39;</span>]</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># append data to list</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    data_list.append(data)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the list of dictionaries into a pandas DataFrame</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data_list)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the DataFrame to a CSV file</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">&#39;train_df_raw.csv&#39;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co"># print the result</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>pprint(df, indent<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>{   1: {&#39;category&#39;: &#39;Webinars&#39;, &#39;ids&#39;: [&#39;08687&#39;], &#39;labels&#39;: None},
-    2: {&#39;category&#39;: &#39;Open Positions&#39;, &#39;ids&#39;: [&#39;08686&#39;], &#39;labels&#39;: None}}</code></pre>
+<pre><code>       id                             date  \
+0   00763  Sun, 06 Jan 2008 23:30:26 -0800   
+1   05196  Tue, 12 Aug 2014 12:44:39 -0700   
+2   03768  Sun, 29 Jan 2012 14:23:36 -0800   
+3   06260  Fri, 03 Jun 2016 09:41:31 -0700   
+4   05133  Thu, 19 Jun 2014 20:06:06 -0700   
+5   06326  Thu, 18 Aug 2016 12:51:38 -0700   
+6   02024  Fri, 18 Sep 2009 13:14:17 -0700   
+7   07307  Sun, 03 Feb 2019 12:55:36 -0800   
+8   06451  Mon, 12 Dec 2016 01:44:36 -0800   
+9   05618  Thu, 18 Jun 2015 07:05:13 -0700   
+10  01113  Tue, 19 Aug 2008 14:30:11 -0700   
+11  04371  Wed, 09 Jan 2013 02:45:54 -0800   
+12  02664  Wed, 04 Aug 2010 10:02:03 -0700   
+13  08282  Tue, 05 Oct 2021 17:19:22 -0700   
+14  07856  Wed, 25 Mar 2020 09:53:18 -0700   
+15  01439  Tue, 13 Jan 2009 13:18:14 -0800   
+16  02501  Thu, 29 Apr 2010 10:47:15 -0700   
+17  06385  Tue, 04 Oct 2016 03:44:20 -0700   
+18  05603  Thu, 11 Jun 2015 19:32:33 -0700   
+19  01505  Wed, 25 Feb 2009 08:37:45 -0800   
+
+                                              subject  \
+0   RE: [NMusers] AUC Calculation in Simulation wi...   
+1                    [NMusers] Rosa webinar presenter   
+2                                    [NMusers] PRIORS   
+3   [NMusers] Come join us at PAGE 2016 to learn m...   
+4   [NMusers] Compartment amounts, A(n), used as r...   
+5   [NMusers] US Pharmacometrics Positions Availab...   
+6     Re: [NMusers] VPC appropriateness in complex PK   
+7   [NMusers] Why should we avoid using micro rate...   
+8   [NMusers] Different results with ADVAN4 and AD...   
+9                 [NMusers] Estimation of Intake Time   
+10               [NMusers] NONMEM VI 2.0 Bug Alert #1   
+11                  [NMusers] Minimisation problem...   
+12  [NMusers] Register for the ICON NONMEM / PDxPo...   
+13  [NMusers] FDA Announces an Analgesic Clinical ...   
+14  [NMusers] Registration is OPEN!!!  NONMEM Work...   
+15  [NMusers] Recall: Clinical PK Opening at Major...   
+16                       [NMusers] Questions about M3   
+17  [NMusers] Mango Solutions R for Pharmacometric...   
+18  [NMusers] BAYES Estimation: OBJECTIVE FUNCTION...   
+19                         [NMusers] VPC, NPC or PPC?   
+
+                                              message  
+0   Dear Paul,\n\n \n\nWhen using $SIM only, the A...  
+1   Hello everyone,\n\nPreparing the webinar progr...  
+2   I have previously conducted a meta-analysis of...  
+3   Come join us at PAGE 2016 to learn more about ...  
+4   Dear NMusers,\n\nI am doing a simulation in NO...  
+5   Dear NMusers,\n\n\nIt seems that now is an int...  
+6   Hi Dider,\nVPC is very good when your data set...  
+7   Hello everyone!\n\nI have a question. I was tr...  
+8   Dear nmusers,\nI have a data set which contain...  
+9   Dear NMusers, \n\n \n\nI would like to present...  
+10  Dear All:\n \nBelow are listed three bugs that...  
+11  Dear NMusers\n\n \n\nI am trying to analyse da...  
+12  Dear NMUsers,\n \nAs we have announced several...  
+13  The U.S. Food and Drug Administration (FDA)&#39;s ...  
+14  Registration is now open for all workshops lis...  
+15  T.J. Elder would like to recall the message, &quot;...  
+16  Dear NMusers,\n\nI&#39;m seeking inputs/advice on ...  
+17  Hi Everyone,\nEstablished Global Premier R Tra...  
+18  Dear All,\n\nI am using a cascade of the EM es...  
+19  Hi All,\n\n \n\nWe have a dataset with as many...  </code></pre>
 </div>
-</div>
-</section>
-</section>
-<section id="create-discussions" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Create Discussions</h1>
-<section id="loop-through-threads" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="loop-through-threads"><span class="header-section-number">3.1</span> Loop Through Threads</h2>
-<div class="cell" data-execution_count="6">
-<details open>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check if we want to actually create discussions or just test</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> create_dis_bool:</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop through each element in the dictionary</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> thread_id, msg_list <span class="kw">in</span> thread_dict.items():</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># define id</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">id</span> <span class="op">=</span> msg_list[<span class="dv">0</span>]</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># retrieve message</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        cur_msg <span class="op">=</span> msg[<span class="bu">id</span>]</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># retrieve category from openai</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        category <span class="op">=</span> get_chat_completion(</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>            api_key <span class="op">=</span> ai_api_token,</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>            categories <span class="op">=</span> categories,</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>            message_text <span class="op">=</span> cur_msg[<span class="st">&#39;subject&#39;</span>],</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>            model <span class="op">=</span> model</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get category_id from category_dict</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        category_id <span class="op">=</span> category_dict[category]</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># create discussion for id and store output</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        dis_out <span class="op">=</span> create_discussion(</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            api_token<span class="op">=</span>gh_api_token,</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span>cur_msg[<span class="st">&#39;subject&#39;</span>],</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>            body<span class="op">=</span>cur_msg[<span class="st">&#39;message&#39;</span>],</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>            date<span class="op">=</span>cur_msg[<span class="st">&#39;date&#39;</span>],</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>            author<span class="op">=</span>cur_msg[<span class="st">&#39;author&#39;</span>],</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>            repository_id <span class="op">=</span> repository_id,</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>            category_id <span class="op">=</span> category_id</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># output to console</span></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&#39;Created discussion </span><span class="sc">{</span>dis_out[<span class="st">&quot;data&quot;</span>][<span class="st">&quot;createDiscussion&quot;</span>][<span class="st">&quot;discussion&quot;</span>][<span class="st">&quot;id&quot;</span>]<span class="sc">}</span><span class="ss"> for message </span><span class="sc">{</span><span class="bu">id</span><span class="sc">}</span><span class="ss">.&#39;</span>)</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># store freshly created discussion id</span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>        dis_id <span class="op">=</span> dis_out[<span class="st">&#39;data&#39;</span>][<span class="st">&#39;createDiscussion&#39;</span>][<span class="st">&#39;discussion&#39;</span>][<span class="st">&#39;id&#39;</span>]</span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>        <span class="co"># check if thread has more than one message</span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(msg_list) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>            <span class="co"># loop through all messages in thread</span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> msg_id <span class="kw">in</span> msg_list[<span class="dv">1</span>:]:</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>                <span class="co"># retrieve message</span></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>                cur_msg <span class="op">=</span> msg[msg_id]</span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>                <span class="co"># add comment to discussion</span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>                add_comment_to_discussion(</span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>                    api_token<span class="op">=</span>gh_api_token,</span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>                    discussion_id<span class="op">=</span>dis_id,</span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>                    body<span class="op">=</span>cur_msg[<span class="st">&#39;message&#39;</span>],</span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>                    date<span class="op">=</span>cur_msg[<span class="st">&#39;date&#39;</span>],</span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>                    author<span class="op">=</span>cur_msg[<span class="st">&#39;author&#39;</span>],</span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>                    silent<span class="op">=</span><span class="va">False</span></span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>                <span class="co"># output to console</span></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f&#39;Added comment to discussion </span><span class="sc">{</span>dis_id<span class="sc">}</span><span class="ss"> for message </span><span class="sc">{</span>msg_id<span class="sc">}</span><span class="ss">.&#39;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="delete-all-discussions-if-needed" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="delete-all-discussions-if-needed"><span class="header-section-number">3.2</span> Delete all discussions (if needed)</h2>
-<div class="cell" data-execution_count="7">
-<details open>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch all discussions for the given repository ID</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>all_discussions <span class="op">=</span> list_all_discussions(api_token<span class="op">=</span>gh_api_token, repository_id<span class="op">=</span>repository_id)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete each discussion</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dis_id, title <span class="kw">in</span> all_discussions:</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Deleting discussion with ID: </span><span class="sc">{</span>dis_id<span class="sc">}</span><span class="ss">, Title: </span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    delete_discussion(api_token<span class="op">=</span>gh_api_token, discussion_id<span class="op">=</span>dis_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-</section>
-<section id="tests" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Tests</h1>
-<section id="openai-test" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="openai-test"><span class="header-section-number">4.1</span> OpenAi Test</h2>
-<div class="cell" data-execution_count="8">
-<details open>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # test openai with simple message</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># email_content = &quot;[NMusers] 2023 Virtual Training Course on PKPD of Protein Therapeutics, November 28-30 &quot;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># classification = get_chat_completion(api_key = ai_api_token, categories = categories, message_text = email_content)</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print(classification)</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># add_labels_to_discussion(api_token = gh_api_token, discussion_id = &quot;D_kwDOKYhvW84AVshP&quot; , labels = [&quot;LA_kwDOKYhvW88AAAABZzOrMA&quot;, &quot;LA_kwDOKYhvW88AAAABZzPGkQ&quot;])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <!-- -->
 
@@ -3619,245 +3731,155 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class>
-<div class="sourceCode" id="cb11" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;nmusers scraper&quot;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> Marian Klose</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">    echo: true</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">    message: true</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">    warning: true</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">    html:</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">        toc: true</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">        code-fold: show</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">        code-tools: true</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">        number-sections: true</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">        embed-resources: true</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preamble</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Library</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="co"># import own custom functions</span></span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functions <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## PAT / API Tokens</span></span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a><span class="co"># define pats and api tokens safely via gitignored file </span></span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> secrets <span class="im">import</span> gh_api_token</span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> secrets <span class="im">import</span> ai_api_token</span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Global Options and Parameters</span></span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a><span class="co"># define if we want to actually create discussions or just test</span></span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>create_dis_bool <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Define repository and category IDs</span></span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>repository_id <span class="op">=</span> <span class="st">&#39;R_kgDOKYhvWw&#39;</span></span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>category_id <span class="op">=</span> <span class="st">&#39;DIC_kwDOKYhvW84CZobi&#39;</span></span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Hardcoded dictionary for email classification categories</span></span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>category_dict <span class="op">=</span> {</span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Announcements&quot;</span>: <span class="st">&quot;DIC_kwDOKYhvW84CZvWP&quot;</span>,</span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Open Positions&quot;</span>: <span class="st">&quot;DIC_kwDOKYhvW84CZvWQ&quot;</span>,</span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Technicalities&quot;</span>: <span class="st">&quot;DIC_kwDOKYhvW84CZvWX&quot;</span>,</span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Others&quot;</span>: <span class="st">&quot;DIC_kwDOKYhvW84CZvWY&quot;</span></span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="co"># define categories for eamil classification</span></span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> <span class="bu">list</span>(category_dict.keys())</span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a><span class="co"># define chatgpt model</span></span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="st">&quot;gpt-3.5-turbo&quot;</span></span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a><span class="co"># model = &quot;gpt-4&quot;</span></span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Define most recent message ID</span></span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>recent_id <span class="op">=</span> <span class="dv">8687</span></span>
-<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a><span class="co"># define id where to stop</span></span>
-<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>stop_id <span class="op">=</span> <span class="dv">8686</span></span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Define number of messages we want to retrieve (for testing)</span></span>
-<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>n_msg <span class="op">=</span> (recent_id <span class="op">-</span> stop_id)<span class="op">+</span><span class="dv">1</span></span>
-<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a><span class="fu"># Scraping</span></span>
-<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fetching List of Messages</span></span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
-<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Define vector of message IDs</span></span>
-<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(recent_id, recent_id <span class="op">-</span> n_msg, <span class="op">-</span><span class="dv">1</span>))</span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert numerics to strings and paste 0 in front</span></span>
-<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> [<span class="st">&quot;0&quot;</span> <span class="op">+</span> <span class="bu">str</span>(x) <span class="cf">for</span> x <span class="kw">in</span> msg_ids]</span>
-<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a><span class="co"># show</span></span>
-<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>msg_ids</span>
-<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an empty dictionary to hold the msg information</span></span>
-<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>msg <span class="op">=</span> {}</span>
-<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each msg id, extract the details and append</span></span>
-<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> msg_ids:</span>
-<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fetch the details</span></span>
-<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>    single_msg <span class="op">=</span> fetch_details(<span class="bu">id</span>)</span>
-<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append to msg</span></span>
-<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>    msg[<span class="bu">id</span>] <span class="op">=</span> single_msg</span>
-<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract threads</span></span>
-<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>thread_dict <span class="op">=</span> extract_threads(msg)</span>
-<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch any missing messages in the threads</span></span>
-<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>fetch_missing_messages(thread_dict, msg)</span>
-<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a><span class="co"># print the result</span></span>
-<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>pprint(thread_dict, indent<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adding ChatGPT Classification and Labels</span></span>
-<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each element in the dictionary</span></span>
-<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> thread_id, thread_info <span class="kw">in</span> thread_dict.items():</span>
-<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define initial message id</span></span>
-<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a>    inital_msg_id <span class="op">=</span> thread_info[<span class="st">&#39;ids&#39;</span>][<span class="dv">0</span>]</span>
-<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a>    <span class="co"># retrieve initial thread starting message</span></span>
-<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a>    cur_msg <span class="op">=</span> msg[inital_msg_id]</span>
-<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a>    <span class="co"># retrieve category from openai</span></span>
-<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a>    category <span class="op">=</span> get_chat_completion(</span>
-<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a>        api_key <span class="op">=</span> ai_api_token,</span>
-<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a>        categories <span class="op">=</span> categories,</span>
-<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a>        message_text <span class="op">=</span> cur_msg[<span class="st">&#39;subject&#39;</span>],</span>
-<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> model</span>
-<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update thread_dict with category</span></span>
-<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a>    thread_dict[thread_id][<span class="st">&#39;category&#39;</span>] <span class="op">=</span> category</span>
-<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a><span class="co"># print the result</span></span>
-<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a>pprint(thread_dict, indent<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb11-154"><a href="#cb11-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-155"><a href="#cb11-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-156"><a href="#cb11-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-157"><a href="#cb11-157" aria-hidden="true" tabindex="-1"></a><span class="fu"># Create Discussions</span></span>
-<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-159"><a href="#cb11-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loop Through Threads</span></span>
-<span id="cb11-160"><a href="#cb11-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a><span class="co"># check if we want to actually create discussions or just test</span></span>
-<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> create_dis_bool:</span>
-<span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop through each element in the dictionary</span></span>
-<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> thread_id, msg_list <span class="kw">in</span> thread_dict.items():</span>
-<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a>        <span class="co"># define id</span></span>
-<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a>        <span class="bu">id</span> <span class="op">=</span> msg_list[<span class="dv">0</span>]</span>
-<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a>        <span class="co"># retrieve message</span></span>
-<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a>        cur_msg <span class="op">=</span> msg[<span class="bu">id</span>]</span>
-<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a>        <span class="co"># retrieve category from openai</span></span>
-<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a>        category <span class="op">=</span> get_chat_completion(</span>
-<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a>            api_key <span class="op">=</span> ai_api_token,</span>
-<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a>            categories <span class="op">=</span> categories,</span>
-<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a>            message_text <span class="op">=</span> cur_msg[<span class="st">&#39;subject&#39;</span>],</span>
-<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a>            model <span class="op">=</span> model</span>
-<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get category_id from category_dict</span></span>
-<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a>        category_id <span class="op">=</span> category_dict[category]</span>
-<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a>        <span class="co"># create discussion for id and store output</span></span>
-<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a>        dis_out <span class="op">=</span> create_discussion(</span>
-<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a>            api_token<span class="op">=</span>gh_api_token,</span>
-<span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span>cur_msg[<span class="st">&#39;subject&#39;</span>],</span>
-<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a>            body<span class="op">=</span>cur_msg[<span class="st">&#39;message&#39;</span>],</span>
-<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a>            date<span class="op">=</span>cur_msg[<span class="st">&#39;date&#39;</span>],</span>
-<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a>            author<span class="op">=</span>cur_msg[<span class="st">&#39;author&#39;</span>],</span>
-<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a>            repository_id <span class="op">=</span> repository_id,</span>
-<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a>            category_id <span class="op">=</span> category_id</span>
-<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a>        <span class="co"># output to console</span></span>
-<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&#39;Created discussion </span><span class="sc">{</span>dis_out[<span class="st">&quot;data&quot;</span>][<span class="st">&quot;createDiscussion&quot;</span>][<span class="st">&quot;discussion&quot;</span>][<span class="st">&quot;id&quot;</span>]<span class="sc">}</span><span class="ss"> for message </span><span class="sc">{</span><span class="bu">id</span><span class="sc">}</span><span class="ss">.&#39;</span>)</span>
-<span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a>        <span class="co"># store freshly created discussion id</span></span>
-<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a>        dis_id <span class="op">=</span> dis_out[<span class="st">&#39;data&#39;</span>][<span class="st">&#39;createDiscussion&#39;</span>][<span class="st">&#39;discussion&#39;</span>][<span class="st">&#39;id&#39;</span>]</span>
-<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a>        <span class="co"># check if thread has more than one message</span></span>
-<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(msg_list) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
-<span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a>            <span class="co"># loop through all messages in thread</span></span>
-<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> msg_id <span class="kw">in</span> msg_list[<span class="dv">1</span>:]:</span>
-<span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a>                <span class="co"># retrieve message</span></span>
-<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a>                cur_msg <span class="op">=</span> msg[msg_id]</span>
-<span id="cb11-208"><a href="#cb11-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a>                <span class="co"># add comment to discussion</span></span>
-<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a>                add_comment_to_discussion(</span>
-<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a>                    api_token<span class="op">=</span>gh_api_token,</span>
-<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a>                    discussion_id<span class="op">=</span>dis_id,</span>
-<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a>                    body<span class="op">=</span>cur_msg[<span class="st">&#39;message&#39;</span>],</span>
-<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a>                    date<span class="op">=</span>cur_msg[<span class="st">&#39;date&#39;</span>],</span>
-<span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a>                    author<span class="op">=</span>cur_msg[<span class="st">&#39;author&#39;</span>],</span>
-<span id="cb11-216"><a href="#cb11-216" aria-hidden="true" tabindex="-1"></a>                    silent<span class="op">=</span><span class="va">False</span></span>
-<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a>                <span class="co"># output to console</span></span>
-<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f&#39;Added comment to discussion </span><span class="sc">{</span>dis_id<span class="sc">}</span><span class="ss"> for message </span><span class="sc">{</span>msg_id<span class="sc">}</span><span class="ss">.&#39;</span>)</span>
-<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a><span class="fu">## Delete all discussions (if needed)</span></span>
-<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch all discussions for the given repository ID</span></span>
-<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a>all_discussions <span class="op">=</span> list_all_discussions(api_token<span class="op">=</span>gh_api_token, repository_id<span class="op">=</span>repository_id)</span>
-<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete each discussion</span></span>
-<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dis_id, title <span class="kw">in</span> all_discussions:</span>
-<span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Deleting discussion with ID: </span><span class="sc">{</span>dis_id<span class="sc">}</span><span class="ss">, Title: </span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a>    delete_discussion(api_token<span class="op">=</span>gh_api_token, discussion_id<span class="op">=</span>dis_id)</span>
-<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a><span class="fu"># Tests</span></span>
-<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a><span class="fu">## OpenAi Test</span></span>
-<span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a><span class="co"># # test openai with simple message</span></span>
-<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a><span class="co"># email_content = &quot;[NMusers] 2023 Virtual Training Course on PKPD of Protein Therapeutics, November 28-30 &quot;</span></span>
-<span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a><span class="co"># classification = get_chat_completion(api_key = ai_api_token, categories = categories, message_text = email_content)</span></span>
-<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a><span class="co"># print(classification)</span></span>
-<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a><span class="co"># add_labels_to_discussion(api_token = gh_api_token, discussion_id = &quot;D_kwDOKYhvW84AVshP&quot; , labels = [&quot;LA_kwDOKYhvW88AAAABZzOrMA&quot;, &quot;LA_kwDOKYhvW88AAAABZzPGkQ&quot;])</span></span>
-<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;chatgpt training&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> Marian Klose</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">    echo: true</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">    message: true</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">    warning: true</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">    html:</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">        toc: true</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">        code-fold: show</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">        code-tools: true</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">        number-sections: true</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">        embed-resources: true</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preamble</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Library</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co"># import own custom functions</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functions <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## PAT / API Tokens</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="co"># define pats and api tokens safely via gitignored file </span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> my_secrets <span class="im">import</span> gh_api_token</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> my_secrets <span class="im">import</span> ai_api_token</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## Global Options and Parameters</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a><span class="co"># define if we want to actually create discussions or just test</span></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>create_dis_bool <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Define repository and category IDs</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>repository_id <span class="op">=</span> <span class="st">&#39;R_kgDOKYhvWw&#39;</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>category_id <span class="op">=</span> <span class="st">&#39;DIC_kwDOKYhvW84CZobi&#39;</span></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Hardcoded dictionary for email classification categories</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>category_dict <span class="op">=</span> {</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Announcements&quot;</span>: <span class="st">&quot;DIC_kwDOKYhvW84CZvWP&quot;</span>,</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Open Positions&quot;</span>: <span class="st">&quot;DIC_kwDOKYhvW84CZvWQ&quot;</span>,</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Technicalities&quot;</span>: <span class="st">&quot;DIC_kwDOKYhvW84CZvWX&quot;</span>,</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Others&quot;</span>: <span class="st">&quot;DIC_kwDOKYhvW84CZvWY&quot;</span></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="co"># define categories for eamil classification</span></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> <span class="bu">list</span>(category_dict.keys())</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a><span class="co"># define chatgpt model</span></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="st">&quot;gpt-3.5-turbo&quot;</span></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="co"># model = &quot;gpt-4&quot;</span></span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="co"># sample vector of message IDs</span></span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>n_msg <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>recent_id <span class="op">=</span> <span class="dv">8687</span></span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>my_array <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, recent_id))</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> random.sample(my_array, n_msg)</span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="fu"># Scraping</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fetching List of Messages</span></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert numerics to strings and paste 0 in front</span></span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>msg_ids <span class="op">=</span> [<span class="bu">str</span>(num).zfill(<span class="dv">5</span>) <span class="cf">for</span> num <span class="kw">in</span> msg_ids]</span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="co"># show</span></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>msg_ids</span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an empty dictionary to hold the msg information</span></span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>msg <span class="op">=</span> {}</span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each msg id, extract the details and append</span></span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> msg_ids:</span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fetch the details</span></span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>    single_msg <span class="op">=</span> fetch_details(<span class="bu">id</span>)</span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append to msg</span></span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>    msg[<span class="bu">id</span>] <span class="op">=</span> single_msg</span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract threads</span></span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>thread_dict <span class="op">=</span> extract_threads(msg)</span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch any missing messages in the threads</span></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>fetch_missing_messages(thread_dict, msg)</span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a><span class="co"># print the result</span></span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>pprint(thread_dict, indent<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a><span class="fu">## Create Training Dataset</span></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="co"># init data lis t</span></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>data_list <span class="op">=</span> []</span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each element in the dictionary</span></span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> thread_id, thread_info <span class="kw">in</span> thread_dict.items():</span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define initial message id</span></span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>    inital_msg_id <span class="op">=</span> thread_info[<span class="st">&#39;ids&#39;</span>][<span class="dv">0</span>]</span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>    <span class="co"># retrieve initial thread starting message</span></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a>    cur_msg <span class="op">=</span> msg[inital_msg_id]</span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>    <span class="co"># store data from message</span></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> {</span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;id&#39;</span>: cur_msg[<span class="st">&#39;id&#39;</span>],</span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;date&#39;</span>: cur_msg[<span class="st">&#39;date&#39;</span>],</span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;subject&#39;</span>: cur_msg[<span class="st">&#39;subject&#39;</span>],</span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;message&#39;</span>: cur_msg[<span class="st">&#39;message&#39;</span>]</span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>    <span class="co"># append data to list</span></span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a>    data_list.append(data)</span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the list of dictionaries into a pandas DataFrame</span></span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data_list)</span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the DataFrame to a CSV file</span></span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">&#39;train_df_raw.csv&#39;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="co"># print the result</span></span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a>pprint(df, indent<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

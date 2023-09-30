@@ -172,7 +172,11 @@ def extract_threads(messages_dict):
         thread_message_ids = msg['thread_message_ids']
         
         # add threads
-        thread_dict[thread_id] = thread_message_ids
+        thread_dict[thread_id] = {
+            'ids': thread_message_ids if thread_message_ids else None, # assuming there's only one id or None in the list
+            'category': None, # placeholder
+            'labels': None     # placeholder
+        }
         thread_id += 1
         
         # Mark all messages in this thread as seen
@@ -186,9 +190,14 @@ def extract_threads(messages_dict):
 
 # Function to fetch missing messages in thread_dict and add them to msg dictionary
 def fetch_missing_messages(thread_dict, msg):
-    for thread_id, msg_list in thread_dict.items():
-        for msg_id in msg_list:
-            if msg_id not in msg:
+    for thread_id, thread_info in thread_dict.items():
+        msg_ids = thread_info['ids']
+        for msg_id in msg_ids:
+            if msg_id not in msg:  
+
+                # print statement
+                print("fetch_missing_messages: fetching message " + msg_id)
+
                 # Fetch missing message details
                 fetched_msg = fetch_details(msg_id)
                 
