@@ -41,9 +41,12 @@ from secrets import gh_api_token
 from secrets import ai_api_token
 ```
 
-## Global Parameters
+## Global Options and Parameters
 
 ```{python}
+# define if we want to actually create discussions or just test
+create_dis_bool = False
+
 # Define repository and category IDs
 repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
@@ -129,61 +132,63 @@ for thread_id, msg_list in thread_dict.items():
 ## Loop Through Threads
 
 ```{python}	
-# Loop through each element in the dictionary
-for thread_id, msg_list in thread_dict.items():
-    # define id
-    id = msg_list[0]
+# check if we want to actually create discussions or just test
+if create_dis_bool:
+    # Loop through each element in the dictionary
+    for thread_id, msg_list in thread_dict.items():
+        # define id
+        id = msg_list[0]
 
-    # retrieve message
-    cur_msg = msg[id]
+        # retrieve message
+        cur_msg = msg[id]
 
-    # retrieve category from openai
-    category = get_chat_completion(
-        api_key = ai_api_token,
-        categories = categories,
-        message_text = cur_msg['subject'],
-        model = model
-    )
+        # retrieve category from openai
+        category = get_chat_completion(
+            api_key = ai_api_token,
+            categories = categories,
+            message_text = cur_msg['subject'],
+            model = model
+        )
 
-    # get category_id from category_dict
-    category_id = category_dict[category]
+        # get category_id from category_dict
+        category_id = category_dict[category]
 
-    # create discussion for id and store output
-    dis_out = create_discussion(
-        api_token=gh_api_token,
-        title=cur_msg['subject'],
-        body=cur_msg['message'],
-        date=cur_msg['date'],
-        author=cur_msg['author'],
-        repository_id = repository_id,
-        category_id = category_id
-    )
+        # create discussion for id and store output
+        dis_out = create_discussion(
+            api_token=gh_api_token,
+            title=cur_msg['subject'],
+            body=cur_msg['message'],
+            date=cur_msg['date'],
+            author=cur_msg['author'],
+            repository_id = repository_id,
+            category_id = category_id
+        )
 
-    # output to console
-    print(f'Created discussion {dis_out["data"]["createDiscussion"]["discussion"]["id"]} for message {id}.')
+        # output to console
+        print(f'Created discussion {dis_out["data"]["createDiscussion"]["discussion"]["id"]} for message {id}.')
 
-    # store freshly created discussion id
-    dis_id = dis_out['data']['createDiscussion']['discussion']['id']
+        # store freshly created discussion id
+        dis_id = dis_out['data']['createDiscussion']['discussion']['id']
 
-    # check if thread has more than one message
-    if len(msg_list) > 1:
-        # loop through all messages in thread
-        for msg_id in msg_list[1:]:
-            # retrieve message
-            cur_msg = msg[msg_id]
+        # check if thread has more than one message
+        if len(msg_list) > 1:
+            # loop through all messages in thread
+            for msg_id in msg_list[1:]:
+                # retrieve message
+                cur_msg = msg[msg_id]
 
-            # add comment to discussion
-            add_comment_to_discussion(
-                api_token=gh_api_token,
-                discussion_id=dis_id,
-                body=cur_msg['message'],
-                date=cur_msg['date'],
-                author=cur_msg['author'],
-                silent=False
-            )
-            
-            # output to console
-            print(f'Added comment to discussion {dis_id} for message {msg_id}.')
+                # add comment to discussion
+                add_comment_to_discussion(
+                    api_token=gh_api_token,
+                    discussion_id=dis_id,
+                    body=cur_msg['message'],
+                    date=cur_msg['date'],
+                    author=cur_msg['author'],
+                    silent=False
+                )
+                
+                # output to console
+                print(f'Added comment to discussion {dis_id} for message {msg_id}.')
 
 ```
 
