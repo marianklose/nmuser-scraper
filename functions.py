@@ -1,5 +1,14 @@
 
+# load packages
+import openai
+import requests
+import json
+from bs4 import BeautifulSoup
+from pprint import pprint
+
+######################################################################################
 ############################### fetch_details ########################################
+######################################################################################
 
 # define fetching function based on msg number
 def fetch_details(msg_number):
@@ -59,7 +68,10 @@ def fetch_details(msg_number):
 
     return details
 
+
+######################################################################################
 ############################### create_discussion ####################################
+######################################################################################
 
 # define function to create discussion in GitHub repo
 def create_discussion(api_token, repository_id, category_id, date, author, title, body):
@@ -93,7 +105,10 @@ def create_discussion(api_token, repository_id, category_id, date, author, title
     # return response text and store as dict
     return json.loads(r.text)
 
+
+#######################################################################################
 ############################ add_comment_to_discussion ################################
+#######################################################################################
 
 # Function to add a comment to an existing discussion in GitHub
 def add_comment_to_discussion(api_token, discussion_id, body, date, author, silent):
@@ -134,8 +149,9 @@ def add_comment_to_discussion(api_token, discussion_id, body, date, author, sile
     if not silent:
         print(r.text + "\n")
 
-
+#######################################################################################
 ################################ extract_threads ######################################
+#######################################################################################
 
 # function to extract the threads from a list of messages
 def extract_threads(messages_dict):
@@ -164,8 +180,9 @@ def extract_threads(messages_dict):
             
     return thread_dict
 
-
-############################### fetch_missing_messages ###############################
+#######################################################################################
+############################### fetch_missing_messages ################################
+#######################################################################################
 
 # Function to fetch missing messages in thread_dict and add them to msg dictionary
 def fetch_missing_messages(thread_dict, msg):
@@ -179,7 +196,10 @@ def fetch_missing_messages(thread_dict, msg):
                 msg[msg_id] = fetched_msg
 
 
-############################### delete_discussion ###################################
+
+#######################################################################################
+############################### delete_discussion #####################################
+#######################################################################################
 
 # Function to delete a discussion by its ID
 def delete_discussion(api_token, discussion_id):
@@ -209,7 +229,10 @@ def delete_discussion(api_token, discussion_id):
         print(f'Failed to delete discussion with ID {discussion_id}. Error: {r.text}')
 
 
-############################### list_all_discussions #################################
+
+#######################################################################################
+############################### list_all_discussions ##################################
+#######################################################################################
 
 # Function to list all discussions by repository ID
 def list_all_discussions(api_token, repository_id):
@@ -249,8 +272,9 @@ def list_all_discussions(api_token, repository_id):
 
     return discussions
 
-
-############################### get_chat_completion #################################
+#######################################################################################
+############################### get_chat_completion ###################################
+#######################################################################################
 
 def get_chat_completion(api_key, categories, message_text, model):
 
@@ -273,7 +297,10 @@ def get_chat_completion(api_key, categories, message_text, model):
     return chat_completion["choices"][0]["message"]["content"]
 
 
-############################### add_labels_to_discussion #################################
+
+###########################################################################################
+############################### add_labels_to_discussion ##################################
+###########################################################################################
 
 # Function to add a set of labels to an existing discussion in GitHub
 def add_labels_to_discussion(api_token, discussion_id, labels):
