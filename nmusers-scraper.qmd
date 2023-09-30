@@ -62,11 +62,9 @@ categories = list(category_dict.keys())
 
 # Define most recent message ID
 recent_id = 8687
-# recent_id = 8677
 
 # define id where to stop
-# stop_id = 8664
-stop_id = 8655
+stop_id = 8686
 
 # Define number of messages we want to retrieve (for testing)
 n_msg = (recent_id - stop_id)+1
@@ -350,6 +348,41 @@ def get_chat_completion(api_key, categories, message_text, model):
     return chat_completion["choices"][0]["message"]["content"]
 
 
+############################### add_labels_to_discussion #################################
+
+# Function to add a set of labels to an existing discussion in GitHub
+def add_labels_to_discussion(api_token, discussion_id, labels):
+    # Define GraphQL URL
+    url = 'https://api.github.com/graphql'
+    
+    # Convert the list of labels to GraphQL array format
+    graphql_labels = json.dumps(labels)
+    
+    # Define GraphQL query for adding labels
+    query = f'''
+    mutation{{
+        addLabelsToLabelable(input: {{ labelableId: "{discussion_id}", labelIds: {graphql_labels} }}) {{
+            clientMutationId
+        }}
+    }}
+    '''
+    
+    # Define JSON payload
+    json_payload = {'query': query}
+    
+    # Define headers
+    headers = {'Authorization': f'token {api_token}'}
+    
+    # Make POST request
+    r = requests.post(url=url, json=json_payload, headers=headers)
+    
+    # Check for errors
+    if r.status_code == 200:
+        print(f'Successfully added labels to discussion with ID {discussion_id}.')
+    else:
+        print(f'Failed to add labels to discussion with ID {discussion_id}. Error: {r.text}')
+
+
 ```
 
 # Scraping
@@ -475,4 +508,7 @@ for dis_id, title in all_discussions:
 # email_content = "[NMusers] 2023 Virtual Training Course on PKPD of Protein Therapeutics, November 28-30 "
 # classification = get_chat_completion(api_key = ai_api_token, categories = categories, message_text = email_content)
 # print(classification)
+
+
+add_labels_to_discussion(api_token = gh_api_token, discussion_id = "D_kwDOKYhvW84AVshP" , labels = ["LA_kwDOKYhvW88AAAABZzOrMA", "LA_kwDOKYhvW88AAAABZzPGkQ"])
 ```
