@@ -33,7 +33,7 @@ from pprint import pprint
 import functions
 ```
 
-## PAT Token
+## PAT / API Tokens
 
 ```{python}
 # define pats and api tokens safely via gitignored file 
@@ -56,12 +56,12 @@ category_dict = {
     "Others": "DIC_kwDOKYhvW84CZvWY"
 }
 
-# define chatgpt model
-# model = "gpt-3.5-turbo"
-model = "gpt-4"
-
 # define categories for eamil classification
 categories = list(category_dict.keys())
+
+# define chatgpt model
+model = "gpt-3.5-turbo"
+# model = "gpt-4"
 
 # Define most recent message ID
 recent_id = 8687
@@ -112,6 +112,19 @@ fetch_missing_messages(thread_dict, msg)
 pprint(thread_dict, indent=4)
 ```
 
+
+## Adding ChatGPT Classification and Labels
+
+```{python}
+# Loop through each element in the dictionary
+for thread_id, msg_list in thread_dict.items():
+    # define id
+    print(thread_id)
+    print(msg_list)
+```
+
+
+# Create Discussions
 
 ## Loop Through Threads
 
@@ -189,6 +202,7 @@ for dis_id, title in all_discussions:
 ```
 
 
+# Tests
 
 ## OpenAi Test
 
