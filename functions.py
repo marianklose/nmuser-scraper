@@ -11,7 +11,7 @@ from pprint import pprint
 ######################################################################################
 
 # define fetching function based on msg number
-def fetch_details(msg_number):
+def fetch_details(msg_number, headers, timeout):
     # Initialize an empty dictionary to hold the details
     details = {}
 
@@ -22,7 +22,7 @@ def fetch_details(msg_number):
     url = f"https://www.mail-archive.com/nmusers@globomaxnm.com/msg{msg_number}.html"
     
     # Fetch the HTML content from the URL
-    response = requests.get(url)
+    response = requests.get(url, headers = headers, timeout = timeout)
     page_content = response.text
     
     # Initialize a BeautifulSoup object and specify the parser
@@ -53,8 +53,10 @@ def fetch_details(msg_number):
 
     # Extract the subject
     subject_tag = soup.select_one('span.subject span[itemprop="name"]')
-    if subject_tag:
+    if subject_tag and subject_tag.text.strip():
         details['subject'] = subject_tag.text.strip()
+    else:
+        details['subject'] = "no title"
 
     # Extract the author
     author_tag = soup.select_one('span.sender span[itemprop="name"]')
@@ -189,7 +191,7 @@ def extract_threads(messages_dict):
 #######################################################################################
 
 # Function to fetch missing messages in thread_dict and add them to msg dictionary
-def fetch_missing_messages(thread_dict, msg):
+def fetch_missing_messages(thread_dict, msg, headers, timeout):
     for thread_id, thread_info in thread_dict.items():
         msg_ids = thread_info['ids']
         for msg_id in msg_ids:
@@ -199,7 +201,7 @@ def fetch_missing_messages(thread_dict, msg):
                 print("fetch_missing_messages: fetching message " + msg_id)
 
                 # Fetch missing message details
-                fetched_msg = fetch_details(msg_id)
+                fetched_msg = fetch_details(msg_id, headers = headers, timeout = timeout)
                 
                 # Add the fetched message to msg dictionary
                 msg[msg_id] = fetched_msg

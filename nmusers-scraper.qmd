@@ -51,6 +51,14 @@ create_dis_bool = False
 repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
 
+# add headers to requests
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.3'
+}
+
+# define time until the request times out
+timeout = 60
+
 # Hardcoded dictionary for email classification categories
 category_dict = {
     "Announcements": "DIC_kwDOKYhvW84CZvWP",
@@ -99,7 +107,7 @@ msg = {}
 for id in msg_ids:
 
     # Fetch the details
-    single_msg = fetch_details(id)
+    single_msg = fetch_details(msg_number = id, headers = headers)
 
     # Append to msg
     msg[id] = single_msg
