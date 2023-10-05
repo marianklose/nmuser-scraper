@@ -59,6 +59,9 @@ headers = {
 # define time until the request times out
 timeout = 60
 
+# define max number of retries when scraping
+retries = 3
+
 # Hardcoded dictionary for email classification categories
 category_dict = {
     "Announcements": "DIC_kwDOKYhvW84CZvWP",
@@ -107,7 +110,12 @@ msg = {}
 for id in msg_ids:
 
     # Fetch the details
-    single_msg = fetch_details(msg_number = id, headers = headers)
+    single_msg = fetch_details(
+        msg_number = id,
+        headers = headers,
+        timeout = timeout,
+        retries = retries
+    )
 
     # Append to msg
     msg[id] = single_msg
@@ -117,7 +125,13 @@ for id in msg_ids:
 thread_dict = extract_threads(msg)
 
 # Fetch any missing messages in the threads
-fetch_missing_messages(thread_dict, msg)
+fetch_missing_messages(
+    thread_dict = thread_dict,
+    msg = msg,
+    headers = headers,
+    timeout = timeout,
+    retries = retries
+)
 
 # print the result
 pprint(thread_dict, indent=4)

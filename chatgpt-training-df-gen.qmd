@@ -61,6 +61,12 @@ headers = {
 # define time until the request times out
 timeout = 60
 
+# define max number of retries when scraping
+retries = 3
+
+# define sleep time
+sleep_time = 0.5
+
 # Hardcoded dictionary for email classification categories
 category_dict = {
     "Announcements": "DIC_kwDOKYhvW84CZvWP",
@@ -77,8 +83,8 @@ model = "gpt-3.5-turbo"
 # model = "gpt-4"
 
 # sample vector of message IDs
-n_msg = 5
-recent_id = 8687
+n_msg = 50
+recent_id = 8691
 my_array = list(range(1, recent_id))
 msg_ids = random.sample(my_array, n_msg)
 ```
@@ -105,8 +111,12 @@ for id in msg_ids:
     single_msg = fetch_details(
         msg_number = id,
         headers = headers,
-        timeout = timeout
+        timeout = timeout,
+        retries = retries
     )
+
+    # sleep for n seconds
+    time.sleep(sleep_time)
 
     # Append to msg
     msg[id] = single_msg
@@ -120,7 +130,9 @@ fetch_missing_messages(
     thread_dict = thread_dict,
     msg = msg,
     headers = headers,
-    timeout = timeout
+    timeout = timeout,
+    retries = retries,
+    first_only = True
 )
 
 # print the result
@@ -132,7 +144,7 @@ pprint(thread_dict, indent=4)
 ## Create Training Dataset
 
 ```{python}
-# init data lis t
+# init data list
 data_list = []
 
 # Loop through each element in the dictionary
@@ -157,6 +169,10 @@ for thread_id, thread_info in thread_dict.items():
 
 # Convert the list of dictionaries into a pandas DataFrame
 df = pd.DataFrame(data_list)
+
+# add empty column for labels and category
+df['category'] = ''
+df['labels'] = ''
 
 # Save the DataFrame to a CSV file
 df.to_csv('train_df_raw.csv', index=False)

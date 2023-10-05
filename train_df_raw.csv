@@ -1,93 +1,890 @@
-id,date,subject,message
-04570,"Wed, 12 Jun 2013 16:50:35 -0700",[NMusers] Workshop on Pharmacometrics,"Dear Colleagues,
+id,date,subject,message,category,labels
+7122,"Thu, 14 Jun 2018 08:18:48 -0700",[NMusers] Clinical Trial Graphics in ggplot2 & Clinical Trial Simulations in R public training course Boston MA & R for PK public course London UK -Mango Solutions,"Hi Everyone
 
- 
+Mango Solutions will be hosting:
+A two day Pharma focused training course in Boston MA on the 14th & 15th 
+November. This will follow on from our Boston Enterprise Applications of the R 
+Language (EARL) conference  
+www.earl-conference.com<http://www.earl-conference.com>
+The course content will cover:
 
-Registration is open for the third   <http://pharmacometrica.webs.com>
-Workshop on Pharmacometrics as a tool for optimizing drug development,
-Château de Longcol, La Fouillade (France), October 28-21, 2013,
-<http://www.pharmacometrica.webs.com> http://www.pharmacometrica.webs.com
+Clinical Trial Graphics in ggplot2- (day one).
+This one day course is designed to introduce to those already familiar with the 
+basics of R, the ggplot2 package for visualisation. This course also includes 
+the basics of getting data into the right format for plotting with ggplot2- 
+SPACES AVAILABLE
+Clinical Trial Simulations in R - (day two).
+A one day course aimed at introducing how simulation can be performed in R. 
+With a focus on Clinical Trial Simulation, this course will introduce 
+simulation from scratch and work through the tools available to simplify common 
+simulation tasks.- SPACES AVAILABLE
 
- 
+We will also be hosting a two day Pharma focused training course in the 
+Heathrow area of London on the 20th & 21st of  November 2018- NEW DATES 
+ANNOUNCED!
+Our 2 day Intro to R for PK course is designed to introduce existing R users to 
+tools and techniques for enhancing their work in the Pharma industry, with an 
+emphasis on Pharmacometrics
 
-The workshop is intended for scientists in the pharmaceutical industry,
-regulatory agencies, contract research organizations, and academia who are
-expected to implement and apply model-based approach and to deploy
-innovative pharmacometrics concepts and strategies for better supporting and
-increasing the efficiency of drug development. 
-
- 
-
-A Clinical Trial Simulator developed in R will be used to illustrate the use
-of R in  pharmacometrics, the population PK and PK/PD concepts, the
-relevance of the inter and intra subject variability and the impact of
-covariates on the clinical trial outcomes. As a working example, the
-simulator will be used to generate data of a virtual clinical trial in
-non-small cell lung cancer. The model will include a semi-mechanistic PK/PD
-tumor growth component, the link between PK and adverse events and the link
-between tumor growth and survival. The simulated virtual data will then be
-used in a population analysis in NONMEM. The R scripts (including the trial
-simulator) and the NONMEM control streams used will be distributed to the
-participants. 
-
- 
-
-For more information about the course, including the daily schedule, please
-visit the workshop website:  <http://pharmacometrica.webs.com>
-http://pharmacometrica.webs.com.
-
- 
-
-Workshop venue: Château de Longcol (France):
-<http://www.chateaudelongcol.com> www.chateaudelongcol.com
-
- 
-
-Roberto Gomeni, PhD HDR
-
-PharmacoMetrica
-
-Longcol, 12270 La Fouillade (France)
-
-E-mail:  <mailto:roberto.gom...@pharmacometrica.com>
-roberto.gom...@pharmacometrica.com
-
-Mobile: +33(0) 760 45 1976
-
-Fax: +33 (0) 983 23 3188
-
- <http://www.pharmacometrica.com/> www.pharmacometrica.com"
-05836,"Fri, 23 Oct 2015 07:11:59 -0700",[NMusers] Mark Your Calendars!  Hold the Dates! ICON NONMEM/PDxPoP Workshops for 2016,"The following workshops are being planned for 2016:
-
-March 1-3 - San Francisco, California - 3-day NONMEM/PDxPoP Workshop
-
-April 12-14 - Howard County Maryland - 3-day NONMEM/PDxPoP Workshop
-
-June (Date TBD) - 1 Day Advanced Methods NONMEM workshop - PAGE 2016 - Lisbon, 
-Portugal
-
-September 13-15 - Howard County Maryland - 3-day NONMEM/PDxPoP Workshop
-
-October (Date TBD) - 1 Day Advanced Methods NONMEM Workshop - ACoP 2016 - 
-Seattle, Washington
-
-If you are interested in any of the dates listed or have questions about the 
-workshops, please contact me at:  
-lisa.wilh...@iconplc.com<mailto:lisa.wilh...@iconplc.com>
-
-Kind regards,
+For full course details and pricing please email: 
+pha...@mango-solutions.com<mailto:pha...@mango-solutions.com>
+Commercial and Academic rates are available.
 
 
-Lisa R. Wilhelm-Lear
-Customer Service Lead
-NONMEM & PDxPoP Software
-ICON
+Kind regards
+Christina
 
-Please note my new phone number:
-External Tel:   301-944-6771
-Internal Tel: 7210 6771
-Fax:  215-789-9549
-Web:  www.iconplc.com
+
+
+
+
+--
+
+LEGAL NOTICE
+
+This message is intended for the use of the named recipient(s) only and may 
+contain
+confidential and / or privileged information. If you are not the intended 
+recipient, please
+contact the sender and delete this message. Any unauthorised use of the 
+information
+contained in this message is prohibited.
+
+Mango Business Solutions Limited is registered in England under No. 4560258 
+with its
+registered office at Suite 3, Middlesex House, Rutherford Close, Stevenage, 
+Herts, SG1 2EF,
+UK.
+
+PLEASE CONSIDER THE ENVIRONMENT BEFORE PRINTING THIS EMAIL",Announcements,workshop
+8597,"Wed, 12 Apr 2023 01:35:40 -0700",[NMusers] Invitation to 2nd pre-PAGE Educational Pharmacometrics Summer Symposium,"Dear NMusers,
+
+
+
+We are pleased to invite you to the upcoming second *Educational
+Pharmacometrics Summer Symposium *(EPSS), which will be held on *27 June
+2023*, at the *University of A Coruña*, close to PAGE venue. This one-day
+symposium will bring together experts and professionals in the field of
+pharmacometrics (PMx) to give an overview of *what PMx is* and *how it can
+contribute to model-informed drug development and therapy individualisation*
+(programme
+<https://drive.google.com/file/d/1TEX-cvnhsUj2bmmgLvKdJ_Bef86eGloo/view?usp=share_link>
+).
+
+
+
+In short, the symposium will begin with a brief introduction to PMx,
+followed by a discussion on the use of PMx in drug development, covering
+preclinical and clinical applications, and also give an introduction to
+mechanistic models. After lunch and networking, the use of PMx to optimise
+and personalise treatment will be presented, followed by PMx case studies,
+which will be based on submitted student abstracts. The symposium will
+conclude with a short group work session. With speakers from academia,
+pharmaceutical industry and consultancy, this event covers a broad range of
+PMx roles and may also be a great opportunity for those looking for the
+next step in their career development.
+
+
+
+The symposium is *intended for* students from all natural sciences (Master
+and PhD), postdocs, and others with an interest in pharmacometrics, such
+as, clinical pharmacists, clinicians, mathematicians, statisticians, or
+colleagues from industry.
+
+
+
+Students or postdocs/trainees may *apply to present their original
+PMx-related work* as a part of the symposium (submitted abstract should not
+exceed 4,500 characters, including spaces, and may be the same as for the
+PAGE meeting); *abstract submission deadline is 31 May 2023*. The
+participation is *free of charge *and limited to 70 participants. Light
+lunch and coffee will be provided. To register please follow this link
+<https://forms.gle/hLK7c2jkNRgaHT6T8> (open *until 31 May 2023*). *Based on
+last year’s very positive feedback, register early to avoid missing out*.
+For more information, please do not hesitate to contact us at
+2nde...@gmail.com.
+
+
+
+Best wishes,
+Eva
+
+
+
+On behalf of the EPSS organisers:
+
+Eva Germovsek (Boehringer Ingelheim),
+
+Jurij Aguiar Zdovc (Pharmetheus),
+
+Natalia Riva (University of Navarra)",Announcements,"networking, conference"
+2379,"Mon, 22 Feb 2010 08:38:20 -0800","[NMusers] How to calculate t1/2, z?","I have a three-compartment model. Dose anyone know how to calculate the
+terminal half life (t1/2, Z) using the finial estimates (V2, V3, V4, CL2,
+CL3, and CL4)?
+
+t1/2, z= ln2*Varea/CL, should Varea =V2+V3+V4? How about CL?
+
+Thank you!
+
+Li",Technicalities,"half-life, 3cmt"
+6503,"Fri, 13 Jan 2017 07:26:04 -0800",[NMusers] Error with SAEM and LIKE Option,"Dear All, I get error while using SAEM estimation method for repeated time to 
+event model. But, the same model runs well with LAPLACE. Could you suggest what 
+I am missing below. 
+This $EST runs well$ESTIMATION MAXEVAL=999 METHOD=COND LAPLACE LIKE PRINT=1
+
+Following $EST method fails with the following error $EST METHOD=SAEM LAP LIKE 
+NBURN=1000 NITER=1000 PRINT=200 IACCEPT=0.2 CTYPE=3 CINTERVAL=10 $EST 
+METHOD=IMP LAPLACE CTYPE=3 CINTERVAL=1 NITER=300 IACCEPT=0.2 DF=6 SEED=123
+Error (WARNING  121) INTERACTION IS IMPLIED WITH EM/BAYES ESTIMATION METHODS
+AN ERROR WAS FOUND IN THE CONTROL STATEMENTS.
+545  $ESTIM: ""INTERACTION"" CANNOT BE USED WITH ""LIKE"" OR ""-2LL"".
+Varun",Technicalities,"estimation, SAEM, LAPLACE, NONMEM, error"
+4737,"Thu, 19 Sep 2013 12:39:23 -0700",[NMusers] Parameter Estimation in IF Conditioning Statement,"Dear NONMEM users,
+
+My goal was to add a drug effect to a disease progression model in a way that 
+the drug effect is different when a certain threshold concentration is exceeded 
+(similarly to modeling a 'hockey-stick' when performing covariate analysis). 
+First, I did it in the following way (partial simplified code)
+
+$PRED
+
+THRESH = THETA(1) ;threshold concentration
+
+INT = THETA(2)+ ETA(1)
+
+IF(WCMIN.LE.THRESH) SLOPE = THETA(3)+THETA(4)*CONC+ETA(2)
+IF(WCMIN.GT.THRESH) SLOPE = THETA(3)+THETA(5)*CONC+ETA(2)
+
+IPRED=INT+SLOPE*TIME
+
+and NONMEM did not manage to estimate THRESH=THETA(1) (i.e., the initial 
+estimate did not change during minimization and the gradient was zero 
+throughout). I tried this for several different initial estimates.
+
+I then centered the observed CONC on THRESH and run the following model because 
+colleagues mentioned that they have successfully run a 'hockey-stick' 
+estimating the threshold parameter  (partial simplified code)
+
+IF(WCMIN.LE.THRESH) SLOPE = THETA(3)+THETA(4)*(CONC-THRESH)+ETA(2)
+IF(WCMIN.GT.THRESH) SLOPE = THETA(3)+THETA(5)*(CONC- THRESH)+ETA(2)
+
+This time, NONMEM provided very reasonable estimates for all model parameters 
+and the covariance step was successful.
+
+I wonder now if the centering of the variable (and hence something particular 
+to the data set) caused the difference in estimability of the threshold 
+parameter or whether NONMEN cannot estimate parameters that only occur in the 
+conditioning part of the IF statement (Note that after centering THRESH also 
+appears in another part of the code).
+
+Could somebody please provide some insight on this? I have searched in the 
+NONMEM user group but could not find anything.
+
+
+Mit freundlichen Grüßen / Kind regards,
+Dr. Benjamin Weber
+
+Boehringer Ingelheim Pharma GmbH & Co. KG
+Translational Medicine
+Tel.: +49 (7351) 54-143520
+Fax: +49 (7351) 83-143520
+mailto:benjamin.we...@boehringer-ingelheim.com
+
+Boehringer Ingelheim Pharma GmbH & Co. KG, Sitz: Ingelheim am Rhein; 
+Registergericht Mainz: HR A 22206; Komplementär Boehringer Ingelheim 
+Deutschland GmbH; Geschäftsführung: Dr. Engelbert Günster (Vorsitzender),  
+Ursula Fuggis-Hahn, Ralf Gorniak,  Michael Klein, Dr. Martin Wanning; 
+Vorsitzender des Aufsichtsrates: Dr. Joachim Hasenmaier; Sitz: Ingelheim am 
+Rhein; Registergericht Mainz: HR B 23260
+
+Diese E-Mail ist vertraulich zu behandeln. Sie kann besonderem rechtlichem 
+Schutz unterliegen. Wenn Sie nicht der richtige Adressat sind, senden Sie bitte 
+diese E-Mail an den Absender zurück, löschen die eingegangene E-Mail und geben 
+den Inhalt der E-Mail nicht weiter. Jegliche unbefugte Bearbeitung, Nutzung, 
+Vervielfältigung oder Verbreitung ist verboten. / This e-mail is confidential 
+and may also be legally privileged. If you are not the intended recipient 
+please reply to sender, delete the e-mail and do not disclose its contents to 
+any person. Any unauthorized review, use, disclosure, copying or distribution 
+is strictly prohibited.",Technicalities,"disease-progression, error, NONMEM, hockey-stick, pharmacodynamics "
+5201,"Thu, 21 Aug 2014 07:54:12 -0700",[NMusers] Warning: PARAMETER ESTIMATE IS NEAR ITS BOUNDARY,"Dear nmusers,
+
+I have a trouble in solving this warning error despite of going through all
+old post in this forum.
+I have used the initial estimates from WINONLIN parameter estimates,
+Tried median and means as initial estimates (IEs).
+
+$EST METHOD=1 INTERACTION PRINT=5 MAX=9999 SIG=3 POSTHOC
+MSFO=1cm_mixture.msf NOABORT
+
+As mentioned earlier by Tom Ludden & Scot Van Wart, I have tried everything
+they suggested,  but still no luck
+
+$EST METHOD=CONDITIONAL INTER MAXEVAL=9999 PRINT=5    NOTHETABOUNDTEST
+NOOMEGABOUNDTEST NOSIGMABOUNDTEST
+
+1. I have tried the initial estimates of the last run as initial estimate
+for the next run
+
+2. I have changed the initial estimates around the IEs from winonlin run.
+
+3. I have changed the upper bounds, omega block  (several times)
+
+
+I appreciate your suggestions, thank you very  much in advance.
+
+
+Regards,
+Shankar Lanke Ph.D.
+
+$PK
+
+IF (MIXNUM.EQ.1)THEN
+   TVCL=THETA(1)
+   CL=TVCL*EXP(ETA(1))
+ELSE
+   TVCL=THETA(2)
+   CL=TVCL*EXP(ETA(2))
+ENDIF
+
+IF (MIXNUM.EQ.1)THEN
+   TVV=THETA(3)
+   V=TVV*EXP(ETA(3))
+ELSE
+   TVV=THETA(4)
+   V=TVV*EXP(ETA(4))
+ENDIF
+   S1=V
+$MIX
+  NSPOP=2
+  P(1)=THETA(5)
+  P(2)=1-P(1)
+
+$ERROR
+ DEL=0
+ IF (F.LE.0.0001) DEL=1
+ IPRE=F
+ W= IPRE +DEL
+ IRES= DV-IPRE
+ IWRE=IRES/W
+   Y = F + W*ERR(1)
+
+$EST METHOD=CONDITIONAL INTERACTION PRINT=5 MAX=9999 NOTHETABOUNDTEST
+NOOMEGABOUNDTEST NOSIGMABOUNDTEST SIG=3 POSTHOC MSFO=1cm_mixture.msf NOABORT
+$THETA
+
+  (0,22,1000);[CL MIXNUM-1]
+  (0,105,1000);[CL MIXNUM-2]
+  (0,20,1000);[V MIXNUM-1]
+  (0,44,1000);[V MIXNUM-2]
+  (0,0.5,1) ;[MIXEST]
+
+$OMEGA
+  0.0279 ;[P] omega(1,1)S
+  0.1 ;[P] omega(2,2)
+  0.1 ;
+  0.1 ;
+  0.1 ;
+
+$SIGMA
+  0.0755 ;[A] sigma(1,1)",Technicalities,"NONMEM, error, boundary, estimation"
+4748,"Fri, 27 Sep 2013 07:09:58 -0700",[NMusers] Pharmacometrics Network Benelux - Third meeting announcement,"Dear Colleagues,
+
+It is a pleasure to invite you for the third meeting of Pharmacometrics Network 
+Benelux.
+
+Please mark the following date and time in your agenda :
+
+When: Thursday, November 28th - 12:30 - 18:00
+Where: Astellas , Advagraf & Prograf rooms, Mirai House, Sylviusweg 62, 2333 BE 
+Leiden, The Netherlands
+Agenda theme: Modeling and simulation in pediatric drug development
+
+You can already register by sending an e-mail to Petra Bitter by Monday 
+November 25th.
+E-mail: petra.bit...@astellas.com<mailto:petra.bit...@astellas.com>. There is 
+no registration fee, but registration is required for participation.
+
+The format of the meeting will consist in 4 lectures and 2 ""work-in-progress"" 
+sessions as successfully applied last spring. We would like to foster the 
+interaction between participants and presenters with the work-in-progress 
+presentations and the audience will have opportunity to provide input and 
+direction. The meeting will include a light lunch, a coffee/tea break and some 
+drinks afterward.
+
+Preliminary Program
+Lectures
+Predicting  the efficacy of the Nanobody® ALX-0681 for the treatment of 
+acquired thrombotic thrombocytopenic purpura (TTP) in pediatric patients - 
+Massimiliano Germani, PhD, Ablynx
+Scaling PK to estimate first dose in children - Ashley Strougo, PhD, Astellas
+Model-based dosing rationale for darunavir when co-administered with low-dose 
+ritonavir in pediatric HIV-1 infected patients - Anne Brochot, MSc, Janssen
+
+Work in Progress:
+Pharmacokinetic modeling and dose optimization of the polyclonal antibody 
+Thymoglobulin in pediatric patients in stem cell transplantation setting - Rick 
+Admiraal, MD; Department of Pediatric Immunology, University Medical Center 
+Utrecht; Division of Pharmacology, LACDR, Leiden University; Department of 
+Pediatrics, Leiden University Medical Center, Leiden
+Challenges in the prediction of dosages for new drugs in pediatric patients: 
+the potential and limitations of application of semi-physiological models - 
+Prof Catherijne AJ Knibbe, PharmD PhD; Division of Pharmacology, LACDR, Leiden 
+University and St Antonius Hospital Nieuwegein
+
+
+There will be a security check when arriving at Astellas (ID required) and 
+participant will receive a badge. Also, the parking capacity is limited so we 
+encourage you to car pool or to use public transportation (Astellas premises 
+are located 15 min walking from Leiden Central Station). We will provide you 
+with route direction in the coming weeks.
+
+***CALL FOR PRESENTERS*** : We are still looking for a volunteer to present 
+some modeling work in pediatrics, please contact us 
+(abroc...@its.jnj.com<mailto:abroc...@its.jnj.com>) if you want to participate.
+
+
+We hope to see you in Leiden on November 28!
+
+Anne Brochot
+Eugène Cox
+Rik de Greef
+Charlotte van Kesteren
+Thomas Kerbusch
+Catherijne Knibbe
+Ron Mathôt
+Stefaan Rossenu
+Jan-Stefan Van der Walt
+An Vermeulen
+
+On Pharmacometrics Network Benelux: the initiative aims to connect 
+pharmacometricians in the Benelux (Belgium, Netherlands, Luxembourg). The 
+intention is to create an informal platform for the pharmacometric community in 
+this region of the world (in industry, academia, hospital pharmacies as well as 
+regulatory bodies), with the goal to promote professional and scientific 
+awareness and interactions.
+
+Stay tuned on our latest activity by joining our group on LinkedIn.",Announcements,
+1911,"Mon, 10 Aug 2009 05:38:46 -0700",[NMusers] dose non-proportional,"Dear NONMEM user,
+
+This may be an old topic. I newly subscribed to the mail list and I searched 
+the archives, but could not find the related answer.
+
+We have a compound, which showed a more-than-dose-proportional increase in SAD. 
+The slope from power model was ~1.4, the half-life is consistent in all the 
+cohorts though. Also in MAD, the accumulation was less than expected. Could you 
+please kindly instruct me how to incorporate these two factors in the NONMEM?
+
+I really appreciate your help!
+
+Regards,
+Xiaolu",Technicalities,
+4654,"Mon, 12 Aug 2013 09:24:38 -0700","[NMusers] Workshop on PK and PD Modeling Biologics in Baltimore, MD","Second announcement:
+
+Leonid and Ekaterina Gibiansky (QuantPharm LLC) will present the 
+workshop on Modeling of Biologics with Target-Mediated Disposition in 
+Maryland (near Baltimore), September 13, 2013.
+
+
+The workshop provides an overview of the PK of biologics, introduces 
+target-mediated drug disposition (TMDD) modeling concepts, and discusses 
+applications of TMDD modeling to drug development of biologics. Latest 
+developments such as modeling of antibody-drug conjugates and 
+immunogenicity, will be presented. NONMEM codes, inputs and outputs for 
+TMDD modeling are provided to the participants.
+
+
+More details can be found here:
+
+   http://www.quantpharm.com/Workshop.html
+
+The link below contains registration details:
+
+http://www.iconplc.com/news-events/events/workshops/a-1-day-workshop-on-model/index.xml
+
+
+This workshop is a part of a 4-day series organized by ICON Development
+Solutions:
+
+Days 1-2: Beginner/intermediate NONMEM / PDxPoP workshops (ICON)
+Day 3   : Advanced Nonmem workshop (ICON)
+Day 4   : Modeling Biologics with Target-Mediated Disposition (QuantPharm)
+
+You may register for days 1 & 2, day 3, and/or day 4 separately, 
+together, or in all possible combinations. If you are interested to 
+combine TMDD workshop with Nonmem worskops, you can review those and 
+register here:
+
+
+http://www.iconplc.com/news-events/events/workshops/
+
+
+Thanks!
+Leonid
+
+--------------------------------------
+Leonid Gibiansky, Ph.D.
+President, QuantPharm LLC
+web:    www.quantpharm.com
+e-mail: LGibiansky at quantpharm.com
+tel:    (301) 767 5566",Announcements,
+7865,"Tue, 07 Apr 2020 04:58:26 -0700","[NMusers] Free Webinar: ""Plug&Play"" Pharmacometric Computational Environment","“IQdesktop, a Qualified Virtual Modeling and Simulation Environment”,
+Wednesday, April 15th, 2020, 4:00 to 5:00 pm CEST
+
+Free Registration:
+https://zoom.us/webinar/register/WN_7CWrAWEfSyWD_kPy0UFptg
+
+*Overview*
+Reproducibility is a cornerstone of QSP and pharmacometric analyses. These
+analyses rely on an array of tools such as R (with packages), NONMEM,
+gfortran,
+PsN and on a given operating system (OS). Over time these tools and the OS
+are
+updated for compatibility reasons, bug fixing and introducing new features.
+Some of these updates can however alter the results or even break the code
+of
+previous analyses, and as such reproducibility fades over time. Changes in
+tools’ version can also be a challenge for reproducibility across different
+computing environments.
+
+IQdesktop (https://iqdesktop.intiquan.com) is a freely available
+pharmacometric
+computational environment which comes fully qualified and pre-installed
+with
+most pharmacometric and QSP tools such as MONOLIX, NONMEM, PsN, xpose, R
+and a
+CRAN snapshot (some tools require their own private licenses). Each
+IQdesktop
+image version contains a unique snapshot of the OS and tools’ version.
+IQdesktop relies on the latest virtualization and containerization
+techniques,
+allowing to easily install, scale and deploy different versions of the
+images
+on any host computer system.
+
+This webinar will address the following points:
+- Introduction to the concept of computational reproducibility
+- Introduction to containerization and IQdesktop
+- Live Demo of IQdesktop
+- Installation walkthrough
+- Q&A session
+
+Sincerely,
+
+Henning Schmidt
+On behalf of the IntiQuan team
+
+________________________________________________________________________________
+
+
+
+
+
+IntiQuan GmbH
+Spalenring 150
+4055 Basel, Switzerland
+Web: www.intiquan.com
+Tel: +41 76 603 28 06
+
+*Confidentiality Note: *This message is intended solely for the designated
+recipient(s). It may contain confidential or proprietary information and
+may be subject to attorney-client privilege or other confidentiality
+protections. If you are not a designated recipient you may not review, copy
+or distribute this message. If you receive this in error, please notify the
+sender by reply e-mail and delete this message. Thank you.
+
+*Data Protection & Privacy:* The IntiQuan Data Protection statement applies
+for all communication. You can view it here:
+https://www.intiquan.com/data-protection.
+
+IntiQuan GmbH | Managing Director: Dr. Henning Schmidt | Trade register:
+Basel Stadt CH-270.4.004.907-8 | UID: CHE-181.306.905",Software & Packages,
+4062,"Fri, 06 Jul 2012 09:00:30 -0700",[NMusers] Modeling targeted mediated drug disposition using Quasi-equilibrium model,"Dear users,
+
+
+
+I am working on monoclonal antibody exhibiting target mediated drug disposition 
+and trying to fit a quasi-equilibrium model described by Mager and Krzyzanski 
+[Pharm Res 22(10):1598]. In the paper, the quasi-equilibrium was fitted to 
+total drug conc. and total target conc. We observed total drug conc., total 
+target conc., and free target conc. I am trying to fit the model to not only 
+total drug conc. and total target conc. but also free target conc. 
+simutaneously. But I did not figure out how I can incorporate free target conc. 
+in the model using KD instead of Kon and Koff. Could anybody please give me 
+some suggestion or help? Thank you.
+
+
+
+Best,
+
+Xiaofeng",Technicalities,
+5164,"Tue, 08 Jul 2014 03:40:30 -0700","[NMusers] CHDR: Introduction course to Population PK and PK/PD modeling with	 NONMEM","Centre for Human Drug Research: Introduction course to Population PK and PK/PD 
+modeling with NONMEM
+This hands-on course is an introduction to population modeling for analyzing 
+pharmacokinetic and pharmacodynamic data and discusses the general concept of 
+population modeling and the application in drug development. It includes a 
+series of hands-on examples, which enables the attendees to learn to work with 
+NONMEM and R to solve standard pharmacokinetic and pharmacodynamic problems, 
+including data file preparation, model coding, and visualization/interpretation 
+of the results. 
+Target Audience
+The course is intended for people who have basic knowledge of PK/PD concepts 
+and data analysis and wish to apply/extend their knowledge and skills on 
+pharmacokinetics and pharmacodynamics in drug development. 
+Course Objectives 
+Aim of the course is to familiarize the participants with basics of population 
+PK/PD modeling and to train the participants in working with NONMEM (Non Linear 
+Mixed Effects Modeling) to conduct population PK and PK/PD data analyses.
+Details
+Instructor                      Dr. Jasper Stevens (jstev...@chdr.nl)
+Duration                        3 x 8 hours
+Dates                           29th to 31st of October, 2014; 9:00 – 17:00 hr 
+(CET)
+Location                       CHDR, Zernikedreef 8, 2333 CL, Leiden, the 
+Netherlands (T: +31 71 5246 400)
+Language                      English
+Maximum capacity        16 attendees
+Program 
+Session 1 Agenda and brief introduction to population PK modeling, NONMEM and R
+Session 2 NONMEM work flow for population PK models (data management, data 
+exploration, model code and execution, output and interpretation)
+Session 3 Population PK models continued: alternative administration routes, 
+solving differential equations using NONMEM and simulations
+Session 4 Population PK/PD models: brief introduction to PK/PD models and 
+implementation of direct effect models in NONMEM
+Session 5 Population PK/PD models continued: effect compartment and indirect 
+response models
+Course fee
+The course fee is 1550 EUR, including course materials, coffee breaks, lunches 
+and one evening dinner (Wednesday evening). Computers are available, including 
+the required software packages. A limited number of students can register for a 
+reduced fee (775 EUR), for which a support letter of the supervisor has to be 
+included upon registration. 
+Cancellation received before September 1st, 2014 is subject to full refund, 
+cancellation received after this date is subject to 50% refund.
+Registration
+You can register by sending an email to jstev...@chdr.nl thereby including your 
+name, affiliation and postal address.
+
+
+Jasper Stevens 
+Pharmacometrician 
+Centre for Human Drug Research
+Zernikedreef 8
+2333 CL Leiden
+The Netherlands
+T +31 (0)71 5246462
+F +31 (0)71 5246499
+jstev...@chdr.nl
+http://www.chdr.nl
+
+Follow us:",Announcements,
+1311,"Thu, 20 Nov 2008 11:21:02 -0800",Re: [NMusers] Models that abort before convergence Addendum,"Leonid wrote privately to Mark but Mark posted to nmusers:
+
+""We were discussing the usefulness of nonmem error messages: what to do 
+if $COV failed, or even if estimation step has not converged 
+successfully (e.e., infinite OF message).
+
+
+Nick point is that we just ignore the error messages.
+My point is that we erro messages prompt us to study the model because 
+more often than not, error messages point out to real problem (although 
+sometimes they need to be ignored if you are happy with the model).""
+
+
+Nick replied:
+
+My point is not ""ignore the error messages"". It is ""Do not use the 
+termination messages as a guide to whether the model is good or bad.""
+
+
+(Note that NONMEM does not list them as ERROR messages. They are simply 
+messages about NONMEM's view of the world when it decided to finish the 
+estimation step. Some messages can be ignored (ROUNDING ERRORS) while 
+others (EXCEEDED NUMBER OF FUNCTION EVALUATIONS) probably mean you 
+should restart the model where it finished and keep going. Other 
+messages in NMVI about boundary conditions are usually just a nuisance 
+but if you did happen to be asleep and do not look at your parameter 
+estimates then this is a reminder to wake up.
+
+
+Leonid suggests we use these messages to examine the model. But there is 
+no clue in these messages as to which part of the model (or the data) 
+should be examined. So they are worthless except to remind you that you 
+should be thinking about your model and data.
+
+
+But you MUST think about the model and the data ALWAYS! It makes no 
+difference what termination message you get you must continue to think 
+(the hard part <grin>) and remember the advice of Box:
+
+
+""All models are wrong but some are useful"".
+
+NONMEM has no idea if your model is wrong. It is always wrong but it 
+seems Leonid is mislead into thinking it is not wrong when NONMEM says 
+MINIMIZATION SUCCESSFUL.
+NONMEM especially has no idea if your model is useful. Only you and your 
+colleagues who want to use the results of the modelling can decide if 
+its useful. Usefulness can be investigated by model evaluation 
+procedures (e.g. VPC, NPDE, etc) but the final decision will rest with a 
+human brain not NONMEM's randomly generated minimization messages.
+
+
+
+Nick
+
+
+Mark Sale - Next Level Solutions wrote:
+
+        
+Leonid,
+  I agree with your point that failure to converge/and or covariance 
+is a message that the model is a prompt to study the model.  I object 
+to those who claim that model that fails covariance is not useful 
+despite data to the contrary (just went around and around with a 
+sponsor about this - actually their stats consultant who basically 
+just kept insisting on the theory regardless of data that we presented 
+to the contrary).  But, I think that the messages are completely 
+non-specific - they tell you something is less than ideal, but give no 
+clue as to what. I suspect that graphics are likely to be much more 
+consistently informative, telling you not only that something is less 
+than ideal, but some clue what to do to fix it.  As such, I'm not sure 
+that convergence and covariance messages add anything to the process 
+(anything that a good and thorough analyst would have known already, 
+based on VPC, NPC, various post hoc plots etc).
+
+
+Mark
+
+
+Mark Sale MD
+Next Level Solutions, LLC
+www.NextLevelSolns.com <http://www.nextlevelsolns.com/>
+919-846-9185
+
+    -------- Original Message --------
+    Subject: RE: [NMusers] Models that abort before convergence
+    From: ""[EMAIL PROTECTED]"" <[EMAIL PROTECTED]>
+    Date: Wed, November 19, 2008 10:23 pm
+    To: [EMAIL PROTECTED]
+
+
+    Mark,
+    I am sorry, I simply do not understand what you are saying. I do
+    not want
+    to bother the group, it could be that I am the only one who is
+    missing your
+    point, but could you repeat what exactly you are trying to say?
+    We were discussing the usefulness of nonmem error messages: what
+    to do if
+    $COV failed, or even if estimation step has not converged successfully
+    (e.e., infinite OF message).
+
+    Nick point is that we just ignore the error messages.
+    My point is that we erro messages prompt us to study the model
+    because more
+    often than not, error messages point out to real problem (although
+    sometimes they need to be ignored if you are happy with the
+    model). What is
+    your opinion?
+
+    Thanks
+    Leonid
+
+    Original Message:
+    -----------------
+    From: Mark Sale - Next Level Solutions [EMAIL PROTECTED]
+    Date: Wed, 19 Nov 2008 06:48:36 -0700
+    To: nmusers@globomaxnm.com
+    Subject: RE: [NMusers] Models that abort before convergence
+
+
+    <!-- wmLetter_head_start -->
+    <table align=""center"" style=""empty-cells: show;"" bgcolor=""#ffffff""
+    border=""0"" cellpadding=""0"" cellspacing=""0"" width=""100%""><tr><td
+    valign=""top"" style=""text-align: left;"" align=""left"" width=""108""><img
+    src=""cid:left@b8c2bfa43541d55928145888195cae14""></td><td
+    style=""vertical-align: top;""><div style=""padding: 5px; overflow-x:
+    auto;""><!-- wmLetter_head_end --><html><body><span
+    style=""font-family:Verdana; color:#000000; font-size:10pt;"">Leonid et
+    al,<br><br> I'm a little confused by this discussion. To make an
+    analogy, assume that drug company A has a wonderful theory that
+    drug B will
+    treat a disease. Theory makes sense by your favorite epistemology
+    criteria
+    etc. But of course, being good scientists, we know that theories
+    must be
+    verified, so we do an experiment, and the data suggest that the
+    theory is
+    wrong. Most of us would criticize as unscientific someone who who
+    discarded the data (didn't point out flaws in the data, didn't provide
+    opposing data, simply discounted it) in favor of continuing to
+    believe the
+    theory.<br> Why do we not apply the same standards here? Theory says
+    that models that do not converge (or fail covariance) are ""bad"". Data
+    (that so far as I know no one has found to be flawed, nor provided
+    opposing
+    data) suggests that, by at least one criteria (same parameter
+    estimates,
+    same SD of parameter estimates) there are no important differences. I
+    don't disagree that failing a covariance step, or failing to converge
+    provide information about a model. But it doesn't seem to be
+    informative
+    about what we probably really care about -does the line go through the
+    points, how confident are we WRT the precision of the parameters
+    and is the
+    model predictive.<br> I'm not sure if the small number of published
+    examples (of bootstrap with ~500 samples) are a small number of
+    anecdotes
+    or a small number of trials with N ~ 500, but I've run 5 or so
+    myself and
+    found the same to be consistently the case. That is, a successful
+    covariance step is not informative WRT the parameter values or their
+    precision. I suspect others have similar experience. If there are
+    other
+    ""studies""/anecdotes with different conclusions, someone should publish
+    them. Otherwise, it seems like we are obligated to abandon this
+    theory in
+    favor of the data.<br><br> <br><br><br>Mark Sale MD<br>
+    Next Level Solutions, LLC<br>
+    <a href=""http://www.NextLevelSolns.com
+    <http://www.nextlevelsolns.com/>""
+    mce_href=""http://www.NextLevelSolns.com
+    <http://www.nextlevelsolns.com/>"">www.NextLevelSolns.com</a
+    <http://www.nextlevelsolns.com%3c/a>><br>
+    919-846-9185<br><br>
+    <blockquote webmail=""1"" style=""border-left: 2px solid blue;
+    margin-left:
+    8px; padding-left: 8px; font-size: 10pt; color: black; font-family:
+    verdana;"">
+    <div >
+    -------- Original Message --------<br>
+    Subject: RE: [NMusers] Models that abort before convergence<br>
+    From: ""[EMAIL PROTECTED]"" <[EMAIL PROTECTED]><br>
+    Date: Tue, November 18, 2008 11:13 pm<br>
+    To: [EMAIL PROTECTED], nmusers@globomaxnm.com,<br>
+    [EMAIL PROTECTED]<br>
+    <br>
+    Dennis,<br>
+    I do not support extreme views (from places where people walk upside
+    down<br>
+    :) ) that Nonmem error messages should be ignored: they serve the
+    useful<br>
+    purpose to alert when Nonmem is having some difficulties, and should
+    always<br>
+    be part of the picture. If the data looks good, model is simple,
+    then we<br>
+    need to look for the reason for the poor convergence. Sometimes it
+    helps
+    to<br>
+    use SIGDIG= 5 or 6 to get 3 significant digits precision. But if
+    you are<br>
+    working on the limit of the algorithms (as implemented) abilities:<br>
+    nonlinear model + stiff differential equations + large range of doses
+    and<br>
+    concentrations, etc., then you face the situation when you cannot
+    force<br>
+    convergence even if you try hard. On my recent project, none of
+    the<br>
+    intermediate model converged even though bootstrap provided pretty
+    narrow<br>
+    CI (so it does not look like over-parametrized model), all diagnostic
+    plots<br>
+    were good, and the visual predictive check was reasonable. Then
+    you just<br>
+    blame the algorithm and move on. You loose the ability to justify
+    your<br>
+    covariate selection based on the objective function drop (which is
+    not a<br>
+    good idea any way), and may need to provide a little bit more
+    detailed<br>
+    investigation to convince reviewers (regulatory and/or journal)
+    that the<br>
+    model is adequate for the intended purpose. <br>
+    Thanks<br>
+    Leonid<br>
+    <br>
+    <br>
+    Original Message:<br>
+    -----------------<br>
+    From: Dennis Fisher [EMAIL PROTECTED]<br>
+    Date: Tue, 18 Nov 2008 11:21:23 -0800<br>
+    To: nmusers@globomaxnm.com, [EMAIL PROTECTED]<br>
+    Subject: [NMusers] Models that abort before convergence<br>
+    <br>
+    <br>
+    Colleagues,<br>
+    <br>
+    I am curious as to your thoughts about a particular NONMEM issue.
+    I <br>
+    often find myself in a situation where a complex model does not <br>
+    converge to 3 digits (""no of digits: unreportable"") yet the
+    objective <br>
+    function is markedly better than a previous model and graphics
+    suggest <br>
+    that the model is quite good (and better than the previous one).
+    Nick <br>
+    Holford has advocated (and I agree) that NONMEM's SE's have
+    minimal <br>
+    utility and the inability to calculate them is not important. <br>
+    However, I have not seen similar discussion about whether one can
+    / <br>
+    should accept a model that did not converge.<br>
+    <br>
+    The particular situation that I dealing with at the moment is that
+    a <br>
+    dataset that I am analyzing yielded a series of results that did
+    not <br>
+    converge as I added parameters (despite an improving fit and a
+    marked <br>
+    decrease in the objective function), then yet a more complicated
+    model <br>
+    yielded 3.0 significant digits. In this case, there is no problem
+    (I <br>
+    can use this final model for bootstrap, VPC, etc.) but what if
+    none of <br>
+    these models had converged.<br>
+    <br>
+    Dennis<br>
+    <br>
+    Dennis Fisher MD<br>
+    P < (The ""P Less Than"" Company)<br>
+    Phone: 1-866-PLessThan (1-866-753-7784)<br>
+    Fax: 1-415-564-2220<br>
+    <a href=""http://www.PLessThan.com <http://www.plessthan.com/>""
+    target=""_blank""
+    mce_href=""http://www.PLessThan.com
+    <http://www.plessthan.com/>"">www.PLessThan.com</a
+    <http://www.plessthan.com%3c/a>><br>
+    <br>
+    <br>
+    --------------------------------------------------------------------<br>
+    mail2web.com - MicrosoftÂ® Exchange solutions from a leading
+    provider -<br>
+    <a href=""http://link.mail2web.com/Business/Exchange""; target=""_blank""
+    mce_href=""http://link.mail2web.com/Business/Exchange"";>http://link.mail2web.c
+    <http://link.mail2web.c/>
+    om/Business/Exchange</a><br>
+    <br>
+    <br>
+
+    </div>
+    </blockquote></span></body></html><!-- wmLetter_tail_start
+    --></div></td></tr></table><!-- wmLetter_tail_end -->
+
+    --------------------------------------------------------------------
+    mail2web.com - Microsoft® Exchange solutions from a leading provider -
+    http://link.mail2web.com/Business/Exchange
+
+
+
+
+--
+Nick Holford, Dept Pharmacology & Clinical Pharmacology
+University of Auckland, 85 Park Rd, Private Bag 92019, Auckland, New Zealand
+[EMAIL PROTECTED] tel:+64(9)923-6730 fax:+64(9)373-7090
+http://www.fmhs.auckland.ac.nz/sms/pharmacology/holford",Technicalities,
+6679,"Thu, 25 May 2017 20:30:56 -0700","[NMusers] Testing nmusers, number 500.  PLease ignore","Testing number 500
 <br /><br />
 ICON plc made the following annotations.
 ------------------------------------------------------------------------------
@@ -108,280 +905,1417 @@ South County Business Park
 Leopardstown
 Dublin 18
 Ireland
-Registered number: 145835"
-06284,"Wed, 13 Jul 2016 14:29:25 -0700",[NMusers] Researcher/post-doc position in pharmacometrics at Uppsala University,"Vacant Researcher/post-doc position in the Pharmacometrics Research Group at 
-the Department of Pharmaceutical Biosciences, Uppsala University, Sweden
+Registered number: 145835",Administrative & Other,
+8303,"Tue, 02 Nov 2021 01:00:58 -0700",[NMusers] Open position as Assistant/Associate Professor at University of Copenhagen,"Dear NMusers,
 
-We have an open position within our research group. We are looking for an 
-applicant holding a PhD or equivalent in the pharmaceutical, medical, 
-engineering science or statistical research area. Experience of pharmacometric 
-analysis evaluating pharmacokinetic or pharmacodynamic data with for example 
-NONMEM is a merit. The work duties include to perform pharmacometric analyses 
-based on preclinical and clinical data to describe 
-dose-concentration-effect-relationships within the anti-tuberculosis area in 
-order to contribute to the design and conduct of preclinical studies to better 
-forecast the clinical effect based on early preclinical information.
+We have an open position as Tenure Track Assistant Professor or Associate 
+Professor of Pharmacometrics at University of Copenhagen with application 
+deadline 28 November 2021.
+For more information and to apply, please visit: 
+https://employment.ku.dk/faculty/?show=154984
+Kind regards
 
-It is an one year position starting October 1, 2016. For more information about 
-the position and how to apply, please visit 
-http://www.uu.se/en/about-uu/join-us/details/?positionId=108534
-
-Please submit your application no later than 18th of August, 2016
+Trine Meldgaard Lund
 
 
-Best wishes,
+Trine Meldgaard Lund
+Associate Professor, PhD
+Leader of Pharmacometrics Research Group
+Head of Translational Pharmacology Discipline
 
-Ulrika
+University of Copenhagen
+Faculty of Health and Medical Sciences
+Department of Drug Design and Pharmacology
+Universitetsparken 2
+2100 Copenhagen
 
 
-Ulrika Simonsson, PhD, Professor
-Pharmacometrics Research Group
-Dept of Pharmaceutical Biosciences
-Uppsala University
-Sweden"
-03074,"Sat, 05 Mar 2011 09:30:43 -0800",,"Hi
- 
-I am trying to build a structural model for an oral drug. I am getting 
-extremely large and unreasonable values for vd, eg a billion L, putting an 
-upper limit on theta will give a near boundary warning.
- 
-Does anyone have an idea why this might occur and how to solve it.
- 
-This is part of the input file:
-$SUBROUTINE ADVAN2 TRANS2
+DIR +45 35 33 63 40
+trine.l...@sund.ku.dk<mailto:trine.l...@sund.ku.dk>
+www.drug.ku.dk/disciplines/translational-pharmacology/pharmacometrics/<http://www.drug.ku.dk/disciplines/translational-pharmacology/pharmacometrics/>
+Researcher profile<https://drug.ku.dk/staff/?pure=en/persons/118265>",Open Positions,
+407,"Mon, 09 Jul 2007 15:35:46 -0700",[NMusers] COMPUTING COVARIANCE OF PREDICTION ERRORS IN NONMEM,"Dear NMUsers, Sometimes, it is desirable to compute an estimate of  the covariance of 2 prediction errors  in the same individual in order to estimate the variance of the sum of prediction errors in that  individual. 
+This estimate has been suggested by Vozeh et al. (1990) to be in the form: 
+
+where where covN(PEi,PEi) is the covariance of the prediction errors i and i while E is the expectation  of the enclosed _expression_; g and h are partial derivatives of the vector of PK parameters with respect to the ç and å respectively, m is the number of etas in the model etc.)
+My question is: how can this be coded/outputted from a NONMEM run. 
+Thanks for your help. Jo",Technicalities,
+7446,"Thu, 18 Apr 2019 10:28:13 -0700",[NMusers] Multiple Pharmacometrics opportunities at Novartis (application links attached),"Hello,
+
+I have attached the links through which you may apply for positions in the 
+Pharmacometrics group at Novartis.
+The opportunities can be at either East Hanover, NJ or Cambridge, MA.
+
+https://jobs.brassring.com/1033/ASP/TG/cim_jobdetail.asp?partnerid=13617&siteid=5268&Areq=266387BR
+ (East Hanover, NJ, but can be at Cambridge, MA)
+
+https://www.novartis.com/careers/career-search/job-details/266017BR (Cambridge, 
+MA)
+https://www.novartis.com/careers/career-search/job-details/266016BR (East 
+Hanover, NJ)
+__________________________________
+Ramprasad ""Prasad"" Ramakrishna
+Early Development Head, Pharmacometrics,
+GDD/CD&A/Analytics
+Novartis Pharma/NIBR
+45 Sidney Street, Cambridge, MA 02139, USA
+O:    +1  617 8713066
+M:    +1 617 417 7760
+ramprasad.ramakris...@novartis.com<mailto:ramprasad.ramakris...@novartis.com>
+www.novartis.com<http://www.novartis.com/>",Open Positions,
+4095,"Mon, 16 Jul 2012 08:47:55 -0700",[NMusers] please unsubscribe,"Please unsubscribe, thank you",Administrative & Other,
+3548,"Thu, 22 Sep 2011 06:51:41 -0700",[NMusers] Epsilon shrinkage and IWRES,"Dear all,
+
+Can someone enlighten me on a NONMEM implementation? 
+Since NONMEM 7, epsilon shrinkage is reported in the output, and the manual
+states that it is calculated as:
+100%*[1-SD(IWRES)]
+in accordance with ""Karlsson MO and Savic RM. Diagnosing Model Diagnostics.
+Clinical Pharmacology and Therapeutics, 2007; 82(1): 17-20"" as one would
+expect.
+However, as far as I know, the user needs to manually code the IWRES bit
+using the ""Uppsala implementation"":
+
+IPRED = F
+IRES = DV - IPRED
+W = THETA(3)
+IWRES = IRES/W
+Y = IPRED+W*EPS(1)
+
+SIGMA 1 FIXED
+
+So how does NONMEM arrive at epsilon shrinkage? And is there by any chance
+an (undocumented?) IWRES item that can be exported in a table file as well?
+
+Kind regards,
+
+Rik
+
+
+
+Rik Schoemaker, PhD
+Exprimo NV
+Tel: +31 (0)20 4416410
+E-mail: rik.schoema...@exprimo.com
+Web: www.exprimo.com
+
+This e-mail is confidential. It is also privileged or otherwise protected by
+work product immunity or other legal rules. The information is intended to
+be for use of the individual or entity named above. If you are not the
+intended recipient, please be aware that any disclosure, copying,
+distribution or use of the contents of this information is prohibited. You
+should therefore delete this message from your computer system. If you have
+received the message in error, please notify us by reply e-mail. The
+integrity and security of this message cannot be guaranteed on the Internet.
+
+Thank you for your co-operation. 
+
+
+
+----------------------------
+This e-mail message has been scanned for Viruses by Norman Virus Control and 
+it's Content by MailMarshal",Technicalities,
+3673,"Mon, 12 Dec 2011 13:57:21 -0800",[NMusers] 202 Fortran Syntax of wings for NM7,"Dear All,
+
+I have exact same NONMEM code run in  two command windows,  NM7 and
+wings for NM7.  The NONMEM run is successful in the NM7  but  cannot
+start  in wings for NM7.  Below is the error message.
+
+ AN ERROR WAS FOUND IN THE CONTROL STATEMENTS.
+
+ AN ERROR WAS FOUND ON LINE  25 AT THE APPROXIMATE POSITION NOTED:
+   MU_1 =THETA(12) LOG(THETA(1))
+                   X
+ THE CHARACTERS IN ERROR ARE: LOG
+ 202  FORTRAN SYNTAX IS INCORRECT OR INAPPROPRIATE IN THIS CONTEXT.
+Error in NM-TRAN_Execution with ......
+
+
+After several tests, I realized that  it may be due to the setting of
+wings for NM7, such as  parameter size.
+In my model, I have 12 THETAS, 10 ETAS and 3 SIGMA. If I delete
+THETA(12) , everything is working.
+We have NONMEM 7.1.0  and  Wings for Nonmem  version 703 installed
+with their default setting.
+
+Can anyone help me to handle this problem?  Is this due to the size of
+parameter? How to increase the parameter size of wings for NM7.
+Here is my NONMEM code:
+
+$PROB
+$DATA
+$INPUT
+$SUBROUTINE ADVAN6 TOL=9
+
+$MODEL NCOMP=5
+
+COMP=(GI,DEFDOSE) ;COMPARTMENT 1  DEPOSIT IN GI TRACT
+COMP=(CENTER)     ;COMPARTMENT 2 FOR CENTER COMPARTMENT
+COMP=(PERI)          ;COMPARTMENT 3 FOR PERIPHERAL COMPARTMENT
+COMP=(MET)       ;COMPARTMENT 4 FOR METABOLITE CENTER COMPARTMENT
+COMP=(FREE)       ;COMPARTMENT 5 FOR FREE UNBOUND  COMPARTMENT
+
 $PK
-TVCL = THETA(1)
-CL = TVCL*EXP(ETA(1))
-V = THETA(2)
-KA = THETA(3)
-S2 = V
- 
 
-$THETA (0,10)
-$THETA (0,20)
-$THETA  2 FIXED
- 
- 
-Best regards
-Susan"
-01926,"Fri, 21 Aug 2009 05:30:20 -0700",RE: [NMusers] Linear VS LTBS,"Neil,
- 
-I never use what you call the ""dual error"" model with log-transformed data as I 
-do not undertstand all the assumptions that would be implied. You can refine 
-your $ERROR block further by incorporating the LOQ. The moxonidine models of 
-Mats Karlsson's group (also in their workshop material or their publications) 
-show you how it is coded.
- 
-Sorry, I do not have the time to find them and paste them into this mail.
- 
-Joachim
+  IF (CNIT.EQ.1.OR.CNIT.EQ.3.OR.CNIT.EQ.-1) CSP=1
+  IF (CNIT.EQ.2.OR.CNIT.EQ.4) CSP=0
+  IF (ALB.NE.-1) NALB=ALB/3.4
+  IF (ALB.EQ.-1) NALB=1
+
+  MU_1 = LOG(THETA(1))
+ALAG1 = EXP(MU_1+ETA(1))
+
+  MU_2 = LOG(THETA(2))
+K12 = EXP(MU_2+ETA(2))
+
+  MU_3 = LOG(THETA(3))+0.75*LOG(BW/70)
+Q = EXP(MU_3+ETA(3))
+
+  MU_4 = LOG(THETA(4))-0.25*LOG(BW/70)+THETA(12)*LOG(NALB)
+K24 = EXP(MU_4+ETA(4))
+
+MU_5 = LOG(THETA(5))-0.25*LOG(BW/70)
+K40 = EXP(MU_5+ETA(5))
+
+  MU_6 = LOG(THETA(6))+CSP*LOG(THETA(11))
+K41 = (EXP(MU_6+ETA(6)))
+
+ MU_7 = LOG(THETA(7)) + LOG(BW/70)
+V2 =  EXP(MU_7+ETA(7))
+
+ MU_8 = LOG(THETA(8)) + LOG(BW/70)
+V3 =  EXP(MU_8+ETA(8))
+
+  MU_9 = LOG(THETA(9)) + LOG(BW/70)
+V4 =  EXP(MU_9+ETA(9))
+
+  MU_10 = LOG(THETA(10))
+FR = EXP(MU_10+ETA(10))
+
+K23 = Q/V2
+K32 = Q/V3
+
+S2 = V2
+S4 = V4
+S5 = V2
+
+$DES
+
+DADT(1) = -K12*A(1)+K41*A(4)
+
+DADT(2) = K12*A(1)+K32*A(3)-(K23+K24)*A(2)
+
+DADT(3) = K23*A(2)-K32*A(3)
+
+DADT(4) = K24*A(2)-(K41+K40)*A(4)
+
+DADT(5) = FR*(K12*A(1)+K32*A(3)-(K23+K24)*A(2))
+
+$ERROR (ONLY OBSERVATIONS)
+
+$EST METHOD=ITS NITER=50 PRINT=5 NSIG=3 SIGL=9
+$EST METHOD=IMP NITER=500 ISAMPLE=1000 PRINT=1 NOABORT CTYPE=3
+CITER=10 CALPHA=0.05
+
+$THETA
+$OMEGA
+$SIGMA
 
 
---------------------------------------------------------------------------
-AstraZeneca UK Limited is a company incorporated in England and Wales with 
-registered number: 03674842 and a registered office at 15 Stanhope Gate, London 
-W1K 1LN.
-Confidentiality Notice: This message is private and may contain confidential, 
-proprietary and legally privileged information. If you have received this 
-message in error, please notify us and remove it from your system and note that 
-you must not copy, distribute or take any action in reliance on it. Any 
-unauthorised use or disclosure of the contents of this message is not permitted 
-and may be unlawful.
-Disclaimer: Email messages may be subject to delays, interception, non-delivery 
-and unauthorised alterations. Therefore, information expressed in this message 
-is not given or endorsed by AstraZeneca UK Limited unless otherwise notified by 
-an authorised representative independent of this message. No contractual 
-relationship is created by this message by any person unless specifically 
-indicated by agreement in writing other than email.
-Monitoring: AstraZeneca UK Limited may monitor email traffic data and content 
-for the purposes of the prevention and detection of crime, ensuring the 
-security of our computer systems and checking Compliance with our Code of 
-Conduct and Policies.
+
+Thanks for your help,
+
+-- 
+Hong Li, Ph.D.
+Postdoctoral Associate
+Department of Pharmaceutical Science
+University at Buffalo, SUNY
+363 Hochstetter Hall
+Buffalo, NY 14260
+Tel#: (716)645-4827",Technicalities,
+8198,"Wed, 02 Jun 2021 15:02:40 -0700","[NMusers] BAPKPD Network Special Topics Webinar: Dr. Giacomini, High Throughput Screening and Real World Biomarkers to Predict Drug-Drug and Drug-Nutrient Interactions: Implications to polypharmacy associated with COVID treatment","Bay Area PKPD Network
+
+Special Topics Webinar
+
+Thursday, June 10, 2021 from 12:00pm-1:00pm PDT
+
+Location: Online
+
+Register: for free at https://tinyurl.com/BAPKPD-webinar2021 or see 
+http://www.bapkpd.org/upevent.html for information
+
+
+
+Kathy Giacomini, Ph.D.
+
+Professor, Department of Bioengineering and Therapeutic Sciences UCSF Schools 
+of Pharmacy and Medicine
+
+
+
+High Throughput Screening and Real World Biomarkers to Predict Drug-Drug and 
+Drug-Nutrient Interactions:
+Implications to polypharmacy associated with COVID treatment
+
+Individuals with serious COVID infections often have pre-existing 
+co-morbidities and are generally older.  Thus, in addition to being prescribed 
+drugs for the treatment of COVID19 and its sequelae, many of these individuals 
+are taking a myriad of other drugs.  In this presentation, I will describe a 
+screening study of 25 small molecule drugs in clinical trials for COVID19 
+against 11 drug transporters, which are targets for clinically relevant 
+drug-drug interactions (DDIs).    Our in vitro studies revealed that 20 of the 
+25 drugs met the criteria suggested by FDA DDI guidance to consider a clinical 
+DDI study.  Further, I will describe the analyses of real world transporter 
+biomarkers in data from electronic health records, which suggested that several 
+of the drugs actually do cause transporter-mediated DDIs clinically.  I will 
+end with a discussion of the propensity for many anti-microbial drugs to 
+perpetrate clinical DDIs and drug-nutrient interactions, and the use of various 
+biomarkers for predicting DDIs in pre- and post-marketing settings.",Announcements,
+2,"Wed, 07 Feb 2007 10:53:31 -0800",[NMusers] Sample size/power in NONMEM,"Dear Colleagues,
+  In response to the recent discussion in this forum about sample size
+and power in NONMEM, Next Level Solutions has developed tools for
+formal ""power"" assessment in NONMEM using simulation (as described by
+Serge Guzy in this discussion).  Essentially, one or more (preferably
+more) models will be provided to Next Level Solutions by the sponsor,
+along with proposed sampling schemes.  Additional optional information
+includes drop out rates, sampling time errors (reported and
+unreported), missing sample probability, trial design (cross over,
+parallel), LLQ and dosing time inaccuracies (mean and sd).
+  Sampling schemes will be generated (with the described random effects)
+and NONMEM analysis by bootstrap (with multiple sets of initial
+estimates to reduce the problem of local minima).  The generated report
+will include:
+   -Probability of model convergence
+   -Probability of successful covariance step
+   -Probability of the absolute value of all off-diagonal elements of
+the correlation matrix of estimation being < 0.95.
+   -Mean and SEE for all parameters (by bootstrap, not NONMEM estimates
+of SEE)
+   -Probability of picking up a hierarchical effect (e.g., effect of age
+on clearance vs no effect of age on clearance), given the effect size
+described by the model(s) and a log likelihood ratio test.
+
+Turnaround time for analysis will depend on the run times for the
+models, but typically is a few days to a week - most of which is
+computer run time (1000 samples and NONMEM analyses for each sampling
+scheme, or twice that if reduced vs full model hypothesis is to be
+tested)
+
+Thanks
+Mark",Technicalities,
+728,"Sun, 02 Dec 2007 20:44:51 -0800",[NMusers] How to increase total image size in Fortran?,"Dear NM users,
+
+Recently, I was running a complicated PK/PD modeling involving 6 differential 
+equations, and 5 different conditions. I got an error message as follows:
+warning LNK4084: total image size 772845568 exceeds max (268435456); image may 
+not run
+
+After I did some research online, it seems that FORTRAN does not like more than 
+256MB cache or something. So, I am wondering whether anybody had this 
+experience or solution for this kind of error in NONMEM before. I really 
+appreciate your input.
+
+Thanks in advance.
+
+Jian 
+
+&&&&&&&&&&
+&GO GATORS! &
+&&&&&&&&&&
+
+
+
+      
+____________________________________________________________________________________
+Get easy, one-click access to your favorites. 
+Make Yahoo! your homepage.
+http://www.yahoo.com/r/hs",Technicalities,
+2718,"Wed, 25 Aug 2010 13:41:11 -0700",RE: [NMusers] Block versus diagonal omega,"the same way you got on the list, send a message to
+nmusers-requ...@globomaxnm.com. ask to unsubscribe. 
+
 -----Original Message-----
-From: Indranil Bhattacharya [mailto:ibhattacha...@gmail.com]
-Sent: 21 August 2009 12:53
-To: Grevel, Joachim
-Cc: nmusers@globomaxnm.com
-Subject: Re: [NMusers] Linear VS LTBS
-
-
-Hi Joachim, thanks for your suggestions/comments. 
- 
-When using LTBS I had used a different error model and the error block is shown 
-below
-$ERROR
-IPRED = -5 
-IF (F.GT.0) IPRED = LOG(F) ;log transforming predicition
-IRES=DV-IPRED
-W=1
-IWRES=IRES/W ;Uniform Weighting
-Y = IPRED + ERR(1)
- 
-I also performed bootsrap on both LTBS and non-LTBS models and the non-LTBS CI 
-were much more tighter and the precision was greater than non-LTBS.
-I think the problem plausibly is with the fact that when fitting the 
-non-transformed data I have used the proportional + additive model while using 
-LTBS the exponential model (which converts to additional model due to LTBS) was 
-used. The extra additive component also may be more important in the non-LTBS 
-model as for some subjects the concentrations were right on LOQ.
- 
-I tried the dual error model for LTBS but does not provide a CV%. So I am 
-currently running a bootstrap to get the CI when using the dual error model 
-with LTBS.
- 
-Neil
-
-
-On Fri, Aug 21, 2009 at 3:01 AM, Grevel, Joachim < 
-joachim.gre...@astrazeneca.com> wrote:
-
-
-
-
-Hi Neil,
- 
-1. When data are log-transformed the $ERROR block has to change: additive error 
-becomes true exponential error which cannot be achieved without 
-log-transformation (Nick, correct me if I am wrong).
- 
-2. Error cannot ""go away"". You claim your structural model (THs) remained 
-unchanged. Therefore the ""amount"" of error will remain the same as well. If you 
-reduce BSV you may have to ""pay"" for it with increased residual variability.
- 
-3. Confidence intervals of ETAs based on standard errors produced during the 
-covariance step are unreliable (many threads in NMusers). Do bootstrap to 
-obtain more reliable C.I..
- 
-These are my five cents worth of thought in the early morning,
- 
-Good luck,
- 
-Joachim
-
-
-
-
-
-
-
-
-
-  _____  
-
-
-AstraZeneca UK Limited is a company incorporated in England and Wales with 
-registered number: 03674842 and a registered office at 15 Stanhope Gate, London 
-W1K 1LN.
-
-
-
-Confidentiality Notice: This message is private and may contain confidential, 
-proprietary and legally privileged information. If you have received this 
-message in error, please notify us and remove it from your system and note that 
-you must not copy, distribute or take any action in reliance on it. Any 
-unauthorised use or disclosure of the contents of this message is not permitted 
-and may be unlawful.
-
-
-
-Disclaimer: Email messages may be subject to delays, interception, non-delivery 
-and unauthorised alterations. Therefore, information expressed in this message 
-is not given or endorsed by AstraZeneca UK Limited unless otherwise notified by 
-an authorised representative independent of this message. No contractual 
-relationship is created by this message by any person unless specifically 
-indicated by agreement in writing other than email.
-
-
-
-Monitoring: AstraZeneca UK Limited may monitor email traffic data and content 
-for the purposes of the prevention and detection of crime, ensuring the 
-security of our computer systems and checking compliance with our Code of 
-Conduct and policies. 
-
-
-
-
-
-
------Original Message-----
-
-
-From: owner-nmus...@globomaxnm.com [mailto: owner-nmus...@globomaxnm.com]on 
-Behalf Of Indranil Bhattacharya
-Sent: 20 August 2009 17:07
+From: owner-nmus...@globomaxnm.com [mailto:owner-nmus...@globomaxnm.com] On
+Behalf Of Bioengineering Faculty Search
+Sent: Wednesday, August 25, 2010 3:59 PM
 To: nmusers@globomaxnm.com
-Subject: [NMusers] Linear VS LTBS
+Subject: Fwd: [NMusers] Block versus diagonal omega
+
+Does anyone know how I get OFF this list?
+
+Thanks,
+Janet
 
 
-Hi, while data fitting using NONMEM on a regular PK data set and its log 
-transformed version I made the following observations
+
+-------- Original Message --------
+Subject:        [NMusers] Block versus diagonal omega
+Date:   Wed, 25 Aug 2010 14:20:01 -0500
+From:   Berg, Alexander K., Pharm.D., Ph.D. <berg.alexan...@mayo.edu>
+To:     <nmusers@globomaxnm.com>
+
+
+
+Hello -
+
+I was curious if someone from the group could perhaps describe the basis
+for deciding whether to use a block (variance and covariance) versus
+diagonal (variance only) form of omega. Specifically, what tests if any
+can be performed to decide between the two forms and are there certain
+situations where one is preferred over the other as I often see only the
+diagonal form used. Any help would be much appreciated -
+
+Al Berg, PhD/PharmD
+Clinical Pharmacology Fellow
+Mayo Clinic - Rochester
+berg.alexan...@mayo.edu",Technicalities,
+6437,"Wed, 23 Nov 2016 00:44:30 -0800",[NMusers] RE: No TABLE output with 1500 measurements per individual,"Dear NM-Users,
+
+We are trying to model with NONMEM 7.3 (FOCE.I) a dataset containing one 
+measurement per minute for 68 individuals, for a total of 1440 measurements per 
+individual. The dataset is therefore composed of ~100,000 rows.
+After having defined $SIZES adequately (LIM6 statement), the (successful) 
+minimization of the algorithm takes few minutes, without any warning or error 
+messages.
+
+The problem is that the TABLE output step is nearly impossible to obtain. Even 
+with the FIRSTONLY statement, no table can be obtained in a reasonable time 
+period.
+
+Trying to limit the table contents to ID & IPRED only does not solve the issue.
+
+We performed some additional tests with MSF files as input. When applying MSF 
+to a dataset composed of only ONE individual at a time, the table takes 24 
+hours to be generated.
+This would therefore take 68 days (if time increases proportionally... ?) to 
+obtain PRED & IPRED for all individuals.
+
+When implementing the model in an alternative commercial software, the table is 
+output in less than 20 minutes.
+
+A solution would be to use MSF on a reduced dataset i.e., with a (randomly) 
+decreased number of measurements per individual, but we want to avoid this.
+What other solution do we have ?
+
+Can anyone provide some input on it ?
+
+Thanks !
+
+Jean-Marie Martinez
+Modeling & Simulation Group
+Sanofi Montpellier",Technicalities,
+8635,"Thu, 06 Jul 2023 03:09:33 -0700",[NMusers] Specify full OMEGA matrix for simulation,"Hi all,
+
+I am trying to specify a full OMEGA matrix for simulation purpose. I get 
+issues because some diagonals are zero and some are positive. If I write
+
+
+$OMEGA BLOCK(3) FIX
+0.078
+0 0.02
+0 0 0
+
+I get this error:
+AN ERROR WAS FOUND ON LINE 34 AT THE APPROXIMATE POSITION NOTED:
+  0 0 0
+
+  224  A VARIANCE IS ZERO, BUT THE BLOCK IS NOT FIXED TO ZERO.
+
+I know I could do:
+$OMEGA BLOCK(2) FIX
+0.078
+0 0.02
+$OMEGA FIX
+0
+
+However, that would be complicated to generate programmatically. Anyway 
+I can tell Nonmem to use a specified OMEGA matrix as is for a 
+simulation?
+
+
+Thank you,
+Philip",Technicalities,
+5452,"Thu, 26 Feb 2015 02:28:11 -0800",[NMusers] Covariate modelling question,"I posted this message a few days ago but it doesn't seem to have been 
+sent to the list - so I'm resending without the example output.
+
+Best wishes
+Fiona
+
+--
+Dear all
+
+I am attempting to do some covariate modelling, using the scm wizard in 
+Pirana. I have seen some results which I wasn't expecting and would be 
+grateful if anyone could shed any light on it for me.
+
+
+Initially, I used a forward inclusion p value of 0.1 and a backward 
+elimination p value of 0.05. This resulted in quite a complex 
+(implausible) model (we do have a reasonably large dataset), and I 
+decided to be more stringent, using p<0.05 for inclusion (and the same 
+p>0.05 for elimination at the last step). As a shortcut, I could see 
+from the output from the first attempt (with p<0.1) what I expected the 
+final model to look like if I were to run it again with p<0.05, ie where 
+the process would truncate. Just to double check (and verify that 
+nothing would be eliminated at the last step), I re-ran the scm wizard 
+with the more stringent p<0.05. And the results are not what I 
+expected... Below I have pasted the output for the first few forward 
+steps from each attempt. The results are essentially the same up until 
+the third step, although we see some small differences in the OFV 
+creeping in from the second step. However, at the fourth step, the 
+results are completely different. This isn't what I was expecting, based 
+on my understanding of the model selection process. Is this a known 
+behaviour? Has anyone experienced this problem and/or know why these 
+differences might occur? I'd be grateful for any advice.
+
+
+Many thanks in advance for your help.
+
+Best wishes
+Fiona
+
+
+--
+*Fiona Vanobberghen (née Ewings), PhD*
+Swiss Tropical and Public Health Institute
+Socinstrasse 57, 4051, Basel, Switzerland
+Tel: +41 61 284 87 41",Technicalities,
+1002,"Thu, 05 Jun 2008 15:42:55 -0700",[NMusers] enzyme auto inhibition PK model,"Hi Dear Nonmem user,
+
+I am trying to model the kinetics of a compound that exhibits enzyme
+auto-inhibition.I have found some previously suggested literature by nonmem
+users, but all of them were auto-induction cases.  Does anyone know any
+enzyme auto-inhibition PK model paper published ?
+
+Thanks so much!
+
+Sincerely,
+Yuyan Jin
+Graduate student
+University of Pittsburgh",Technicalities,
+4400,"Wed, 23 Jan 2013 08:13:30 -0800","[NMusers] A Special Local NJ/PA/NY ISOP ""MOSAIC"" Meeting","You are invited to the 
+
  
-  - PK parameters (thetas) were generally similar between regular and when 
-using LTBS.
--ETA on CL was similar
--ETA on Vc was different between the two runs. 
-- Sigma was higher in LTBS (51%) than linear (33%)
+
+Inaugural 2013 MOSAIC [Local ISOP of NJ/PA/NY] Meeting, Feb. 12,  2013 
+
+""Beyond Excellent Clinical  Decision Support - What else can Pharmacometrics
+Contribute?""
+
+Bridgewater Manor, 1251 Route 202/206  Bridgewater, NJ 08807
+
  
-Now using LTBS, I would have expected to see the ETAs unchanged or actually 
-decrease and accordingly I observed that the eta values decreased showing less 
-BSV. However the %RSE for ETA on VC changed from 40% (linear) to 350% (LTBS) 
-and further the lower 95% CI bound has a negative number for ETA on Vc (-0.087).
+
+The inaugural 2013 Local ISoP meeting will be held on February 12, at 6pm.
+It will feature four eminent contributors to pharmacometrics: Doctors Sandy
+Allerheiligen of Merck, Rick Lalonde of Pfizer, Shif Mariam of Johnson and
+Johnson, and Don Stanski of Novartis.  These industry leaders will first
+briefly outline how pharmacometrics and modeling services are currently
+delivered in their companies.  They then will present ideas and hold a
+round-table discussion follows with ideas for the future, discussing new
+areas where our discipline can contribute.  
+
  
-What would be the explanation behind the above observations regarding increased 
-%RSE using LTBS and a negative lower bound for ETA on Vc? Can a negative lower 
-bound in ETA be considered as zero?
-Also why would the residual vriability increase when using LTBS?
+
+This meeting focuses on the present and future of Pharmacometrics.  There is
+a reason that this is especially fitting.  This is the first ISoP  event
+held since the premature loss of our colleague, friend, and former ISoP
+Steering Committee member, Dr. Brian J. McHugh.  The meeting will be held in
+memory of Brian, and a portion of the proceeds will be contributed to a
+scholarship fund the family has established in Brian's memory.  
+
  
-Please note that the PK is multiexponential (may be this is responsible).
+
  
-Thanks.
+
+For more information and to register, please visit www.go-isop.org/attend
+
  
-Neil
+
+ 
+
+Best,
+
+ 
+
+Jim Bosley
+
+Chair, ISoP Local Events Committee (NJ/PA/NY)",Announcements,
+1607,"Fri, 10 Apr 2009 12:55:31 -0700",[NMusers] When is F1 Evaluated,"Hello,
+
+When is F1 evaluated?  I am working on a model with nonlinear
+bioavailability and I need to know if F1 is evaluated during the entire
+absorption process or if it is evaluated upon the dose entering the
+dosing compartment.
+
+Thanks,
+
+Bill
+Notice:  This e-mail message, together with any attachments, contains
+information of Merck & Co., Inc. (One Merck Drive, Whitehouse Station,
+New Jersey, USA 08889), and/or its affiliates (which may be known
+outside the United States as Merck Frosst, Merck Sharp & Dohme or
+MSD and in Japan, as Banyu - direct contact information for affiliates is
+available at http://www.merck.com/contact/contacts.html) that may be
+confidential, proprietary copyrighted and/or legally privileged. It is
+intended solely for the use of the individual or entity named on this
+message. If you are not the intended recipient, and have received this
+message in error, please notify us immediately by reply e-mail and
+then delete it from your system.",Technicalities,
+7733,"Tue, 03 Dec 2019 16:34:33 -0800",[NMusers] FDATA file bug,"Hi All,
+
+I am using NONMEM 7.4.3. I want to confirm the right input dataset into
+NONMEM.  However, I found that the FDATA file can save only around the
+beginning 9 columns of the original CSV file. The ending columns (e.g.,
+column 10-20) are either missing or combined into a single column in the
+FDATA file.
+
+I am not sure other people encountered the same problem.
+
+Thank you,
+
+Mark",Technicalities,
+2193,"Fri, 13 Nov 2009 06:14:04 -0800","[NMusers] Intensive course: 'Concepts and Applications of Predicting A	DME, Pharmacokinetics and Population Variability' - Prince	ton, NJ, USA","Simcyp, the leader in mechanistic in vitro - in vivo extrapolation (IVIVE)
+of pharmacokinetics invites you to register for the well-established and
+renowned:
+
+Intensive course: 'Concepts and Applications of Predicting ADME,
+Pharmacokinetics and Population Variability' 
+
+17th - 21st May 2010
+
+Princeton, New Jersey, USA
+
+The course is comprised of lectures, delivered by leading experts in each
+field of ADME, interspersed with interactive workshops centred around
+practical examples demonstrating how in vitro data generated during drug
+development can be used to predict:
+
+*       Metabolic drug clearance (CL) 
+*       Metabolic drug-drug interactions (DDIs) 
+*       Gut first-pass metabolism 
+*       Oral drug absorption incorporating food effects and the impact of
+dosage form 
+*       Effect of transporters and enterohepatic recirculation on kinetics 
+*       Drug distribution to different organs 
+*       Population variability in drug concentration-time profiles 
+*       Variation in kinetics in specific populations (paediatrics, ethnic
+groups, various disease populations) 
+*       Time-course of drug in plasma that fits observed clinical data
+(achieved using fitting modules within physiologically-based
+pharmacokinetics (PBPK) models combined with drug specific in vitro
+information)
+
+The main emphasis is on using data generated in pre-clinical stages to
+understand the kinetic behaviour of drugs in various target populations.
+This informs decisions on the conduct and optimal design of clinical studies
+with the ultimate aim of improving the quality of submissions for regulatory
+approval.
+
+The complete course runs from 17th - 21st May at the Nassau Inn, Princeton,
+NJ. Delegates may also choose to register for part of the course:
+
+Part I: 17th - 19th May 2010 
+Part II: 19th - 21st May 2010 
+
+For further information and registration details, please visit our website
+at:
+http://www.simcyp.com/ProductServices/Workshops/20100517_New_Jersey.htm?p=1 
+
+ 
+
+Regards
+
+Masoud",Announcements,
+5982,"Tue, 22 Dec 2015 05:47:30 -0800",[NMusers] Nested if,"All:
+
+ 
+
+I have a control stream that runs okay which involves differential
+equations.  When I requested an output table containing thetas I  got this
+error.
+
+, "" The characters in error are: Theta  479 This item is not listed in
+module NMPRD4 and may not be displayed.""
+
+ 
+
+I have searched the archives and came across a post from 2011 which
+discussed the relationship of PREDPP to this module NMPRD4.
+
+Part of the post stated, ""Every variable displayed via $TABLE has the value
+that was calculated by the last call to DES with the current event record.
+This is not a design  decision; it is inevitable. Values created by PREDPP
+for display by NONMEM are stored in a common area (formerly COMMON NMPRD4;
+now MODULE NMPRD4).""
+
+ 
+
+However there was insufficient discussion for me to figure out how to
+resolve this issue.   I would be very appreciative if someone with
+experience with this problem could advise me how it can be corrected so that
+I can generate a table containing my final Theta and Eta values from Nonmem
+73?
+
+ 
+
+ 
+
+Thanks,
+
+Andre
+
+ 
+
+Andre Jackson
+
+jacksonan1...@gmail.com",Technicalities,
+3747,"Sat, 14 Jan 2012 02:12:37 -0800",[NMusers] Uppsala Pharmacometrics Satellite workshop at PAGE,"Dear all,
+
+Uppsala Pharmacometrics will give a 2.5-day course on
+Pharmacokinetic-Pharmacodynamic modeling of continuous and categorical data
+in NONMEM for intermediate and advanced users from 3rd to 5th of June in
+Venice, Italy, as a satellite meeting before PAGE 2012. The course presents
+modeling strategies, techniques and implementations (using NONMEM) for the
+handling of PKPD information in population models. PD models for continuous
+data as well as binary, ordered categorical, count and time to event data
+will be discussed. Model diagnostics for PKPD models will be covered. The
+course will consist of both lectures and hands-on computer exercises using
+NONMEM 7, PsN and Xpose 4. The participants will be provided with a large
+library of NONMEM code as well as self-instructive material for further
+studies and exploration of examples for a wide range of PKPD models applied
+in different disease areas. 
+
+ 
+
+A prerequisite for the course is basic experience with performing NONMEM
+analyses.
+
+For more information and registration, see  www.uppsala-pharmacometrics.com.
+
+Best regards,
+
+Lena Friberg
+
+ 
+
+ 
+
+--------------------------------------------------
+
+Lena Friberg, PhD
+
+Associate professor in Pharmacometrics
+
+Department of Pharmaceutical Biosciences
+
+Uppsala University
+
+Box 591
+
+75124 Uppsala
+
+Sweden
+
+ 
+
+phone: +46 18 471 4685
+
+e-mail: lena.frib...@farmbio.uu.se",Announcements,
+6319,"Fri, 12 Aug 2016 02:03:26 -0700","[NMusers] Course on Advanced methods for population model building and evaluation in NONMEM, 23-25 January, 2017 in Lambertville, NJ, USA.","Dear all,
+
+Uppsala Pharmacometrics will give a 2.5-day course on “Advanced methods for 
+population model building and evaluation in NONMEM"", 23-25 January, 2017 in 
+Lambertville, NJ, USA.  The course presents model building and evaluation 
+strategies, techniques and implementations in population models and will 
+consist of both lectures and hands-on computer exercises using NONMEM 7, PsN 
+and Xpose 4.
+
+ For more information and registration, see 
+http://www.uppsala-pharmacometrics.com/build_diagnose_NJ_2017.html.
+
+Best regards,
+
+Andrew
+
+Andrew Hooker, Ph.D.
+Associate Professor of Pharmacometrics
+Dept. of Pharmaceutical Biosciences
+Uppsala University
+Box 591, 751 24, Uppsala, Sweden
+Phone: +46 18 471 4355
+Mobile: +46 768 000 725
+www.farmbio.uu.se/research/researchgroups/pharmacometrics/<http://www.farmbio.uu.se/research/researchgroups/pharmacometrics/>",Announcements,
+3289,"Wed, 25 May 2011 17:28:15 -0700",[NMusers] Question regarding Calculation Process in $DES BLOCK,"Hi,
+
+I have a question about calculation process in $DES block.
+
+Suppose I have 2 subjects, subject 1 has time point from 0-4hr, subject 2
+has time point from 0-5hr.
+Suppose I have NONMEM codes as follows:
+$DES
+DDT1=T
+DADT(1)=-Kin*A(1)
+
+When I output DDT1, the table will be:
+
+   Subject Time (hr)  DDT1 1 0  4??? 1 1  1 1 2  2 1 3  3 1 4  4 2 0  5??? 2
+1  1 2 2  2 2 3  3 2 4  4 2 5  5
+
+Why the DDT1 for subject 1 at first time point is 4 and subject 2 at first
+time point is 5? Why it holds the last time point value of each subject?
+
+Thank you.
+
+lili",Technicalities,
+1487,"Tue, 10 Feb 2009 02:52:40 -0800",[NMusers] NONMEM Workshops for intermediate and advanced users,"Dear all,
+
+ 
+
+This is a reminder that the Uppsala Pharmacometrics group will be having two
+NONMEM Workshops for intermediate and advanced users immediately before and
+after the ASCPT meeting in Washington D.C. in March:
+
+ 
+
+1.    Pharmacokinetic-Pharmacodynamic modeling of Continuous and Categorical
+data in NONMEM - March 16-18
+
+ 
+
+2.    New features and advanced methods for model building and evaluation in
+NONMEM VI - March 21-23
+
+ 
+
+Don't miss out! Workshops can be taken together or separately. For more
+information see below or visit
+
+www.uppsala-pharmacometrics.com. 
+
+ 
+
+Best regards
+
+ 
+
+Andy
+
+Andrew Hooker, Ph.D.
+
+Associate Professor of Pharmacometrics
+
+Div. of Pharmacokinetics and Drug Therapy
+
+Dept. of Pharmaceutical Biosciences
+
+Uppsala University
+
+Box 591, 751 24, Uppsala, Sweden
+
+Phone: +46 18 471 4355
+
+Mobile: +46 701 679 048
+
+ <http://www.farmbio.uu.se/research.php?avd=5>
+www.farmbio.uu.se/research.php?avd=5  
+
+ 
+
+ 
+
+-------------------------------------------------------------------
+
+Brief information for workshop 1:
+
+ 
+
+The course presents modeling strategies, techniques and implementations
+(using NONMEM) for the handling of PKPD information in population models. PD
+models for continuous data as well as binary, ordered categorical, count and
+time to event data will be discussed. The course will include new models and
+methods for evaluation of models. The course will consist of both lectures
+and hands-on computer exercises using NONMEM VI, PsN and Xpose 4. The
+participants will be provided with a library of NONMEM code for the entire
+field as well as self-instructive material for further studies and
+exploration of examples for a wide range of PKPD models applied in different
+disease areas. 
+
+ 
+
+The course will be given by Prof. Mats Karlsson, Dr Lena Friberg, Dr Andrew
+Hooker and Dr Ulrika Simonsson.
+
+ 
+
+A prerequisite for the course is experience with performing NONMEM analyses
+and basic knowledge of PK/PD models.
+
+ 
+
+-------------------------------------------------------------------
+
+Brief information for workshop 2:
+
+ 
+
+During the last decade they have been involved in the testing and evaluation
+of NONMEM VI as it has been developed and several research projects have
+focused on new functionality in NONMEM VI. In parallel, diagnostics for
+model building have been developed, evaluated and integrated into NONMEM
+VI-adapted versions of the freeware programs Perl-speaks-NONMEM (PsN) and
+Xpose 4. In this course the Uppsala group will present some of the most
+exciting new features of NONMEM VI and how these tools can be used in the
+development and evaluation of non-linear mixed effects models.
+
+ 
+
+ 
+
+The course will be given by Prof. Mats Karlsson, Dr Andrew Hooker and Dr
+Radojka Savic.
+
+ 
+
+A prerequisite for the course is experience with performing NONMEM analyses
+or having attended a NONMEM basic workshop.
+
+ 
+
+-------------------------------------------------------------------
+
+Course Fees (per workshop):
+
+ 
+
+Regular fee: 2800 USD
+
+Academic/Government fee: 1800 USD
+
+ 
+
+Registration fee includes: hardcopy folder, extensive electronic material
+including lectures, exercises, programs (PsN and Xpose), additional
+self-study material including hands-ons and solutions. Continental
+breakfast, morning and afternoon refreshments, lunch and a welcome reception
+are included.
+
+ 
+
+Attendance is strictly limited to 50 with a limited ""reduced fee"" places
+available for academic/government participants. Registration and academic
+fees will be offered on the basis of first come, first served.",Announcements,
+6527,"Mon, 13 Feb 2017 23:57:40 -0800",[NMusers] testing 210,"Testing 210
+
+Robert J. Bauer, Ph.D.
+Pharmacometrics R&D
+ICON Early Phase
+820 W. Diamond Avenue
+Suite 100
+Gaithersburg, MD 20878
+Office: (215) 616-6428
+Mobile: (925) 286-0769
+robert.ba...@iconplc.com<mailto:robert.ba...@iconplc.com>
+www.iconplc.com<http://www.iconplc.com/>
+<br /><br />
+ICON plc made the following annotations.
+------------------------------------------------------------------------------
+This e-mail transmission may contain confidential or legally privileged 
+information that is intended only for the individual or entity named in the 
+e-mail address. If you
+are not the intended recipient, you are hereby notified that any disclosure, 
+copying, distribution, or reliance upon the contents of this e-mail is strictly 
+prohibited. If
+you have received this e-mail transmission in error, please reply to the 
+sender, so that ICON plc can arrange for proper delivery, and then please 
+delete the message.
+
+Thank You,
+
+ICON plc
+South County Business Park
+Leopardstown
+Dublin 18
+Ireland
+Registered number: 145835",Administrative & Other,
+207,"Sat, 31 Mar 2007 14:34:12 -0800",[NMusers] Absorption delay NOT completed before the next dose is given,"Dear NM users,
+
+NM help files says the following about ALAG 
+
+ 
+
+""When additional doses are specified on a dose event record, the absorption
+lag time applies to the dose and to all the additional doses. In this case
+the lag time should not exceed the (length of the) interdose interval"" 
+
+ 
+
+My questions are
+a)  Why doesn't ADDL work for the above specific case? 
+b)  I am running linear models with ADVAN2 and ADVAN5 and absorption delay
+is NOT completed before the next dose is given. Due to the problem stated
+above I am not using ADDL. Instead I have a dosing record at every time a
+dose enters the depot compartment. Will this circumvent the problem stated
+above? In other words does ALAG always have to be smaller than II and why? 
+
+ 
+
+Please advice…MNS",Technicalities,
+3599,"Wed, 26 Oct 2011 06:12:47 -0700",[NMusers] Delayd Cmax following infusion of a monoclonal antibody,"Dear NMUsers,
+
+ 
+
+Some pharmacokinetic data of a monoclonal antibody (IGG1 like) administered
+as 2-h infusion (single dose and repeated administration every two weeks)
+show a peak concentration observed (generally 1 to 6 hours) after the end of
+infusion.
+
+At the current stage, we are aiming to develop as quickly as possible a
+pragmatic PK model that can be further used to simulate alternative
+administration regimens under discussion for future studies.
+
+What could be the physiological explanation for observing a peak
+concentration after the end of the infusion? Maybe can target drug-mediated
+disposition, a common observation in mAbs pharmacokinetics, be - at least
+part of - the answer? 
+
+Assuming a plausible explanation can be found, what would be your advice on
+the more efficient modeling strategy, keeping in mind that the modeling
+interest at this stage is only for simulation purpose?
+
+ 
+
+Thanks in advance for any suggestion!
+
+Fabrice
+
+ 
+
+Fabrice Nollevaux,
+
+Arlenda SA
+
+ <http://www.arlenda.com> www.arlenda.com",Technicalities,
+1425,"Mon, 12 Jan 2009 04:07:50 -0800",[NMusers] Second announcement for Exprimo NV's basic level hands-on course entitled 'Population analysis using NONMEM'; 31 March - 2 April 2009,"Dear Friends and Colleagues
+
+ 
+
+This is the second announcement for Exprimo NV's basic level hands-on course
+entitled 'Population analysis using NONMEM'. Both academic and full price
+places are still available.
+
+ 
+
+Exprimo is pleased to announce that the fifth offering of our popular basic
+hands-on course entitled 'Population analysis using NONMEM' is now open for
+registration. The course has received excellent feedback on all previous
+occasions that it has been held.
+
+ 
+
+The course will be held in Copenhagen, Denmark, and will last three days
+from 09:00 on Tuesday the 31st March to 16:00 on Thursday the 2nd April
+2009. Registration will be held from 08:00 to 09:00 on Tuesday the 31st
+March 2009.  The course will be a mixture of lectures and hands-on practical
+sessions and will be held in English. All participants will have access to a
+PC. The number of places is limited and there are reduced fee places for
+academics.
+
+ 
+
+The course will be given by Dr. Janet R Wade, Prof. Niclas Jonsson and Dr.
+Rik Schoemaker.
+
+ 
+
+Day 1 
+
+ 
+
+Lecture - Introduction to population (mixed effects) analyses.
+
+Lecture - Data requirements and specifications 
+
+Lecture - Structural models 
+
+Lecture - Statistical models 
+
+Practical - Data file creation and exploratory data analysis 
+
+Practical - Writing a NM-TRAN control stream (I) 
+
+ 
+
+Day 2 
+
+ 
+
+Lecture - Use during drug development
+
+Lecture - Understanding NONMEM output
+
+Lecture - Covariate models
+
+Practical - Writing a NM-TRAN control stream (II) 
+
+ 
+
+Day 3 
+
+ 
+
+Lecture - Goodness of fit graphs and diagnostics 
+
+Practical - Covariate models 
+
+Practical - Population PK /PD models
+
+ 
+
+More information and registration details can be found at www.exprimo.com
+<http://www.exprimo.com/> ; click on the Courses link at the top of the
+page.
+
+ 
+
+Kind regards
+
+Janet
+
+ 
+
+-------------------------------------------------------------- 
+Janet R. Wade, PhD 
+
+Exprimo NV 
+
+ 
+
+www.exprimo.com <http://www.exprimo.com/>  
+
+ 
+
+Email    janet.w...@exprimo.com  
+
+ 
+
+This e-mail is confidential. It is also privileged or otherwise protected by
+work product immunity or other legal rules. The information is intended to
+be for use of the individual or entity named above. If you are not the
+intended recipient, please be aware that any disclosure, copying,
+distribution or use of the contents of this information is prohibited. You
+should therefore delete this message from your computer system. If you have
+received the message in error, please notify us by reply e-mail. The
+integrity and security of this message cannot be guaranteed on the Internet.
+Thank you for your co-operation.
+
+ 
+
+ 
 
 
--- 
-Indranil Bhattacharya
+----------------------------
+This e-mail message has been scanned for Viruses by Norman Virus Control and 
+it's Content by MailMarshal",Announcements,
+2521,"Fri, 21 May 2010 11:20:16 -0700",[NMusers] document describing PDx-Pop 4 Operation from an Intel Fortran-Compatible Desktop Shortcut,"PDx-Pop 4 Operation from an Intel Fortran-Compatible Desktop Shortcut
+
+William J. Bachman, Ph.D
+
+Director, Pharmacometrics R&D
+
+ICON Development Solutions
+
+Original Document Date: May 21, 2010
+
+ 
+
+Overview:  Setting the global environment variables for Intel Visual
+Fortran compilers using Microsoft Visual Studio has become overly
+burdensome for PDx-Pop users (and PDx-Pop customer support).  This
+document describes creating a Desktop Shortcut based on a DOS Command
+Prompt window modified to have the same Intel Fortran compatibility as
+the Intel Fortran Build Environment window.  A batch file will be
+created that will be run by the Desktop Shortcut to set the environment
+for Intel Fortran and launch PDx-Pop 4.
+
+ 
+
+PDx-Pop_4_Intel_Fortran-Compatible_Desktop_Shortcut.pdf     available at
+ftp://ftp.globomaxnm.com/Public/pdxpop/
+
+
+ICON plc made the following annotations.
+------------------------------------------------------------------------------
+This e-mail transmission may contain confidential or legally privileged 
+information
+that is intended only for the individual or entity named in the e-mail address. 
+If you
+are not the intended recipient, you are hereby notified that any disclosure, 
+copying,
+distribution, or reliance upon the contents of this e-mail is strictly 
+prohibited. If
+you have received this e-mail transmission in error, please reply to the 
+sender, so that
+ICON plc can arrange for proper delivery, and then please delete the message.
+Thank You,
+ICON plc
+South County Business Park
+Leopardstown
+Dublin 18
+Ireland
+Registered number: 145835",Technicalities,
+7288,"Thu, 17 Jan 2019 10:26:40 -0800","[NMusers] ICON's NONMEM repository update, and F77 to f90 converter","Dear nmusers:
+The readme file to ICON's NONMEM repository,
+https://nonmem.iconplc.com/nonmem
+has been updated, called readme_nonmem_repository.txt at
+
+Also, a f77 to f90 converter has been added, to convert legacy *.f files into 
+*.f90 files, for compatibility with NONMEM 7.  This is located at:
+https://nonmem.iconplc.com/nonmem/Fortran_Converter_F77_to_F90/
+
+Robert J. Bauer, Ph.D.
+Senior Director
+Pharmacometrics R&D
+ICON Early Phase
+820 W. Diamond Avenue
+Suite 100
+Gaithersburg, MD 20878
+Office: (215) 616-6428
+Mobile: (925) 286-0769
+robert.ba...@iconplc.com<mailto:robert.ba...@iconplc.com>
+www.iconplc.com<http://www.iconplc.com/>
+<br /><br />
+ICON plc made the following annotations.
+------------------------------------------------------------------------------
+This e-mail transmission may contain confidential or legally privileged 
+information that is intended only for the individual or entity named in the 
+e-mail address. If you
+are not the intended recipient, you are hereby notified that any disclosure, 
+copying, distribution, or reliance upon the contents of this e-mail is strictly 
+prohibited. If
+you have received this e-mail transmission in error, please reply to the 
+sender, so that ICON plc can arrange for proper delivery, and then please 
+delete the message.
+
+Thank You,
+
+ICON plc
+South County Business Park
+Leopardstown
+Dublin 18
+Ireland
+Registered number: 145835",Announcements,
+8247,"Thu, 05 Aug 2021 10:02:16 -0700",[NMusers] Director and PKPD scientist positions at Eli Lilly and Company,"At Eli Lilly and Company, our scientists in Global 
+Pharmacokinetics/Pharmacodynamics and Pharmacometrics Department are subject 
+matter experts and leaders in R&D throughout the value chain from preclinical 
+molecule identification to clinical development, registration and 
+commercialization. Our goal is to successfully identify and develop the right 
+drug with the right dose for the right patient by applying the model-informed 
+drug research and development (MIDD) paradigm.  Scientists in our department 
+not only have the opportunities to conduct modeling and simulation work, but 
+also are functional leaders on project teams driving and impacting the drug 
+discovery and development strategy and plan.
+
+
+
+We are looking for creative, motivated and hardworking scientists and leaders 
+to join our diverse team of scientists who are passionate about improving the 
+lives of the patients and communities we serve. We have positions open for 
+junior scientist, experienced drug developer, and leadership role within the 
+department.
+
+
+
+Please find more details for these positions and apply through the link below:
+
+
+
+PKPD Director position:
+
+
+https://careers.lilly.com/job/indianapolis/director-pk-pd-and-pharmacometrics/410/11658768816
+
+
+
+PKPD Scientist for junior and senior level positions:
+
+
+https://careers.lilly.com/job/indianapolis/research-scientist-pk-pd-and-pharmacometrics/410/4231844176
+
+
+https://careers.lilly.com/job/indianapolis/principal-research-scientist-pk-pd-and-pharmacometrics/410/6316007536
 
 
 
 
 
+For more than a century, Eli Lilly and Company has been committed to making 
+life better. We continuously focus on new and innovative ways to fulfill our 
+extraordinary purpose of making medicines that help people live longer, 
+healthier, more active lives. We are a global healthcare leader headquartered 
+in Indianapolis, Indiana. Our 35,000 employees around the world work to 
+discover and bring life-changing medicines to those who need them, improve the 
+understanding and management of disease, and give back to our communities 
+through philanthropy and volunteerism. We give our best effort to our work, and 
+we put people first.
+
+
+Lan
+__________________________________________
+Lan Ni, Ph.D.
+Senior Director
+Global PK/PD and Pharmacometrics
+Eli Lilly and Company
+Lilly Corporate Center, Indianapolis IN 46285 USA
+(317) 277-3636 (office)  | (317) 260-9871 (mobile)
+ni_...@lilly.com<mailto:ni_...@lilly.com> | www.lilly.com<http://www.lilly.com/>",Open Positions,
+5976,"Mon, 21 Dec 2015 23:07:05 -0800",[NMusers] Problem of STS in NONMEM,"Dear all,
+
+I got a problem when using NONMEM with STS method. My aim is to get
+individual parameter estimates. I would like to let NONMEM estimate
+individual parameter one subject by one subject. My control stream is
+partially listed below, which is edited according to this thread
+http://www.cognigencorp.com/nonmem/nmo/topic035.html
+
+*$SUBROUTINES ADVAN1 TRANS2*
+
+*$PK*
+*CL = THETA(1) * EXP(ETA(1))*
+*V  = THETA(2) * EXP(ETA(2))*
+*S1 = V*
+
+*$ERROR*
+*IPRED = F*
+*    W = F*
+*    Y = IPRED*(1+EXP(ETA(3))*EPS(1))*
+* IRES = DV-IPRED*
+*IWRES = IRES/W*
+
+*$THETA*
+*(10,20,30)   ; CL*
+*(10,80,100)  ; V*
+
+*$OMEGA*
+*100 ; IIV CL*
+*100 ; IIV V*
+*100 ; IIV SIGMA*
+
+*$SIGMA*
+*1 FIXED ; PRO*
+*$EST METHOD=1 INTER MAXEVAL=0 NOABORT SIG=3 PRINT=1 POSTHOC*
+*$COV*
+*$TABLE ID TIME AMT CMT DV PRED IPRED IWRES CL V ETA(1) ETA(2) ETA(3)
+ONEHEADER NOPRINT FILE=sdtab101.tab*
+
+The model can run successfully, and I got individual parameter estimates
+from output file. I found that for each subject the individual parameter
+estimate changed  if I change the initial value of THETA. It seems that
+NONMEM regarded the initial value fixed (just like a fixed typical value).
+But I expected NONMEM to estimate individual parameters based on individual
+data rather than the initial value. Is there anything wrong with the code?
+Thanks in advance.
+
+Anyue",Technicalities,
+8120,"Wed, 24 Mar 2021 02:55:12 -0700",[NMusers] Statistical power of covariate inclusion in popPK models,"Hi,
+
+
+Thank you all for your answers. I have two follow-up questions:
 
 
 
+1.       Is it mandatory to use the matrix R as a variance co-variance matrix 
+to obtain the FIM? In case we have already used other type of variance 
+co-variance matrix, should we rerun the model with matrix R setting?
 
 
 
+2.       How critical is the estimation method for the computed SE? In other 
+words, is it relevant to compare two powers computed based on two standard 
+errors givens by different estimation algorithms?
+
+ For example, if we used FOCE-INTER to minimize our model, could we compare the 
+power (based on the Wald test) to results given by PFIM which is based on FO ?
 
 
 
+Just for a little bit of background to clarify why we are interested in the 
+Wald test.
 
+We are working on the comparison of different methods to compute the 
+statistical power of covariate inclusion in popPK models (SSE (gold standard), 
+MCMP, PPE , and Wald test). We have also included the Wald test in our 
+comparison because it is the fastest method and mostly because it used by 
+optimal designs software. Therefore, the evaluation of the accuracy of the 
+power derived by this method could facilitate the bridging step between model 
+validation and the design of upcoming clinical trials using optimal design 
+software.
 
+Thank you in advance.
 
+Cordially.
 
+Ibtihel HAMMAMI.",Technicalities,
+4670,"Fri, 23 Aug 2013 09:31:23 -0700",[NMusers] Time-varing covariate,"Hi, Dear NMusers:
 
+I want to add a time-varing covariate in my model. For example, blood
+pressure or blood flow as covariates. But I am not sure how to do it. I see
+some earlier threads to discuss it but they all use complicated methods.
 
+I am wondering if there are any new way  to do it in NM 7.2?  I see in the
+user guide that EVID=4 can indicate physiological change. Is this what I
+should use?
 
+Thank you very much for any suggestions.
 
+Best regards,
 
+Siwei",Technicalities,
+6586,"Thu, 09 Mar 2017 10:25:09 -0800",[NMusers] question about random seed for simulation,"Dear All
+I have finished a multiple dose simulation for 600 subjects and want to perform 
+a single dose simulation (different sampling time) on the same subjects (same 
+ETA as the first simulation).  I used the same seed for the simulation step, it 
+turned out the first subject was the same and the rest of the subjects are not 
+and I am not sure whether this was due to the fact that the two simulation has 
+different number TIME records.  If so, I wonder what is the proper way to set 
+the simulation seed so that the ETAs for the second simulation will be 
+identical to the first one.
 
+I know that I could output the individual parameter estimate from the first 
+simulation and import them into the second one.  But I was thinking if the 
+random seed can be synchronized between the two simulation, it could be an 
+easier solution.
 
+Your help is very much appreciated!
 
+Thank you very much and best regards!
 
+Penny (Peijuan) Zhu, Ph.D.
+Associate Director Clinical Pharmacology
 
+Cell: 862-926-9079
 
+PD Bio-Pharma CDMA
+Sandoz
+1N025, 100 College Road West
+Princeton, NJ 08540",Technicalities,
+5964,"Fri, 11 Dec 2015 07:09:07 -0800",[NMusers] Error in $NONPARAMETRIC,"Dear all,
 
+When generating a VPC for a nonparametric ($NONPARAMETRIC subroutine on) model, 
+I get the following error message from NONMEM 7.3.0 (installed on OSX 10.10.5, 
+PsN 4.4.8), which doesn't occur with creating a VPC for a ""normal"" parametric 
+model.
 
+> “ #TERE:
+> 0ERROR IN READING FILE : FILE15/16 USED BY DAT4 “
 
+The control stream that causes this error is just a MAXEVAL=0 to filter the 
+original data on IGNORE/ACCEPT and output needed variables defined in the model 
+code, so it should not be a difficult task for NONMEM.
 
+Does anyone know what might be the cause of this error?
 
-
-
-
-
-
-
-
-
--- 
-Indranil Bhattacharya"
+Sincerely,
+Rob
+Het Radboudumc staat geregistreerd bij de Kamer van Koophandel in het 
+handelsregister onder nummer 41055629.
+The Radboud university medical center is listed in the Commercial Register of 
+the Chamber of Commerce under file number 41055629.",Technicalities,

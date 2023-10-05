@@ -3,6 +3,7 @@
 import openai
 import requests
 import json
+import time
 from bs4 import BeautifulSoup
 from pprint import pprint
 
@@ -11,7 +12,7 @@ from pprint import pprint
 ######################################################################################
 
 # define fetching function based on msg number
-def fetch_details(msg_number, headers, timeout):
+def fetch_details(msg_number, headers, timeout, retries):
     # Initialize an empty dictionary to hold the details
     details = {}
 
@@ -21,53 +22,73 @@ def fetch_details(msg_number, headers, timeout):
     # Generate the full URL of the detailed page
     url = f"https://www.mail-archive.com/nmusers@globomaxnm.com/msg{msg_number}.html"
     
-    # Fetch the HTML content from the URL
-    response = requests.get(url, headers = headers, timeout = timeout)
-    page_content = response.text
-    
-    # Initialize a BeautifulSoup object and specify the parser
-    soup = BeautifulSoup(page_content, 'html.parser')
+    for attempt in range(retries):
+        try:
+            # Fetch the HTML content from the URL
+            response = requests.get(url, headers = headers, timeout = timeout)
+            response.raise_for_status() # Ensure we raise errors for 4xx and 5xx responses
+            page_content = response.text
+            
+            # Initialize a BeautifulSoup object and specify the parser
+            soup = BeautifulSoup(page_content, 'html.parser')
 
-    # Additional fields for thread details
-    thread_section = soup.select_one('div.tSliceList ul.icons')
-    
-    # Check if the list is empty
-    details['is_standalone'] = len(thread_section.find_all('li', recursive=False)) == 0 if thread_section else True
-                                   
-    # Extract message IDs within the thread
-    details['thread_message_ids'] = []
-    if not details['is_standalone']:
-        thread_msgs = thread_section.select('a[href^="msg"]')
-        details['thread_message_ids'] = [msg['href'].replace('msg', '').replace('.html', '') for msg in thread_msgs]
+            # Additional fields for thread details
+            thread_section = soup.select_one('div.tSliceList ul.icons')
+            
+            # Check if the list is empty
+            details['is_standalone'] = len(thread_section.find_all('li', recursive=False)) == 0 if thread_section else True
+                                        
+            # Extract message IDs within the thread
+            details['thread_message_ids'] = []
+            if not details['is_standalone']:
+                thread_msgs = thread_section.select('a[href^="msg"]')
+                details['thread_message_ids'] = [msg['href'].replace('msg', '').replace('.html', '') for msg in thread_msgs]
 
-    # append id to thread_message_ids
-    details['thread_message_ids'].append(msg_number)
+            # append id to thread_message_ids
+            details['thread_message_ids'].append(msg_number)
 
-    # sort message ids in upscending order
-    details['thread_message_ids'] = sorted(details['thread_message_ids'], key=int)
-    
-    # Extract the date
-    date_tag = soup.select_one('span.date a')
-    if date_tag:
-        details['date'] = date_tag.text.strip()
+            # sort message ids in upscending order
+            details['thread_message_ids'] = sorted(details['thread_message_ids'], key=int)
+            
+            # Extract the date
+            date_tag = soup.select_one('span.date a')
+            if date_tag:
+                details['date'] = date_tag.text.strip()
 
-    # Extract the subject
-    subject_tag = soup.select_one('span.subject span[itemprop="name"]')
-    if subject_tag and subject_tag.text.strip():
-        details['subject'] = subject_tag.text.strip()
-    else:
-        details['subject'] = "no title"
+            # Extract the subject
+            subject_tag = soup.select_one('span.subject span[itemprop="name"]')
+            if subject_tag and subject_tag.text.strip():
+                details['subject'] = subject_tag.text.strip()
+            else:
+                details['subject'] = "no title"
 
-    # Extract the author
-    author_tag = soup.select_one('span.sender span[itemprop="name"]')
-    if author_tag:
-        details['author'] = author_tag.text.strip()
-    
-    # Extract the message text
-    message_tag = soup.select_one('div.msgBody')
-    if message_tag:
-        details['message'] = message_tag.text.strip()
+            # Extract the author
+            author_tag = soup.select_one('span.sender span[itemprop="name"]')
+            if author_tag:
+                details['author'] = author_tag.text.strip()
+            
+            # Extract the message text
+            message_tag = soup.select_one('div.msgBody')
+            if message_tag:
+                details['message'] = message_tag.text.strip()
+            
+            # if everything worked out, break the loop
+            return details
 
+        except requests.RequestException as e:  # Catches any request-related exceptions
+            if attempt < retries - 1:  # if not the last attempt
+                time.sleep(5)  # delay for 5 seconds before next retry
+                continue  # go to the next iteration of the loop to retry
+            else:
+                print(f"Failed to fetch details for msg{msg_number} after {retries} attempts. Error: {str(e)}")
+                details['message'] = "Scraping failed"
+                details['is_standalone'] = False
+                details['thread_message_ids'] = []
+                details['date'] = "Scraping failed"
+                details['subject'] = "Scraping failed"
+                details['author'] = "Scraping failed"
+                
+            
     return details
 
 
@@ -170,12 +191,12 @@ def extract_threads(messages_dict):
         if msg_id in seen_messages:
             continue
         
-        # Extract the thread message IDs
-        thread_message_ids = msg['thread_message_ids']
+        # Extract the thread message IDs using .get() method with a default empty list
+        thread_message_ids = msg.get('thread_message_ids', [])
         
         # add threads
         thread_dict[thread_id] = {
-            'ids': thread_message_ids if thread_message_ids else None, # assuming there's only one id or None in the list
+            'ids': thread_message_ids if thread_message_ids else None,
             'category': None, # placeholder
             'labels': None     # placeholder
         }
@@ -186,14 +207,17 @@ def extract_threads(messages_dict):
             
     return thread_dict
 
+
 #######################################################################################
 ############################### fetch_missing_messages ################################
 #######################################################################################
 
 # Function to fetch missing messages in thread_dict and add them to msg dictionary
-def fetch_missing_messages(thread_dict, msg, headers, timeout):
+def fetch_missing_messages(thread_dict, msg, headers, timeout, retries, first_only = False):
     for thread_id, thread_info in thread_dict.items():
         msg_ids = thread_info['ids']
+        if first_only:
+            msg_ids = [msg_ids[0]]
         for msg_id in msg_ids:
             if msg_id not in msg:  
 
@@ -201,7 +225,12 @@ def fetch_missing_messages(thread_dict, msg, headers, timeout):
                 print("fetch_missing_messages: fetching message " + msg_id)
 
                 # Fetch missing message details
-                fetched_msg = fetch_details(msg_id, headers = headers, timeout = timeout)
+                fetched_msg = fetch_details(
+                    msg_number = msg_id,
+                    headers = headers,
+                    timeout = timeout,
+                    retries = retries
+                )
                 
                 # Add the fetched message to msg dictionary
                 msg[msg_id] = fetched_msg

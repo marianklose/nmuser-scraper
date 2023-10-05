@@ -27,7 +27,9 @@ import openai
 import requests
 import time
 import json
+import random
 import re
+import pandas as pd
 from bs4 import BeautifulSoup
 from pprint import pprint
 
@@ -61,6 +63,12 @@ headers = {
 # define time until the request times out
 timeout = 60
 
+# define max number of retries when scraping
+retries = 3
+
+# define sleep time
+sleep_time = 0.1
+
 # Hardcoded dictionary for email classification categories
 category_dict = {
     "Announcements": "DIC_kwDOKYhvW84CZvWP",
@@ -76,15 +84,11 @@ categories = list(category_dict.keys())
 model = "gpt-3.5-turbo"
 # model = "gpt-4"
 
-# Define most recent message ID
-recent_id = 8687
-
-# define id where to stop
-stop_id = 8686
-
-# Define number of messages we want to retrieve (for testing)
-n_msg = (recent_id - stop_id)+1
-#
+# sample vector of message IDs
+n_msg = 100
+recent_id = 8691
+my_array = list(range(1, recent_id))
+msg_ids = random.sample(my_array, n_msg)
 #
 #
 #
@@ -93,11 +97,8 @@ n_msg = (recent_id - stop_id)+1
 #
 #
 #| results: asis
-# Define vector of message IDs
-msg_ids = list(range(recent_id, recent_id - n_msg, -1))
-
 # Convert numerics to strings and paste 0 in front
-msg_ids = ["0" + str(x) for x in msg_ids]
+msg_ids = [str(num).zfill(5) for num in msg_ids]
 
 # show
 msg_ids
@@ -109,7 +110,15 @@ msg = {}
 for id in msg_ids:
 
     # Fetch the details
-    single_msg = fetch_details(msg_number = id, headers = headers)
+    single_msg = fetch_details(
+        msg_number = id,
+        headers = headers,
+        timeout = timeout,
+        retries = retries
+    )
+
+    # sleep for n seconds
+    time.sleep(sleep_time)
 
     # Append to msg
     msg[id] = single_msg
@@ -119,7 +128,14 @@ for id in msg_ids:
 thread_dict = extract_threads(msg)
 
 # Fetch any missing messages in the threads
-fetch_missing_messages(thread_dict, msg)
+fetch_missing_messages(
+    thread_dict = thread_dict,
+    msg = msg,
+    headers = headers,
+    timeout = timeout,
+    retries = retries,
+    first_only = True
+)
 
 # print the result
 pprint(thread_dict, indent=4)
@@ -129,6 +145,10 @@ pprint(thread_dict, indent=4)
 #
 #
 #
+#
+# init data list
+data_list = []
+
 # Loop through each element in the dictionary
 for thread_id, thread_info in thread_dict.items():
 
@@ -138,114 +158,29 @@ for thread_id, thread_info in thread_dict.items():
     # retrieve initial thread starting message
     cur_msg = msg[inital_msg_id]
 
-    # retrieve category from openai
-    category = get_chat_completion(
-        api_key = ai_api_token,
-        categories = categories,
-        message_text = cur_msg['subject'],
-        model = model
-    )
+    # store data from message
+    data = {
+        'id': cur_msg['id'],
+        'date': cur_msg['date'],
+        'subject': cur_msg['subject'],
+        'message': cur_msg['message']
+    }
+    
+    # append data to list
+    data_list.append(data)
 
-    # update thread_dict with category
-    thread_dict[thread_id]['category'] = category
+# Convert the list of dictionaries into a pandas DataFrame
+df = pd.DataFrame(data_list)
+
+# add empty column for labels and category
+df['category'] = ''
+df['labels'] = ''
+
+# Save the DataFrame to a CSV file
+df.to_csv('train_df_raw.csv', index=False)
 
 # print the result
-pprint(thread_dict, indent=4)
-#
-#
-#
-#
-#
-#
-#
-#
-# check if we want to actually create discussions or just test
-if create_dis_bool:
-    # Loop through each element in the dictionary
-    for thread_id, msg_list in thread_dict.items():
-        # define id
-        id = msg_list[0]
-
-        # retrieve message
-        cur_msg = msg[id]
-
-        # retrieve category from openai
-        category = get_chat_completion(
-            api_key = ai_api_token,
-            categories = categories,
-            message_text = cur_msg['subject'],
-            model = model
-        )
-
-        # get category_id from category_dict
-        category_id = category_dict[category]
-
-        # create discussion for id and store output
-        dis_out = create_discussion(
-            api_token=gh_api_token,
-            title=cur_msg['subject'],
-            body=cur_msg['message'],
-            date=cur_msg['date'],
-            author=cur_msg['author'],
-            repository_id = repository_id,
-            category_id = category_id
-        )
-
-        # output to console
-        print(f'Created discussion {dis_out["data"]["createDiscussion"]["discussion"]["id"]} for message {id}.')
-
-        # store freshly created discussion id
-        dis_id = dis_out['data']['createDiscussion']['discussion']['id']
-
-        # check if thread has more than one message
-        if len(msg_list) > 1:
-            # loop through all messages in thread
-            for msg_id in msg_list[1:]:
-                # retrieve message
-                cur_msg = msg[msg_id]
-
-                # add comment to discussion
-                add_comment_to_discussion(
-                    api_token=gh_api_token,
-                    discussion_id=dis_id,
-                    body=cur_msg['message'],
-                    date=cur_msg['date'],
-                    author=cur_msg['author'],
-                    silent=False
-                )
-                
-                # output to console
-                print(f'Added comment to discussion {dis_id} for message {msg_id}.')
-
-#
-#
-#
-#
-#
-#
-#| eval: false
-# Fetch all discussions for the given repository ID
-all_discussions = list_all_discussions(api_token=gh_api_token, repository_id=repository_id)
-
-# Delete each discussion
-for dis_id, title in all_discussions:
-    print(f"Deleting discussion with ID: {dis_id}, Title: {title}")
-    delete_discussion(api_token=gh_api_token, discussion_id=dis_id)
-#
-#
-#
-#
-#
-#
-#
-#
-# # test openai with simple message
-# email_content = "[NMusers] 2023 Virtual Training Course on PKPD of Protein Therapeutics, November 28-30 "
-# classification = get_chat_completion(api_key = ai_api_token, categories = categories, message_text = email_content)
-# print(classification)
-
-
-# add_labels_to_discussion(api_token = gh_api_token, discussion_id = "D_kwDOKYhvW84AVshP" , labels = ["LA_kwDOKYhvW88AAAABZzOrMA", "LA_kwDOKYhvW88AAAABZzPGkQ"])
+pprint(df, indent=4)
 #
 #
 #
