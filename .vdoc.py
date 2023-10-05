@@ -1,0 +1,251 @@
+# type: ignore
+# flake8: noqa
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# load packages
+import openai
+import requests
+import time
+import json
+import re
+from bs4 import BeautifulSoup
+from pprint import pprint
+
+# import own custom functions
+from functions import *
+#
+#
+#
+#
+#
+# define pats and api tokens safely via gitignored file 
+from my_secrets import gh_api_token
+from my_secrets import ai_api_token
+#
+#
+#
+#
+#
+# define if we want to actually create discussions or just test
+create_dis_bool = False
+
+# Define repository and category IDs
+repository_id = 'R_kgDOKYhvWw'
+category_id = 'DIC_kwDOKYhvW84CZobi'
+
+# add headers to requests
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.3'
+}
+
+# define time until the request times out
+timeout = 60
+
+# Hardcoded dictionary for email classification categories
+category_dict = {
+    "Announcements": "DIC_kwDOKYhvW84CZvWP",
+    "Open Positions": "DIC_kwDOKYhvW84CZvWQ",
+    "Technicalities": "DIC_kwDOKYhvW84CZvWX",
+    "Others": "DIC_kwDOKYhvW84CZvWY"
+}
+
+# define categories for eamil classification
+categories = list(category_dict.keys())
+
+# define chatgpt model
+model = "gpt-3.5-turbo"
+# model = "gpt-4"
+
+# Define most recent message ID
+recent_id = 8687
+
+# define id where to stop
+stop_id = 8686
+
+# Define number of messages we want to retrieve (for testing)
+n_msg = (recent_id - stop_id)+1
+#
+#
+#
+#
+#
+#
+#
+#
+#| results: asis
+# Define vector of message IDs
+msg_ids = list(range(recent_id, recent_id - n_msg, -1))
+
+# Convert numerics to strings and paste 0 in front
+msg_ids = ["0" + str(x) for x in msg_ids]
+
+# show
+msg_ids
+
+# Initialize an empty dictionary to hold the msg information
+msg = {}
+
+# Loop through each msg id, extract the details and append
+for id in msg_ids:
+
+    # Fetch the details
+    single_msg = fetch_details(msg_number = id, headers = headers)
+
+    # Append to msg
+    msg[id] = single_msg
+
+
+# Extract threads
+thread_dict = extract_threads(msg)
+
+# Fetch any missing messages in the threads
+fetch_missing_messages(thread_dict, msg)
+
+# print the result
+pprint(thread_dict, indent=4)
+#
+#
+#
+#
+#
+#
+# Loop through each element in the dictionary
+for thread_id, thread_info in thread_dict.items():
+
+    # define initial message id
+    inital_msg_id = thread_info['ids'][0]
+
+    # retrieve initial thread starting message
+    cur_msg = msg[inital_msg_id]
+
+    # retrieve category from openai
+    category = get_chat_completion(
+        api_key = ai_api_token,
+        categories = categories,
+        message_text = cur_msg['subject'],
+        model = model
+    )
+
+    # update thread_dict with category
+    thread_dict[thread_id]['category'] = category
+
+# print the result
+pprint(thread_dict, indent=4)
+#
+#
+#
+#
+#
+#
+#
+#
+# check if we want to actually create discussions or just test
+if create_dis_bool:
+    # Loop through each element in the dictionary
+    for thread_id, msg_list in thread_dict.items():
+        # define id
+        id = msg_list[0]
+
+        # retrieve message
+        cur_msg = msg[id]
+
+        # retrieve category from openai
+        category = get_chat_completion(
+            api_key = ai_api_token,
+            categories = categories,
+            message_text = cur_msg['subject'],
+            model = model
+        )
+
+        # get category_id from category_dict
+        category_id = category_dict[category]
+
+        # create discussion for id and store output
+        dis_out = create_discussion(
+            api_token=gh_api_token,
+            title=cur_msg['subject'],
+            body=cur_msg['message'],
+            date=cur_msg['date'],
+            author=cur_msg['author'],
+            repository_id = repository_id,
+            category_id = category_id
+        )
+
+        # output to console
+        print(f'Created discussion {dis_out["data"]["createDiscussion"]["discussion"]["id"]} for message {id}.')
+
+        # store freshly created discussion id
+        dis_id = dis_out['data']['createDiscussion']['discussion']['id']
+
+        # check if thread has more than one message
+        if len(msg_list) > 1:
+            # loop through all messages in thread
+            for msg_id in msg_list[1:]:
+                # retrieve message
+                cur_msg = msg[msg_id]
+
+                # add comment to discussion
+                add_comment_to_discussion(
+                    api_token=gh_api_token,
+                    discussion_id=dis_id,
+                    body=cur_msg['message'],
+                    date=cur_msg['date'],
+                    author=cur_msg['author'],
+                    silent=False
+                )
+                
+                # output to console
+                print(f'Added comment to discussion {dis_id} for message {msg_id}.')
+
+#
+#
+#
+#
+#
+#
+#| eval: false
+# Fetch all discussions for the given repository ID
+all_discussions = list_all_discussions(api_token=gh_api_token, repository_id=repository_id)
+
+# Delete each discussion
+for dis_id, title in all_discussions:
+    print(f"Deleting discussion with ID: {dis_id}, Title: {title}")
+    delete_discussion(api_token=gh_api_token, discussion_id=dis_id)
+#
+#
+#
+#
+#
+#
+#
+#
+# # test openai with simple message
+# email_content = "[NMusers] 2023 Virtual Training Course on PKPD of Protein Therapeutics, November 28-30 "
+# classification = get_chat_completion(api_key = ai_api_token, categories = categories, message_text = email_content)
+# print(classification)
+
+
+# add_labels_to_discussion(api_token = gh_api_token, discussion_id = "D_kwDOKYhvW84AVshP" , labels = ["LA_kwDOKYhvW88AAAABZzOrMA", "LA_kwDOKYhvW88AAAABZzPGkQ"])
+#
+#
+#

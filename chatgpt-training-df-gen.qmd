@@ -53,6 +53,14 @@ create_dis_bool = False
 repository_id = 'R_kgDOKYhvWw'
 category_id = 'DIC_kwDOKYhvW84CZobi'
 
+# add headers to requests
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.3'
+}
+
+# define time until the request times out
+timeout = 60
+
 # Hardcoded dictionary for email classification categories
 category_dict = {
     "Announcements": "DIC_kwDOKYhvW84CZvWP",
@@ -69,7 +77,7 @@ model = "gpt-3.5-turbo"
 # model = "gpt-4"
 
 # sample vector of message IDs
-n_msg = 20
+n_msg = 5
 recent_id = 8687
 my_array = list(range(1, recent_id))
 msg_ids = random.sample(my_array, n_msg)
@@ -94,7 +102,11 @@ msg = {}
 for id in msg_ids:
 
     # Fetch the details
-    single_msg = fetch_details(id)
+    single_msg = fetch_details(
+        msg_number = id,
+        headers = headers,
+        timeout = timeout
+    )
 
     # Append to msg
     msg[id] = single_msg
@@ -104,7 +116,12 @@ for id in msg_ids:
 thread_dict = extract_threads(msg)
 
 # Fetch any missing messages in the threads
-fetch_missing_messages(thread_dict, msg)
+fetch_missing_messages(
+    thread_dict = thread_dict,
+    msg = msg,
+    headers = headers,
+    timeout = timeout
+)
 
 # print the result
 pprint(thread_dict, indent=4)
